@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QRScanningViewController" customModule="Funny" customModuleProvider="target">
+            <connections>
+                <outlet property="openURLBtn" destination="WiR-KV-JDK" id="oQA-Xu-J4V"/>
+                <outlet property="textView" destination="OEs-4B-j3v" id="8s0-Ic-9jY"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ww5-OM-Dw4">
+                    <rect key="frame" x="120" y="100" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="AAM-qu-Hie"/>
+                        <constraint firstAttribute="width" constant="80" id="Qmd-bc-NUd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="点击扫描">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="startScanning:" destination="-1" eventType="touchUpInside" id="jMY-Rq-lHr"/>
+                    </connections>
+                </button>
+                <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEs-4B-j3v">
+                    <rect key="frame" x="20" y="280" width="280" height="120"/>
+                    <color key="backgroundColor" red="0.92066714638157898" green="0.87212171052631504" blue="0.57570929276315785" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="yZW-0P-JiQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WiR-KV-JDK">
+                    <rect key="frame" x="20" y="400" width="280" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="wNz-d6-dl6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="打开网址">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="openURL:" destination="-1" eventType="touchUpInside" id="qzy-MN-YIU"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="WiR-KV-JDK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="65x-RH-DSs"/>
+                <constraint firstItem="OEs-4B-j3v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="7UQ-yl-KpO"/>
+                <constraint firstItem="WiR-KV-JDK" firstAttribute="top" secondItem="OEs-4B-j3v" secondAttribute="bottom" id="BQi-k3-huZ"/>
+                <constraint firstItem="Ww5-OM-Dw4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="DcY-Bf-ufu"/>
+                <constraint firstAttribute="centerX" secondItem="Ww5-OM-Dw4" secondAttribute="centerX" id="L94-ak-jJS"/>
+                <constraint firstAttribute="bottom" secondItem="OEs-4B-j3v" secondAttribute="bottom" constant="80" id="XQW-ry-Y4x"/>
+                <constraint firstAttribute="trailing" secondItem="WiR-KV-JDK" secondAttribute="trailing" constant="20" id="hB8-Hv-2qQ"/>
+                <constraint firstAttribute="trailing" secondItem="OEs-4B-j3v" secondAttribute="trailing" constant="20" id="yYm-WE-Uvj"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="307" y="324"/>
+        </view>
+    </objects>
+</document>

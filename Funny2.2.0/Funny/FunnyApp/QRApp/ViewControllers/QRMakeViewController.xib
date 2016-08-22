@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QRMakeViewController" customModule="Funny" customModuleProvider="target">
+            <connections>
+                <outlet property="QRImageView" destination="uZk-8J-eix" id="sjD-Dd-wSu"/>
+                <outlet property="textView" destination="68g-LC-e2N" id="A2n-A7-UyH"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入要生成二维码的文字" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMY-mR-PSt">
+                    <rect key="frame" x="0.0" y="70" width="320" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="25a-tp-Wwa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.49509148848684209" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68g-LC-e2N">
+                    <rect key="frame" x="20" y="95" width="280" height="150"/>
+                    <color key="backgroundColor" red="0.96361019736842102" green="0.87253289473684215" blue="0.59603721217105265" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="OTn-zt-0PF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="wnb-Km-SvZ"/>
+                    </connections>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3c-ho-1kc">
+                    <rect key="frame" x="20" y="245" width="280" height="40"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="teb-RL-bWt"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="生成">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="QRMake:" destination="-1" eventType="touchUpInside" id="SzT-X9-5cG"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uZk-8J-eix">
+                    <rect key="frame" x="50" y="305" width="220" height="220"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="220" id="WUn-36-dXG"/>
+                        <constraint firstAttribute="height" constant="220" id="vDx-x9-3pc"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="68g-LC-e2N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="0fd-B6-57h"/>
+                <constraint firstAttribute="trailing" secondItem="iMY-mR-PSt" secondAttribute="trailing" id="3cj-fD-m96"/>
+                <constraint firstItem="uZk-8J-eix" firstAttribute="top" secondItem="q3c-ho-1kc" secondAttribute="bottom" constant="20" id="BnI-Jf-ttI"/>
+                <constraint firstItem="iMY-mR-PSt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="H2d-hA-eF2"/>
+                <constraint firstAttribute="trailing" secondItem="68g-LC-e2N" secondAttribute="trailing" constant="20" id="Nqh-2S-hab"/>
+                <constraint firstItem="q3c-ho-1kc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="eKg-vd-9XF"/>
+                <constraint firstItem="q3c-ho-1kc" firstAttribute="top" secondItem="68g-LC-e2N" secondAttribute="bottom" id="qTe-3Z-jUf"/>
+                <constraint firstAttribute="trailing" secondItem="q3c-ho-1kc" secondAttribute="trailing" constant="20" id="syr-OF-KUd"/>
+                <constraint firstItem="iMY-mR-PSt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="tLP-yp-Ow1"/>
+                <constraint firstItem="68g-LC-e2N" firstAttribute="top" secondItem="iMY-mR-PSt" secondAttribute="bottom" id="tTG-1T-ezh"/>
+                <constraint firstAttribute="centerX" secondItem="uZk-8J-eix" secondAttribute="centerX" id="ykg-H5-4g4"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="307" y="324"/>
+        </view>
+    </objects>
+</document>
