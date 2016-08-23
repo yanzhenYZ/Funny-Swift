@@ -13,12 +13,12 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
     
     var isFromWindow: Bool = false
     var scanVC: QRScanningViewController!
-    var session: AVCaptureSession!
-    @IBOutlet weak var scanImageView: UIImageView!
-    var lineImageView: UIImageView!
-    var timer: NSTimer!
-    var upOrDown: Bool = false;
-    var num: Int! = 0
+    private var session: AVCaptureSession!
+    @IBOutlet private weak var scanImageView: UIImageView!
+    private var lineImageView: UIImageView!
+    private var timer: NSTimer!
+    private var upOrDown: Bool = false;
+    private var num: Int! = 0
     
     init(isFromWindow: Bool){
         super.init(nibName: "QRStartScanViewController", bundle: nil);

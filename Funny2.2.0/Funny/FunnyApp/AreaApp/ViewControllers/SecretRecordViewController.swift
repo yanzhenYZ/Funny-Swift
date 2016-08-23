@@ -11,11 +11,15 @@ import UIKit
 class SecretRecordViewController: SuperSecondViewController,UITableViewDataSource, UITableViewDelegate {
     
     var dataSource = [Array<AnyObject>]()
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        self.navigationController?.navigationBarHidden = false;
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBarHidden = false;
         
         let error: NSErrorPointer = nil;
         let exist = NSFileManager.defaultManager().fileExistsAtPath(SecretPathHeader);

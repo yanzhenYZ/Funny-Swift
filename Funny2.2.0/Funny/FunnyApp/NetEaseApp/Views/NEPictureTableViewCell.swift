@@ -10,9 +10,9 @@ import UIKit
 
 class NEPictureTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var onlyImageView: UIImageView!
-    @IBOutlet weak var subTitleLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var onlyImageView: UIImageView!
+    @IBOutlet private weak var subTitleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
     
     
     var model: NetEaseModel! {

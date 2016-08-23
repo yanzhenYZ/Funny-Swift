@@ -10,9 +10,9 @@ import UIKit
 
 class SinaPictureTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLab: UILabel!
-    @IBOutlet weak var onlyImageView: UIImageView!
-    @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet private weak var titleLab: UILabel!
+    @IBOutlet private weak var onlyImageView: UIImageView!
+    @IBOutlet private weak var subTitleLabel: UILabel!
     
     var model: SinaNewsModel! {
         didSet{

@@ -10,11 +10,10 @@ import UIKit
 
 class NEThreePicturesTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var leftImageView: UIImageView!
-    
-    @IBOutlet weak var rightImageView: UIImageView!
-    @IBOutlet weak var middleImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var leftImageView: UIImageView!
+    @IBOutlet private weak var rightImageView: UIImageView!
+    @IBOutlet private weak var middleImageView: UIImageView!
     
     var model: NetEaseModel! {
         didSet{

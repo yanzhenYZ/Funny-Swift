@@ -10,10 +10,10 @@ import UIKit
 
 class NoteShowViewController: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,NoteCellProtocol{
 
-    var dataSource = [NoteModel]()
-    var collectionView: UICollectionView!
-    var isEdit: Bool = false;
-    var itemBtn: UIButton!
+    private var dataSource = [NoteModel]()
+    private var collectionView: UICollectionView!
+    private var isEdit: Bool = false;
+    private var itemBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 

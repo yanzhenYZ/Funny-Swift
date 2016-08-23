@@ -10,9 +10,9 @@ import UIKit
 
 class AboutModifyAreaViewController: UIViewController,LockViewProtocol {
 
-    @IBOutlet weak var lockView: LockView!
-    var num: Int! = 0
-    var passordStr: String!
+    @IBOutlet private weak var lockView: LockView!
+    private var num: Int! = 0
+    private var passordStr: String!
     override func viewDidLoad() {
         super.viewDidLoad()
 

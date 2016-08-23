@@ -10,7 +10,7 @@ import UIKit
 
 class AboutManageViewController: UIViewController {
 
-    var lockView: NumLockView!
+    private var lockView: NumLockView!
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.managePasswordIsRight), name: PASSWORDISRIGHT, object: nil);

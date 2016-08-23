@@ -12,10 +12,10 @@ class NumLockView: UIView {
 
     var onlyOnePW: Bool = false
     var password: String!
-    var inputPasswordLabel: UILabel!
-    var smallView: UIView!
-    var btnView: UIView!
-    var btnsArray = [UIButton]()
+    private var inputPasswordLabel: UILabel!
+    private var smallView: UIView!
+    private var btnView: UIView!
+    private var btnsArray = [UIButton]()
     
     override init(frame: CGRect) {
         super.init(frame: CGRectMake(0, 0, WIDTH, HEIGHT));

@@ -16,11 +16,11 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
     var titleIndex: Int!
     var isModify: Bool! = false
     var keyBoardFrame: CGRect?
-    @IBOutlet weak var rowTextField: YZTextField!
-    @IBOutlet weak var companyTF: YZTextField!
-    @IBOutlet weak var accountTF: YZTextField!
-    @IBOutlet weak var passwordTF: YZTextField!
-    @IBOutlet weak var remarksTF: YZTextField!
+    @IBOutlet private weak var rowTextField: YZTextField!
+    @IBOutlet private weak var companyTF: YZTextField!
+    @IBOutlet private weak var accountTF: YZTextField!
+    @IBOutlet private weak var passwordTF: YZTextField!
+    @IBOutlet private weak var remarksTF: YZTextField!
     var textFields = [YZTextField]()
     
     override func viewDidLoad() {

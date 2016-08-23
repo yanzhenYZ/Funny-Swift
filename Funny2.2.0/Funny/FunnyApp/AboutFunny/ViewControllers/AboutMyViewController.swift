@@ -11,9 +11,9 @@ import UIKit
 let AIS_HEIGHT = CGFloat(350.5);
 class AboutMyViewController: SuperTableViewController{
     
-    var dataSource = [String]()
-    var tableHeaderView: UIView?
-    var headerImageView: UIImageView?
+    private var dataSource = [String]()
+    private var tableHeaderView: UIView?
+    private var headerImageView: UIImageView?
     
     override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated);

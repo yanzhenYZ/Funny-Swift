@@ -10,8 +10,8 @@ import UIKit
 
 class DrawPicturesViewController: SuperSecondViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DrawPictureImageViewProtocol{
 
-    @IBOutlet weak var paintView: DrawPicturePaintView!
-    var dpView: DrawPictureImageView!
+    @IBOutlet private weak var paintView: DrawPicturePaintView!
+    private var dpView: DrawPictureImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

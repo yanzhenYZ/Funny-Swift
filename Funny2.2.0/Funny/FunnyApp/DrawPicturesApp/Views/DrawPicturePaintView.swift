@@ -12,8 +12,8 @@ class DrawPicturePaintView: UIView {
 
     var lineWidth: CGFloat!
     var lineColor: UIColor!
-    var path: UIBezierPath!
-    var paths = [AnyObject]()
+    private var path: UIBezierPath!
+    private var paths = [AnyObject]()
     
     override func drawRect(rect: CGRect) {
         if paths.count > 0 {

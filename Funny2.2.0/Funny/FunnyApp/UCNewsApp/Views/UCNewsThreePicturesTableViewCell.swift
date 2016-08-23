@@ -10,11 +10,11 @@ import UIKit
 
 class UCNewsThreePicturesTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var middleImageView: UIImageView!
-    @IBOutlet weak var rightImageView: UIImageView!
-    @IBOutlet weak var bottomLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var leftImageView: UIImageView!
+    @IBOutlet private weak var middleImageView: UIImageView!
+    @IBOutlet private weak var rightImageView: UIImageView!
+    @IBOutlet private weak var bottomLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -15,8 +15,8 @@ protocol NoteCellProtocol : NSObjectProtocol{
 class NoteCollectionViewCell: UICollectionViewCell {
 
     weak var delegate: NoteCellProtocol?
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet private weak var timeLabel: UILabel!
+    @IBOutlet private weak var textView: UITextView!
     @IBOutlet weak var deleteBtn: UIButton!
     var model: NoteModel! {
         didSet{

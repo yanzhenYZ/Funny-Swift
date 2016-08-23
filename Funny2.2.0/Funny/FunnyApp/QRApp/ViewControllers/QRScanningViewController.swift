@@ -10,9 +10,9 @@ import UIKit
 
 class QRScanningViewController: UIViewController {
 
-    var transition: YZTransition!
-    @IBOutlet weak var openURLBtn: UIButton!
-    @IBOutlet weak var textView: UITextView!
+    private var transition: YZTransition!
+    @IBOutlet private weak var openURLBtn: UIButton!
+    @IBOutlet private weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -10,8 +10,8 @@ import UIKit
 
 class QRHeaderViewController: SuperSecondViewController {
 
-    var makeVC: QRMakeViewController!
-    var scanVC: QRScanningViewController!
+    private var makeVC: QRMakeViewController!
+    private var scanVC: QRScanningViewController!
     
     override func viewDidLoad() {
         self.configUI();

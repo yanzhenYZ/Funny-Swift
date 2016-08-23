@@ -10,8 +10,8 @@ import UIKit
 
 class AboutAboutViewController: UIViewController,UIViewControllerPreviewingDelegate {
 
-    @IBOutlet weak var versonLabel: UILabel!
-    @IBOutlet weak var aboutImageView: UIImageView!
+    @IBOutlet private weak var versonLabel: UILabel!
+    @IBOutlet private weak var aboutImageView: UIImageView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);

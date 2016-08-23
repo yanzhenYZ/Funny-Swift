@@ -11,7 +11,7 @@ import UIKit
 
 class SecretLockViewController: UIViewController,LockViewProtocol {
 
-    @IBOutlet weak var lockView: LockView!
+    @IBOutlet private weak var lockView: LockView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);

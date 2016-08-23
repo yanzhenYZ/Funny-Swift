@@ -10,8 +10,8 @@ import UIKit
 
 class QRMakeViewController: UIViewController,UITextViewDelegate {
 
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var QRImageView: UIImageView!
+    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var QRImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
 

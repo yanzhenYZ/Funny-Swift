@@ -10,10 +10,10 @@ import UIKit
 
 class UCNewsPictureTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var onlyImageView: UIImageView!
+    @IBOutlet private weak var onlyImageView: UIImageView!
     
-    @IBOutlet weak var bottomLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var bottomLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

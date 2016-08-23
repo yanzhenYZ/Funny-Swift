@@ -10,10 +10,10 @@ import UIKit
 
 class AboutMPViewController: UIViewController {
 
-    var segment: UISegmentedControl!
-    @IBOutlet weak var sureBtn: UIButton!
-    @IBOutlet weak var textField2: YZTextField!
-    @IBOutlet weak var textField1: YZTextField!
+    private var segment: UISegmentedControl!
+    @IBOutlet private weak var sureBtn: UIButton!
+    @IBOutlet private weak var textField2: YZTextField!
+    @IBOutlet private weak var textField1: YZTextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()

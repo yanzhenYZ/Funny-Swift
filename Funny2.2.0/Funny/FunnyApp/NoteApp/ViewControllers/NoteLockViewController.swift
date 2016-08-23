@@ -11,7 +11,7 @@ import UIKit
 
 class NoteLockViewController: SuperSecondViewController {
 
-    var lockView: NumLockView!
+    private var lockView: NumLockView!
     
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.notePasswordIsRight), name: PASSWORDISRIGHT, object: nil);
