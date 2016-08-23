@@ -10,9 +10,9 @@ import UIKit
 
 class VideoWindow: UIWindow {
 
-    var videoView: UIView?
-    var beginPoint: CGPoint!
-    var scale: CGFloat! = 1.0
+    private var videoView: UIView?
+    private var beginPoint: CGPoint!
+    private var scale: CGFloat! = 1.0
     
     override init(frame: CGRect) {
         super.init(frame: frame);

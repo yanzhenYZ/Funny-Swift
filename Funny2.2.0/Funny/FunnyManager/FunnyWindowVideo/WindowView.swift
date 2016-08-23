@@ -21,14 +21,13 @@ class WindowView: UIView, WindowLoadingViewProtocol {
     var progressView: UIProgressView!
     var playBtn: UIButton!
     var loadingView: WindowLoadingView!
-    private
-    var effectView: UIVisualEffectView!
-    var closeBtn: UIButton!
-    var topLineView: UIView!
-    var yzView: UIView!
-    var yzLayer: CALayer!
-    var layerDelegate: CALayerDelegate!
-    var beginPoint: CGPoint!
+    private var effectView: UIVisualEffectView!
+    private var closeBtn: UIButton!
+    private var topLineView: UIView!
+    private var yzView: UIView!
+    private var yzLayer: CALayer!
+    private var layerDelegate: CALayerDelegate!
+    private var beginPoint: CGPoint!
     
     override init(frame: CGRect) {
         super.init(frame: frame);

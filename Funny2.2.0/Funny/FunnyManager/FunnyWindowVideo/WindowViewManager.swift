@@ -11,13 +11,13 @@ import AVFoundation
 
 class WindowViewManager: NSObject, WindowViewProtocol {
 
-    var player: AVPlayer? = nil
-    var playerLayer: AVPlayerLayer?
-    var urlStr: String?
-    var isPlayEnd: Bool? = false;
-    var enterBackground: Bool = false
-    var isPause: Bool = false;
-    var isPlaying: Bool = false
+    private var player: AVPlayer? = nil
+    private var playerLayer: AVPlayerLayer?
+    private var urlStr: String?
+    private var isPlayEnd: Bool? = false;
+    private var enterBackground: Bool = false
+    private var isPause: Bool = false;
+    private var isPlaying: Bool = false
     
     func isWindowViewShow() ->Bool {
         return !self.windowView.hidden;
