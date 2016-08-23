@@ -10,9 +10,9 @@ import UIKit
 
 class ContentPictureViewController: ContentSuperViewController {
 
-    var cell: ContentPictureTableViewCell?
-    var commentsArray = [ContentPictureCommentModel]()
-    var dataSource = [ContentPictureGroupModel]()
+    private var cell: ContentPictureTableViewCell?
+    private var commentsArray = [ContentPictureCommentModel]()
+    private var dataSource = [ContentPictureGroupModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

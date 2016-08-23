@@ -10,7 +10,7 @@ import UIKit
 
 class WalfareTextViewController: WalfareSuperViewController {
 
-    var dataSource = [WalfareTextModel]()
+    private var dataSource = [WalfareTextModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

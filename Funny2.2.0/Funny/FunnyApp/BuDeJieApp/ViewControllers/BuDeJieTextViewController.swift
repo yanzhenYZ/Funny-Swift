@@ -10,7 +10,7 @@ import UIKit
 
 class BuDeJieTextViewController: BuDeJieSuperViewController {
 
-    var dataSource = [BuDeJieTextModel]()
+    private var dataSource = [BuDeJieTextModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
         

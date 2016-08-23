@@ -9,10 +9,10 @@
 import UIKit
 
 class ContentRecommendViewController: ContentSuperViewController,VideoPlayBtnActionDelegate{
-    var cell: ContentVideoTableViewCell?
-    var commentsMArray = [ContentVideoCommentsModel]()
-    var groupMArray = [ContentVideoModel]()
-    var currentCell :ContentVideoTableViewCell? = nil;
+    private var cell: ContentVideoTableViewCell?
+    private var commentsMArray = [ContentVideoCommentsModel]()
+    private var groupMArray = [ContentVideoModel]()
+    private var currentCell :ContentVideoTableViewCell? = nil;
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         if (currentCell != nil) {

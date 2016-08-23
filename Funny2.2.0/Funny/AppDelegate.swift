@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nvc = ExtentNavigationViewController(rootViewController:vc);
         window?.rootViewController = nvc;
         window?.makeKeyAndVisible();
-        
+        //
         WXApi.registerApp("wxe3eede5106905cd7");
         self.configUI();
         self.net();

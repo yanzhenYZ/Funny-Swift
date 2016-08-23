@@ -10,8 +10,8 @@ import UIKit
 
 class BuDeJieVideoViewController: BuDeJieSuperViewController,VideoPlayBtnActionDelegate {
 
-    var dataSource = [BuDeJieVideoModel]()
-    var currentCell :BuDeJieVideoTableViewCell? = nil;
+    private var dataSource = [BuDeJieVideoModel]()
+    private var currentCell :BuDeJieVideoTableViewCell? = nil;
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);

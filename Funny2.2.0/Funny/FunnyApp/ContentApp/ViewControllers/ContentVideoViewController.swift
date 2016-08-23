@@ -10,10 +10,10 @@ import UIKit
 
 class ContentVideoViewController: ContentSuperViewController,VideoPlayBtnActionDelegate {
 
-    var cell: ContentVideoTableViewCell?
-    var groupArray = [ContentVideoCommentsModel]()
-    var dataSource = [ContentVideoModel]()
-    var currentCell :ContentVideoTableViewCell? = nil;
+    private var cell: ContentVideoTableViewCell?
+    private var groupArray = [ContentVideoCommentsModel]()
+    private var dataSource = [ContentVideoModel]()
+    private var currentCell :ContentVideoTableViewCell? = nil;
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         if (currentCell != nil) {

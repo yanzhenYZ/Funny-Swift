@@ -10,8 +10,8 @@ import UIKit
 
 class WalfareVideoViewController: WalfareSuperViewController,VideoPlayBtnActionDelegate {
 
-    var dataSource = [WalfareVideoModel]()
-    var currentCell :WalfareVideoTableViewCell? = nil;
+    private var dataSource = [WalfareVideoModel]()
+    private var currentCell :WalfareVideoTableViewCell? = nil;
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);

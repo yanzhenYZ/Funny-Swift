@@ -10,9 +10,9 @@ import UIKit
 
 class WhatSomePicturesViewController: GifShowSuperViewController {
 
-    var maxTime: String?
-    var cell: SomeWhatPictureTableViewCell?
-    var dataSource = [SomeWhatPictureModel]()
+    private var maxTime: String?
+    private var cell: SomeWhatPictureTableViewCell?
+    private var dataSource = [SomeWhatPictureModel]()
     override func viewDidLoad() {
         maxTime = FunnyManager.manager.currentTime();
         super.viewDidLoad()

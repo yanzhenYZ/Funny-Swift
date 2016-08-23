@@ -9,11 +9,11 @@
 import UIKit
 
 class GifShowViewController: GifShowSuperViewController,VideoPlayBtnActionDelegate {
-    var dataSource = [GifShowVideoModel]()
-    var pushIndex: Int = 0
-    var pullIndex: Int = 0
-    var refres: Int = 0;
-    var currentCell :GifShowVideoTableViewCell? = nil;
+    private var dataSource = [GifShowVideoModel]()
+    private var pushIndex: Int = 0
+    private var pullIndex: Int = 0
+    private var refres: Int = 0;
+    private var currentCell :GifShowVideoTableViewCell? = nil;
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         if (currentCell != nil) {

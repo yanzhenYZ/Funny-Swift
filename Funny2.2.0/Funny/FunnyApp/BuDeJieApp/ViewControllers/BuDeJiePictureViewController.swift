@@ -10,8 +10,8 @@ import UIKit
 
 class BuDeJiePictureViewController: BuDeJieSuperViewController {
 
-    var cell: BuDeJiePictureTableViewCell?
-    var dataSource = [BuDeJiePictureModel]()
+    private var cell: BuDeJiePictureTableViewCell?
+    private var dataSource = [BuDeJiePictureModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

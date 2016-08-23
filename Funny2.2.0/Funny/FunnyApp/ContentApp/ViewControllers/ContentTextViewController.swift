@@ -10,9 +10,9 @@ import UIKit
 
 class ContentTextViewController: ContentSuperViewController {
 
-    var cell: ContentTextTableViewCell?
-    var dataGroup = [ContextTextGroupModel]()
-    var dataSource = [ContentTextModel]()
+    private var cell: ContentTextTableViewCell?
+    private var dataGroup = [ContextTextGroupModel]()
+    private var dataSource = [ContentTextModel]()
    
     override func viewDidLoad() {
         super.viewDidLoad()

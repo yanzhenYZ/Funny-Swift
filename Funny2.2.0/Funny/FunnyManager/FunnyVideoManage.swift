@@ -13,12 +13,12 @@ class FunnyVideoManage: NSObject {
    /**
     *曾经播放过视频
     */
-    var isPlayEnd: Bool? = false;
-    var player: AVPlayer? = nil;
-    var playerLayer: AVPlayerLayer?
-    var videoCell: VideoSuperTableViewCell?
-    var urlStr: String?
-    var enterBackground: Bool = false
+    private var isPlayEnd: Bool? = false;
+    private var player: AVPlayer? = nil;
+    private var playerLayer: AVPlayerLayer?
+    private var videoCell: VideoSuperTableViewCell?
+    private var urlStr: String?
+    private var enterBackground: Bool = false
     
     func playVideo(cell: VideoSuperTableViewCell, urlString: String) {
         if !self.startPlayNewAV(urlString, play: cell.playButton.selected) {
