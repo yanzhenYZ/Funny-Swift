@@ -122,11 +122,11 @@ class WindowViewManager: NSObject, WindowViewProtocol {
     func addNotifi(item: AVPlayerItem) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.playVideoEnd), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil);
         item.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.WillResignActive), name: UIApplicationWillResignActiveNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil);
     }
     
-    func WillResignActive() {
+    func didEnterBackground() {
         if self.player?.rate > 0 || isPlaying {
             self.player?.pause();
             enterBackground = true;

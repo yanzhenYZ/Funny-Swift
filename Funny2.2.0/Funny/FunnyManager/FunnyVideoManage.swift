@@ -115,7 +115,7 @@ class FunnyVideoManage: NSObject {
         
     }
 
-    func WillResignActive() {
+    func didEnterBackground() {
         if (self.player!.rate > 0) {
             self.player?.pause();
             self.willEnterBackground(true);
@@ -139,7 +139,7 @@ class FunnyVideoManage: NSObject {
     func addNotifi(item: AVPlayerItem) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.playVideoEnd), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil);
         item.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.WillResignActive), name: UIApplicationWillResignActiveNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didEnterBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil);
     }
 
