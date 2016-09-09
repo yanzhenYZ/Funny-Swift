@@ -8,7 +8,9 @@
 
 import UIKit
 
-let AIS_HEIGHT = CGFloat(350.5);
+private let AIS_HEIGHT: CGFloat = 300.5;
+private let ABOUT_ROWHEIGHT: CGFloat = 60.0;
+
 class AboutMyViewController: SuperTableViewController{
     
     private var dataSource = [String]()
@@ -33,7 +35,7 @@ class AboutMyViewController: SuperTableViewController{
         self.automaticallyAdjustsScrollViewInsets = false;
         self.view.backgroundColor = FunnyManager.manager.color(247, G: 247, B: 247);
         self.tableView.backgroundColor = UIColor.clearColor();
-        self.tableView.rowHeight = 63;
+        self.tableView.rowHeight = ABOUT_ROWHEIGHT;
         self.configUI();
         
     }
@@ -70,8 +72,11 @@ class AboutMyViewController: SuperTableViewController{
         }else if indexPath.row == 1 {
             vc = AboutManageViewController(nibName: "AboutManageViewController", bundle: nil);
         }else if indexPath.row == 2 {
+            vc = AboutSettingsViewController();
+        }
+        else if indexPath.row == 3 {
             vc = AboutDeclareViewController(nibName: "AboutDeclareViewController", bundle: nil);
-        }else if indexPath.row == 3 {
+        }else if indexPath.row == 4 {
             vc = AboutAboutViewController(nibName: "AboutAboutViewController", bundle: nil);
         }
         self.navigationController?.pushViewController(vc!, animated: true);
@@ -140,7 +145,7 @@ class AboutMyViewController: SuperTableViewController{
 //MARK: - UI
     private func configUI() {
         self.title = "我的";
-        dataSource = ["清除缓存","管理员","声明","关于"];
+        dataSource = ["清除缓存","管理员","设置","声明","关于"];
         
         let footerView = UIView(frame: CGRectMake(0, 0, WIDTH, 50));
         footerView.backgroundColor = UIColor.clearColor();

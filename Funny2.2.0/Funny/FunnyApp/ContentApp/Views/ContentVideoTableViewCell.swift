@@ -19,7 +19,7 @@ class ContentVideoTableViewCell: VideoSuperTableViewCell {
     override func configSuperSecondUI() {
         smallView = ContentOtherUserView(frame: CGRectMake(10.0, CGRectGetMaxY(mainImageView.frame)+10, WIDTH - 20.0, 0));
         self.contentView.addSubview(smallView);
-        self.noShare = true;
+//        self.noShare = true;
     }
     
     var groupModel: ContentVideoModel! {

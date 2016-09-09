@@ -17,6 +17,7 @@
 		9B1344CA1CC0B497000DE0CC /* CALayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1344C91CC0B497000DE0CC /* CALayerDelegate.swift */; };
 		9B1BB1DB1D17DD7F0033334D /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1BB1D81D17DD7F0033334D /* AwesomeMenu.m */; };
 		9B1BB1DC1D17DD7F0033334D /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1BB1DA1D17DD7F0033334D /* AwesomeMenuItem.m */; };
+		9B1F8BAB1D828FE50047A1CB /* AboutSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F8BAA1D828FE50047A1CB /* AboutSettingsViewController.swift */; };
 		9B350ADE1D26784D009699DF /* YZActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B350ADD1D26784D009699DF /* YZActionSheet.swift */; };
 		9B350E371D2B5981009699DF /* Super3DTouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B350E351D2B5981009699DF /* Super3DTouchViewController.swift */; };
 		9B350E381D2B5981009699DF /* Super3DTouchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B350E361D2B5981009699DF /* Super3DTouchViewController.xib */; };
@@ -248,6 +249,7 @@
 		9B1BB1D81D17DD7F0033334D /* AwesomeMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenu.m; sourceTree = "<group>"; };
 		9B1BB1D91D17DD7F0033334D /* AwesomeMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenuItem.h; sourceTree = "<group>"; };
 		9B1BB1DA1D17DD7F0033334D /* AwesomeMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenuItem.m; sourceTree = "<group>"; };
+		9B1F8BAA1D828FE50047A1CB /* AboutSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutSettingsViewController.swift; sourceTree = "<group>"; };
 		9B350ADD1D26784D009699DF /* YZActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YZActionSheet.swift; sourceTree = "<group>"; };
 		9B350E351D2B5981009699DF /* Super3DTouchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Super3DTouchViewController.swift; sourceTree = "<group>"; };
 		9B350E361D2B5981009699DF /* Super3DTouchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Super3DTouchViewController.xib; sourceTree = "<group>"; };
@@ -548,6 +550,14 @@
 				9B1BB1DA1D17DD7F0033334D /* AwesomeMenuItem.m */,
 			);
 			path = AwesomeMenu;
+			sourceTree = "<group>";
+		};
+		9B1F8BA71D828EF40047A1CB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9B1F8BAA1D828FE50047A1CB /* AboutSettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		9B350ADC1D26784D009699DF /* YZSheetAction */ = {
@@ -1044,11 +1054,12 @@
 		9B76DE5D1CB4AA560008A487 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9B1F8BA71D828EF40047A1CB /* Settings */,
+				9B7578F21CB6408E00FC75D2 /* AboutMyViewController.swift */,
 				9B7578EA1CB6408E00FC75D2 /* AboutAboutViewController.swift */,
 				9B7578EB1CB6408E00FC75D2 /* AboutAboutViewController.xib */,
 				9B7578EC1CB6408E00FC75D2 /* AboutDeclareViewController.swift */,
 				9B7578ED1CB6408E00FC75D2 /* AboutDeclareViewController.xib */,
-				9B7578F21CB6408E00FC75D2 /* AboutMyViewController.swift */,
 				9B7578DD1CB63EEB00FC75D2 /* ManageViewControllers */,
 				9B350E3B1D2B5B69009699DF /* Verson3DTouchViewController.swift */,
 			);
@@ -1070,12 +1081,12 @@
 			children = (
 				9B76DE821CB4BF390008A487 /* SuperViewController.swift */,
 				9B76DE7D1CB4BF390008A487 /* SuperSecondViewController.swift */,
-				9B76DE7F1CB4BF390008A487 /* SuperTableViewController.xib */,
 				9B76DE801CB4BF390008A487 /* SuperThirdViewController.swift */,
 				9B76DE811CB4BF390008A487 /* SuperThirdViewController.xib */,
 				9B49AA401D1BBD7800D3A1A6 /* SuperForthViewController.swift */,
 				9B76DE7B1CB4BF390008A487 /* ExtentNavigationViewController.swift */,
 				9B76DE7C1CB4BF390008A487 /* ExtentTabBarViewController.swift */,
+				9B76DE7F1CB4BF390008A487 /* SuperTableViewController.xib */,
 				9B76DE7E1CB4BF390008A487 /* SuperTableViewController.swift */,
 				9B350E351D2B5981009699DF /* Super3DTouchViewController.swift */,
 				9B350E361D2B5981009699DF /* Super3DTouchViewController.xib */,
@@ -1529,6 +1540,7 @@
 				9B7578781CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.swift in Sources */,
 				9BEFADA41CB3B9F60076472B /* SDWebImageManager.m in Sources */,
 				9B7578981CB622FF00FC75D2 /* SecretNewItemViewController.swift in Sources */,
+				9B1F8BAB1D828FE50047A1CB /* AboutSettingsViewController.swift in Sources */,
 				9B76DEB01CB504440008A487 /* GifShowSuperViewController.swift in Sources */,
 				9B7578DC1CB6345200FC75D2 /* QRImageTool.m in Sources */,
 				9B1BB1DB1D17DD7F0033334D /* AwesomeMenu.m in Sources */,
