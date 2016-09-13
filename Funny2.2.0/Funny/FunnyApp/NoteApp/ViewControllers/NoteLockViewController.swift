@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import LocalAuthentication
 
 class NoteLockViewController: SuperSecondViewController {
 
@@ -36,6 +36,27 @@ class NoteLockViewController: SuperSecondViewController {
         }
         self.view.addSubview(lockView);
         super.viewDidLoad()
+        
+        let context = LAContext();
+        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) {
+            let vc = NoteShowViewController(nibName: "NoteShowViewController", bundle: nil);
+            unowned let blockSelf = self
+            context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: NSLocalizedString("Touch ID密码", comment: ""), reply: { (success, error) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        blockSelf.navigationController?.pushViewController(vc, animated: true);
+                    })
+                }else{
+                    if Int32(error!.code) == kLAErrorUserFallback {
+                        //
+                    }else if Int32(error!.code) == kLAErrorUserCancel {
+                        //手动取消
+                    }else{
+                        //失败
+                    }
+                }
+            })
+        }
     }
 
     func notePasswordIsRight() {
