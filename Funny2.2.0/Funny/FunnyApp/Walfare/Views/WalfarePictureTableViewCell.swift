@@ -13,7 +13,7 @@ class WalfarePictureTableViewCell: WalfareSuperTableViewCell {
     var mainImageView: UIImageView!
     
     override func configSecondSuperUI() {
-        mainImageView = UIImageView(frame: CGRectMake(10, CGRectGetMaxY(mainTextLabel.frame)+5, WIDTH-20, 0));
+        mainImageView = UIImageView(frame: CGRect(x: 10, y: mainTextLabel.frame.maxY+5, width: WIDTH-20, height: 0));
         self.contentView.addSubview(mainImageView);
     }
     
@@ -25,14 +25,14 @@ class WalfarePictureTableViewCell: WalfareSuperTableViewCell {
             let newSize = FunnyManager.manager.LabelSize(model.wbody, width: WIDTH - 20, font: ContentMainTextFont);
             mainTextLabel.height = newSize.height;
             
-            mainImageView.y = CGRectGetMaxY(mainTextLabel.frame) + 4.0;
+            mainImageView.y = mainTextLabel.frame.maxY + 4.0;
             let scale=CGFloat(Int(model.wpic_m_width)!) / CGFloat(WIDTH-20);
             let height=CGFloat(Int(model.wpic_m_height)!) / scale;
             mainImageView.height = height;
-            mainImageView.sd_setImageWithURL(NSURL(string: model.wpic_middle), placeholderImage: BigImage);
+            mainImageView.sd_setImage(with: URL(string: model.wpic_middle), placeholderImage: BigImage);
             
-            backView.height = CGRectGetMaxY(mainImageView.frame) + 4;
-            rowHeight = CGRectGetMaxY(mainImageView.frame) + 8;
+            backView.height = mainImageView.frame.maxY + 4;
+            rowHeight = mainImageView.frame.maxY + 8;
             
         }
     }

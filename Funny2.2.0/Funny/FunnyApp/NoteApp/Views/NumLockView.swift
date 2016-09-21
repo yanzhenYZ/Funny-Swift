@@ -12,26 +12,26 @@ class NumLockView: UIView {
 
     var onlyOnePW: Bool = false
     var password: String!
-    private var inputPasswordLabel: UILabel!
-    private var smallView: UIView!
-    private var btnView: UIView!
-    private var btnsArray = [UIButton]()
+    fileprivate var inputPasswordLabel: UILabel!
+    fileprivate var smallView: UIView!
+    fileprivate var btnView: UIView!
+    fileprivate var btnsArray = [UIButton]()
     
     override init(frame: CGRect) {
-        super.init(frame: CGRectMake(0, 0, WIDTH, HEIGHT));
+        super.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT));
         self.configUI();
     }
 
-    func numBtnClick(btn: UIButton) {
-        UIView.animateWithDuration(0.05, animations: { () -> Void in
+    func numBtnClick(_ btn: UIButton) {
+        UIView.animate(withDuration: 0.05, animations: { () -> Void in
             btn.backgroundColor = FunnyManager.manager.color(115.0, G: 90.0, B: 113.0);
-        }) { (finished) -> Void in
-            btn.backgroundColor = UIColor.clearColor();
-        }
+        }, completion: { (finished) -> Void in
+            btn.backgroundColor = UIColor.clear;
+        }) 
         self.addBtn(btn);
     }
     
-    private func addBtn(btn: UIButton) {
+    fileprivate func addBtn(_ btn: UIButton) {
         btnsArray.append(btn);
         if btnsArray.count > 4 {
             btnsArray.removeLast();
@@ -48,7 +48,7 @@ class NumLockView: UIView {
         }
      }
     
-    private func isPasswordRight() {
+    fileprivate func isPasswordRight() {
         var str = "";
         for i: Int in 0 ..< btnsArray.count {
             let btn = btnsArray[i];
@@ -76,17 +76,17 @@ class NumLockView: UIView {
         
         if str == pStr1 || str == pStr2 {
             self.backToIdentity();
-            NSNotificationCenter.defaultCenter().postNotificationName(PASSWORDISRIGHT, object: nil);
+            NotificationCenter.default.post(name: Notification.Name(rawValue: PASSWORDISRIGHT), object: nil);
             
         }else{
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                self.smallView.transform = CGAffineTransformMakeTranslation(-20, 0);
+            UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                self.smallView.transform = CGAffineTransform(translationX: -20, y: 0);
             }, completion: { (finished) -> Void in
-                self.smallView.transform = CGAffineTransformMakeTranslation(40, 0);
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    self.smallView.transform = CGAffineTransformIdentity;
+                self.smallView.transform = CGAffineTransform(translationX: 40, y: 0);
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                    self.smallView.transform = CGAffineTransform.identity;
                     }, completion: { (finished) -> Void in
-                        NSNotificationCenter.defaultCenter().postNotificationName(PASSWORDISWRONG, object: nil);
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: PASSWORDISWRONG), object: nil);
                         self.backToIdentity();
                 })
             })
@@ -95,61 +95,61 @@ class NumLockView: UIView {
     }
     
     func backToIdentity() {
-        self.btnsArray.removeAll(keepCapacity: false);
+        self.btnsArray.removeAll(keepingCapacity: false);
         for i: Int in 0 ..< smallView.subviews.count {
             let small = smallView.subviews[i];
-            small.backgroundColor = UIColor.clearColor();
+            small.backgroundColor = UIColor.clear;
         }
     }
 //MARK: - UI
-    private func configUI() {
-        inputPasswordLabel = UILabel(frame: CGRectMake(0, 80, 109, 25));
-        inputPasswordLabel.center = CGPointMake(WIDTH / 2, 92.5);
+    fileprivate func configUI() {
+        inputPasswordLabel = UILabel(frame: CGRect(x: 0, y: 80, width: 109, height: 25));
+        inputPasswordLabel.center = CGPoint(x: WIDTH / 2, y: 92.5);
         inputPasswordLabel.text = "输入密码";
-        inputPasswordLabel.textAlignment = NSTextAlignment.Center;
-        inputPasswordLabel.textColor = UIColor.whiteColor();
-        inputPasswordLabel.font = UIFont.systemFontOfSize(18.0);
-        inputPasswordLabel.backgroundColor = UIColor.clearColor();
+        inputPasswordLabel.textAlignment = NSTextAlignment.center;
+        inputPasswordLabel.textColor = UIColor.white;
+        inputPasswordLabel.font = UIFont.systemFont(ofSize: 18.0);
+        inputPasswordLabel.backgroundColor = UIColor.clear;
         self.addSubview(inputPasswordLabel);
         
-        smallView = UIView(frame: CGRectMake(0, 125, 140, 30));
-        smallView.center = CGPointMake(WIDTH / 2, 140);
-        smallView.backgroundColor = UIColor.clearColor();
+        smallView = UIView(frame: CGRect(x: 0, y: 125, width: 140, height: 30));
+        smallView.center = CGPoint(x: WIDTH / 2, y: 140);
+        smallView.backgroundColor = UIColor.clear;
         let smallViewWH: CGFloat! = 14.0;
         for i: Int in 0 ..< 4 {
             let startX = 12 + 34.0 * CGFloat(i);
-            let sonView = UIView(frame: CGRectMake(startX, 8, smallViewWH, smallViewWH));
+            let sonView = UIView(frame: CGRect(x: startX, y: 8, width: smallViewWH, height: smallViewWH));
             sonView.layer.masksToBounds = true;
             sonView.layer.cornerRadius = sonView.width / 2;
             sonView.layer.borderWidth = 1.2;
-            sonView.layer.borderColor = UIColor.blueColor().CGColor;
+            sonView.layer.borderColor = UIColor.blue.cgColor;
             smallView.addSubview(sonView);
         }
         self.addSubview(smallView);
         
         //space = 20;
         let BtnWH: CGFloat! = (WIDTH - 120.0) / 3;
-        btnView = UIView(frame: CGRectMake(0, 180, WIDTH, 4 * BtnWH + 60.0));
-        btnView.backgroundColor = UIColor.clearColor();
+        btnView = UIView(frame: CGRect(x: 0, y: 180, width: WIDTH, height: 4 * BtnWH + 60.0));
+        btnView.backgroundColor = UIColor.clear;
         for j: Int in 0 ..< 10 {
             let startX = 40 + (BtnWH + 20) * CGFloat(j % 3);
             let startY = (BtnWH + 20) * CGFloat(j / 3);
             var btn:UIButton! = nil;
             if j == 9 {
-                btn = UIButton(frame: CGRectMake(0, startY, BtnWH, BtnWH));
-                btn.center = CGPointMake(WIDTH / 2, startY + BtnWH / 2);
-                btn.setTitle("0", forState: UIControlState.Normal);
+                btn = UIButton(frame: CGRect(x: 0, y: startY, width: BtnWH, height: BtnWH));
+                btn.center = CGPoint(x: WIDTH / 2, y: startY + BtnWH / 2);
+                btn.setTitle("0", for: UIControlState());
             }else{
-                btn = UIButton(frame: CGRectMake(startX, startY, BtnWH, BtnWH));
-                btn.setTitle(String(j + 1), forState: UIControlState.Normal);
+                btn = UIButton(frame: CGRect(x: startX, y: startY, width: BtnWH, height: BtnWH));
+                btn.setTitle(String(j + 1), for: UIControlState());
             }
-            btn.addTarget(self, action: #selector(self.numBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
-            btn.backgroundColor = UIColor.clearColor();
-            btn.titleLabel?.font = UIFont.systemFontOfSize(30.0);
+            btn.addTarget(self, action: #selector(self.numBtnClick(_:)), for: UIControlEvents.touchUpInside);
+            btn.backgroundColor = UIColor.clear;
+            btn.titleLabel?.font = UIFont.systemFont(ofSize: 30.0);
             btn.layer.masksToBounds = true;
             btn.layer.cornerRadius = BtnWH / 2;
             btn.layer.borderWidth = 2;
-            btn.layer.borderColor = UIColor.blueColor().CGColor;
+            btn.layer.borderColor = UIColor.blue.cgColor;
             btnView.addSubview(btn);
         }
         self.addSubview(btnView);
@@ -165,16 +165,16 @@ class NumLockView: UIView {
 //必须设置
     var smallViewBorderColor: UIColor! {
         didSet{
-            for (_,value) in smallView.subviews.enumerate() {
-                value.layer.borderColor = smallViewBorderColor.CGColor;
+            for (_,value) in smallView.subviews.enumerated() {
+                value.layer.borderColor = smallViewBorderColor.cgColor;
             }
         }
     }
     
     var btnBorderColor: UIColor! {
         didSet{
-            for (_,value) in btnView.subviews.enumerate() {
-               value.layer.borderColor = btnBorderColor.CGColor;
+            for (_,value) in btnView.subviews.enumerated() {
+               value.layer.borderColor = btnBorderColor.cgColor;
             }
         }
     }

@@ -11,29 +11,29 @@ import LocalAuthentication
 
 class SecretLockViewController: UIViewController,LockViewProtocol {
 
-    @IBOutlet private weak var lockView: LockView!
+    @IBOutlet fileprivate weak var lockView: LockView!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        self.navigationController?.navigationBarHidden = true;
+        self.navigationController?.isNavigationBarHidden = true;
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         lockView.delegate = self;
         let context = LAContext();
-        if context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil) {
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
             let vc = SecretRecordViewController(nibName: "SecretRecordViewController", bundle: nil);
             unowned let blockSelf = self
-            context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: NSLocalizedString("Touch ID密码", comment: ""), reply: { (success, error) in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: NSLocalizedString("Touch ID密码", comment: ""), reply: { (success, error) in
                 if success {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         blockSelf.navigationController?.pushViewController(vc, animated: true);
                     })
                 }else{
-                    if Int32(error!.code) == kLAErrorUserFallback {
+                    if Int32(error!._code) == kLAErrorUserFallback {
                         //
-                    }else if Int32(error!.code) == kLAErrorUserCancel {
+                    }else if Int32(error!._code) == kLAErrorUserCancel {
                         //手动取消
                     }else{
                         //失败
@@ -44,10 +44,10 @@ class SecretLockViewController: UIViewController,LockViewProtocol {
         
     }
     
-    func lockPasswordString(password: String) {
+    func lockPasswordString(_ password: String) {
         
         var pw1: String? = nil;
-        let pwStr = NSUserDefaults.standardUserDefaults().objectForKey(AREAPASSWORD) as? String;
+        let pwStr = UserDefaults.standard.object(forKey: AREAPASSWORD) as? String;
         if pwStr != nil {
             pw1 = pwStr;
         } else {
@@ -65,9 +65,9 @@ class SecretLockViewController: UIViewController,LockViewProtocol {
     }
     
     
-    @IBAction func exitBtn(sender: AnyObject) {
+    @IBAction func exitBtn(_ sender: AnyObject) {
         
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
     
 }

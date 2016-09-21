@@ -22,9 +22,9 @@ class BuDeJieVideoTableViewCell: VideoSuperTableViewCell {
             
             let scale = CGFloat(Int(model.width)!) / (WIDTH - 20.0);
             let height = CGFloat(Int(model.height)!) / scale;
-            mainImageView.sd_setImageWithURL(NSURL(string: model.bimageuri), placeholderImage: BigImage);
-            mainImageView.frame = CGRectMake(10.0, _userTextLabel.maxY + 10.0, WIDTH - 20.0, height);
-            playButton.frame = CGRectMake(mainImageView.maxX - 70, mainImageView.maxY - 62, 70, 62);
+            mainImageView.sd_setImage(with: URL(string: model.bimageuri), placeholderImage: BigImage);
+            mainImageView.frame = CGRect(x: 10.0, y: _userTextLabel.maxY + 10.0, width: WIDTH - 20.0, height: height);
+            playButton.frame = CGRect(x: mainImageView.maxX - 70, y: mainImageView.maxY - 62, width: 70, height: 62);
             progressView.y = mainImageView.maxY;
             _backView.height = mainImageView.maxY + 6.0;
             rowHeight = mainImageView.maxY + 10.0;

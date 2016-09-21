@@ -11,7 +11,7 @@ import UIKit
 class Super3DTouchViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
-    private var text: String!
+    fileprivate var text: String!
     init() {
         super.init(nibName: "Super3DTouchViewController", bundle: nil);
     }

@@ -12,7 +12,7 @@ class SuperWebViewController: UIViewController,UIWebViewDelegate {
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
-    var delayTime: NSTimeInterval!
+    var delayTime: TimeInterval!
     var urlString: String?
     
     init(urlStr: String){
@@ -30,31 +30,32 @@ class SuperWebViewController: UIViewController,UIWebViewDelegate {
         
         self.title = "Y&Z";
         delayTime = 0.0;
-        let url = NSURL(string: urlString!);
-        let request = NSURLRequest(URL: url!);
+        let url = URL(string: urlString!);
+        let request = URLRequest(url: url!);
         webView.loadRequest(request);
     }
 //MARK: - UIWebViewDelegate
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         //        let str = webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('html')[0].outerHTML;");
         //        print(str);
         if strlen(self.jsString()) > 0 {
-            webView.stringByEvaluatingJavaScriptFromString(self.jsString());
+            webView.stringByEvaluatingJavaScript(from: self.jsString());
         }
-        self.performSelector(#selector(self.show), withObject: nil, afterDelay: delayTime);
+        self.perform(#selector(self.showAnimating), with: nil, afterDelay: delayTime);
+        //self.perform(#selector(self.show()), with: nil, afterDelay: delayTime);
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-        self.show();
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        self.showAnimating();
     }
     
     func jsString() ->String{
         return "";
     }
     
-    func show(){
+    func showAnimating(){
         indicator.stopAnimating();
-        webView.hidden = false;
+        webView.isHidden = false;
     }
 
 }

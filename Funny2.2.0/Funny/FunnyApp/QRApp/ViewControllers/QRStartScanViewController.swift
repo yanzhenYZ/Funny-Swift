@@ -13,19 +13,19 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
     
     var isFromWindow: Bool = false
     var scanVC: QRScanningViewController!
-    private var session: AVCaptureSession!
-    @IBOutlet private weak var scanImageView: UIImageView!
-    private var lineImageView: UIImageView!
-    private var timer: NSTimer!
-    private var upOrDown: Bool = false;
-    private var num: Int! = 0
+    fileprivate var session: AVCaptureSession!
+    @IBOutlet fileprivate weak var scanImageView: UIImageView!
+    fileprivate var lineImageView: UIImageView!
+    fileprivate var timer: Timer!
+    fileprivate var upOrDown: Bool = false;
+    fileprivate var num: Int! = 0
     
     init(isFromWindow: Bool){
         super.init(nibName: "QRStartScanViewController", bundle: nil);
         self.isFromWindow = isFromWindow;
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         self.startScanning();
     }
@@ -33,12 +33,12 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        lineImageView = UIImageView(frame: CGRectMake(0, 0, 220, 2));
-        lineImageView.center = CGPointMake(WIDTH / 2, scanImageView.y);
+        lineImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 220, height: 2));
+        lineImageView.center = CGPoint(x: WIDTH / 2, y: scanImageView.y);
         lineImageView.image = UIImage(named: "line");
         self.view.addSubview(lineImageView);
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: #selector(self.lineMove), userInfo: nil, repeats: true);
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.lineMove), userInfo: nil, repeats: true);
         
         
     }
@@ -46,13 +46,13 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
     func lineMove() {
         if !upOrDown {
             num = num + 1;
-            lineImageView.frame = CGRectMake(lineImageView.x, scanImageView.y + 2.0 * CGFloat(num), 220.0, 2.0);
+            lineImageView.frame = CGRect(x: lineImageView.x, y: scanImageView.y + 2.0 * CGFloat(num), width: 220.0, height: 2.0);
             if 2 * num == 300 {
                 upOrDown = true;
             }
         } else {
             num = num - 1;
-            lineImageView.frame = CGRectMake(lineImageView.x, scanImageView.y + 2.0 * CGFloat(num), 220.0, 2.0);
+            lineImageView.frame = CGRect(x: lineImageView.x, y: scanImageView.y + 2.0 * CGFloat(num), width: 220.0, height: 2.0);
             if 2 * num == 0 {
                 upOrDown = false;
             }
@@ -61,13 +61,13 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
     
     
     
-    private func startScanning() {
+    fileprivate func startScanning() {
         
-        let device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo);
+        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo);
         
         let input = try! AVCaptureDeviceInput.init(device: device);
         let outPut = AVCaptureMetadataOutput();
-        outPut.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue());
+        outPut.setMetadataObjectsDelegate(self, queue: DispatchQueue.main);
         
         session = AVCaptureSession();
         session.sessionPreset = AVCaptureSessionPresetHigh;
@@ -81,34 +81,34 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
         outPut.metadataObjectTypes = [AVMetadataObjectTypeQRCode];
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: session);
-        previewLayer.frame = CGRectMake(10, 10, 280, 280);
+        previewLayer?.frame = CGRect(x: 10, y: 10, width: 280, height: 280);
         //scanImageView.layer.insertSublayer(previewLayer, atIndex: 0);
-        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        previewLayer.backgroundColor = UIColor.redColor().CGColor;
+        previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        previewLayer?.backgroundColor = UIColor.red.cgColor;
         
         print(scanImageView.frame)
-        scanImageView.layer.addSublayer(previewLayer);
+        scanImageView.layer.addSublayer(previewLayer!);
         
         session.startRunning();
     }
     
 //MARK: - delegate
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         
         if metadataObjects.count > 0 {
             let metadataObject = metadataObjects[0] as! AVMetadataMachineReadableCodeObject;
             if isFromWindow {
                 if FunnyManager.manager.isNetURL(metadataObject.stringValue) {
-                    UIApplication.sharedApplication().openURL(NSURL(string: metadataObject.stringValue)!);
+                    UIApplication.shared.openURL(URL(string: metadataObject.stringValue)!);
                 }else{
                     self.session.stopRunning();
                     self.timer.invalidate();
-                    let alert = UIAlertController(title: "扫描结果", message: metadataObject.stringValue, preferredStyle: UIAlertControllerStyle.Alert);
-                    let cancel = UIAlertAction(title: "确定", style: UIAlertActionStyle.Cancel, handler: { (cancel) in
-                        self.dismissViewControllerAnimated(true, completion: nil);
+                    let alert = UIAlertController(title: "扫描结果", message: metadataObject.stringValue, preferredStyle: UIAlertControllerStyle.alert);
+                    let cancel = UIAlertAction(title: "确定", style: UIAlertActionStyle.cancel, handler: { (cancel) in
+                        self.dismiss(animated: true, completion: nil);
                     });
                     alert.addAction(cancel);
-                    self.presentViewController(alert, animated: true, completion: nil);
+                    self.present(alert, animated: true, completion: nil);
                     return;
                 }
             }else{
@@ -118,11 +118,11 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
         
         session.stopRunning();
         timer.invalidate();
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+    @IBAction func cancel(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: { () -> Void in
             self.timer.invalidate();
         })
     }

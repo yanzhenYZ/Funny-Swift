@@ -11,16 +11,16 @@ import UIKit
 class WalfareGirlTableViewCell: WalfarePictureTableViewCell {
 
     override func configSecondSuperUI() {
-        mainImageView = UIImageView(frame: CGRectMake(10, CGRectGetMaxY(mainTextLabel.frame)+5, WIDTH-20, 0));
-        mainImageView.userInteractionEnabled = true;
+        mainImageView = UIImageView(frame: CGRect(x: 10, y: mainTextLabel.frame.maxY+5, width: WIDTH-20, height: 0));
+        mainImageView.isUserInteractionEnabled = true;
         self.contentView.addSubview(mainImageView);
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longGestureAction(_:)));
         longGesture.minimumPressDuration = 1.0;
         mainImageView.addGestureRecognizer(longGesture);
     }
     
-    func longGestureAction(tap: UILongPressGestureRecognizer) {
-        if tap.state != UIGestureRecognizerState.Began {
+    func longGestureAction(_ tap: UILongPressGestureRecognizer) {
+        if tap.state != UIGestureRecognizerState.began {
             return;
         }
         let tapView = tap.view as! UIImageView;

@@ -10,7 +10,7 @@ import UIKit
 
 class WalfareTextViewController: WalfareSuperViewController {
 
-    private var dataSource = [WalfareTextModel]()
+    fileprivate var dataSource = [WalfareTextModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,28 +18,29 @@ class WalfareTextViewController: WalfareSuperViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.NetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: HTML, finished: { (responseObj) -> Void in
-            let itemsArray = responseObj["items"] as! Array<AnyObject>;
-            if refresh == MJRefresh.Pull && self.dataSource.count > 0 {
+        NetManager.requestData(withURLString: urlString, contentType: HTML, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let itemsArray = responseDic["items"] as! Array<AnyObject>;
+            if refresh == MJRefresh.pull && self.dataSource.count > 0 {
                 let firstModel = self.dataSource[0];
                 let testDict = itemsArray[0] as! Dictionary<String,AnyObject>;
                 let testModel = WalfareTextModel();
-                testModel.setValuesForKeysWithDictionary(testDict);
+                testModel.setValuesForKeys(testDict);
                 if firstModel.wbody != testModel.wbody {
-                    for (_,value) in itemsArray.enumerate() {
+                    for (_,value) in itemsArray.enumerated() {
                         let model = WalfareTextModel();
                         let valueDict = value as! Dictionary<String,AnyObject>;
-                        model.setValuesForKeysWithDictionary(valueDict);
-                        self.dataSource.insert(model, atIndex: 0);
+                        model.setValuesForKeys(valueDict);
+                        self.dataSource.insert(model, at: 0);
                     }
                 }
              }else{
-                for (_,value) in itemsArray.enumerate() {
+                for (_,value) in itemsArray.enumerated() {
                     let model = WalfareTextModel();
                     let valueDict = value as! Dictionary<String,AnyObject>;
-                    model.setValuesForKeysWithDictionary(valueDict);
+                    model.setValuesForKeys(valueDict);
                     self.dataSource.append(model);
                 }
             }
@@ -52,29 +53,29 @@ class WalfareTextViewController: WalfareSuperViewController {
         }
     }
  //MARK: tableView
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
 override     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.TextCell(tableView, indexPath: indexPath);
     }
     
-    private func TextCell(tableView: UITableView, indexPath: NSIndexPath) -> WalfareTextTableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("WalfareTextCell") as? WalfareTextTableViewCell;
+    fileprivate func TextCell(_ tableView: UITableView, indexPath: IndexPath) -> WalfareTextTableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "WalfareTextCell") as? WalfareTextTableViewCell;
         if cell == nil {
-            cell = WalfareTextTableViewCell(style:.Default, reuseIdentifier:"WalfareTextCell");
+            cell = WalfareTextTableViewCell(style:.default, reuseIdentifier:"WalfareTextCell");
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         return cell!;
 
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return self.TextCell(tableView, indexPath: indexPath).rowHeight;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 

@@ -9,12 +9,12 @@
 import UIKit
 
 protocol DrawPictureImageViewProtocol : NSObjectProtocol{
-    func drawImage(image: UIImage)
+    func drawImage(_ image: UIImage)
 }
 class DrawPictureImageView: UIView,UIGestureRecognizerDelegate {
 
     weak var delegate: DrawPictureImageViewProtocol?
-    private var imageView: UIImageView!
+    fileprivate var imageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -23,17 +23,17 @@ class DrawPictureImageView: UIView,UIGestureRecognizerDelegate {
     }
     
     func drawInPictureStart() {
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.imageView.alpha = 0.3;
-        }) { (finished) -> Void in
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
+        }, completion: { (finished) -> Void in
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 self.imageView.alpha = 1;
             }, completion: { (finished) -> Void in
                 let newImage = FunnyManager.manager.ScreenShot(self);
                 self.delegate?.drawImage(newImage);
                 self.removeFromSuperview();
             })
-        }
+        }) 
     }
     
     var image: UIImage! {
@@ -42,9 +42,9 @@ class DrawPictureImageView: UIView,UIGestureRecognizerDelegate {
         }
     }
 //MARK: - gesture
-    private func configUI(){
+    fileprivate func configUI(){
         imageView = UIImageView(frame: self.bounds);
-        imageView.userInteractionEnabled = true;
+        imageView.isUserInteractionEnabled = true;
         self.addSubview(imageView);
         
         let pin = UIPinchGestureRecognizer(target: self, action: #selector(self.pinAction(_:)));
@@ -56,17 +56,17 @@ class DrawPictureImageView: UIView,UIGestureRecognizerDelegate {
     }
     
     
-    func pinAction(pin: UIPinchGestureRecognizer) {
-        imageView.transform = CGAffineTransformScale(imageView.transform, pin.scale, pin.scale);
+    func pinAction(_ pin: UIPinchGestureRecognizer) {
+        imageView.transform = imageView.transform.scaledBy(x: pin.scale, y: pin.scale);
         pin.scale = 1;
     }
     
-    func rotation(rotation: UIRotationGestureRecognizer) {
-        imageView.transform=CGAffineTransformRotate(imageView.transform, rotation.rotation);
+    func rotation(_ rotation: UIRotationGestureRecognizer) {
+        imageView.transform=imageView.transform.rotated(by: rotation.rotation);
         rotation.rotation = 0;
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true;
     }
     

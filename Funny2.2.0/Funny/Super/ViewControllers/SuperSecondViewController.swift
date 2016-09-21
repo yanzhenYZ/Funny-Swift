@@ -10,7 +10,7 @@ import UIKit
 
 class SuperSecondViewController: SuperViewController,AwesomeMenuDelegate,YZActionSheetDelegate {
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         self.navigationController?.hidesBottomBarWhenPushed = false;
     }
@@ -21,7 +21,7 @@ class SuperSecondViewController: SuperViewController,AwesomeMenuDelegate,YZActio
         self.configSuperSecondUI();
     }
     
-    private func shotPartViewOrNot(rect: CGRect,shot: Bool) {
+    fileprivate func shotPartViewOrNot(_ rect: CGRect,shot: Bool) {
         self.shotPartView.removeFromSuperview();
         if shot {
             let image = FunnyManager.manager.ScreenShotPart(self.view, rect: rect);
@@ -38,10 +38,10 @@ class SuperSecondViewController: SuperViewController,AwesomeMenuDelegate,YZActio
 //    }()
     
     lazy var shotPartView:SuperScreenPartShotView = {
-        let shotPartView=SuperScreenPartShotView(frame: CGRectMake(0.0, 64.0, WIDTH, HEIGHT-64.0-49.0))
+        let shotPartView=SuperScreenPartShotView(frame: CGRect(x: 0.0, y: 64.0, width: WIDTH, height: HEIGHT-64.0-49.0))
         shotPartView.initBlock{ (rect, shot) -> Void in
-            let frame = CGRectMake(rect.origin.x, rect.origin.y
-                + 64, rect.size.width, rect.size.height);
+            let frame = CGRect(x: rect.origin.x, y: rect.origin.y
+                + 64, width: rect.size.width, height: rect.size.height);
             self.shotPartViewOrNot(frame,shot: shot);
         }
         return shotPartView;
@@ -59,7 +59,7 @@ class SuperSecondViewController: SuperViewController,AwesomeMenuDelegate,YZActio
         
     }
     
-    private func configSuperSecondUI() {
+    fileprivate func configSuperSecondUI() {
         
         let block:(String) -> AwesomeMenuItem = { imageName in
             let menuItemImage = UIImage(named: "menu_bg");
@@ -68,22 +68,22 @@ class SuperSecondViewController: SuperViewController,AwesomeMenuDelegate,YZActio
         let menuItems = [block("shotPart"),block("home"),block("exit"),block("my")];
         let startItem =  AwesomeMenuItem(image: UIImage(named: "menu"), highlightedImage: nil, contentImage: UIImage(named: "plus"), highlightedContentImage: UIImage(named: "plusHL"));
         
-        let menu = AwesomeMenu(frame: CGRectMake(0, HEIGHT - 200 - 49, 200, 200), startItem: startItem, menuItems: menuItems);
-        menu.menuWholeAngle = CGFloat(M_PI_2);
-        menu.startPoint = CGPointMake(20, 180);
-        menu.delegate = self;
-        menu.alpha = 0.5;
-        self.view.addSubview(menu);
+        let menu = AwesomeMenu(frame: CGRect(x: 0, y: HEIGHT - 200 - 49, width: 200, height: 200), start: startItem, menuItems: menuItems);
+        menu?.menuWholeAngle = CGFloat(M_PI_2);
+        menu?.startPoint = CGPoint(x: 20, y: 180);
+        menu?.delegate = self;
+        menu?.alpha = 0.5;
+        self.view.addSubview(menu!);
     }
 //MARK: Awesome delegate
-    func awesomeMenu(menu: AwesomeMenu!, didSelectIndex idx: Int) {
+    func awesomeMenu(_ menu: AwesomeMenu!, didSelect idx: Int) {
         menu.alpha = 0.5;
         if 0 == idx {
             self.view.addSubview(self.shotPartView);
         }else if 1 == idx {
-            self.dismissViewControllerAnimated(true, completion: nil);
+            self.dismiss(animated: true, completion: nil);
         }else if 2 == idx {
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate;
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
             self.sheet.showInView(appDelegate.window);
         }else if 3 == idx {
             let vc = AboutMyViewController();
@@ -92,17 +92,17 @@ class SuperSecondViewController: SuperViewController,AwesomeMenuDelegate,YZActio
         }
     }
 //MARK: YZActionSheet delegate
-    func yzActionSheet(actionSheet: YZActionSheet!, index: Int) {
+    func yzActionSheet(_ actionSheet: YZActionSheet!, index: Int) {
         if index == 1 {
             exit(0);
         }
     }
     
-    func awesomeMenuWillAnimateOpen(menu: AwesomeMenu!) {
+    func awesomeMenuWillAnimateOpen(_ menu: AwesomeMenu!) {
         menu.alpha = 1.0;
     }
     
-    func awesomeMenuWillAnimateClose(menu: AwesomeMenu!) {
+    func awesomeMenuWillAnimateClose(_ menu: AwesomeMenu!) {
         menu.alpha = 0.5;
     }
 }

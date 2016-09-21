@@ -14,7 +14,6 @@
 		9B0A5ADE1D06C8CD00A45729 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A5AD51D06C8CD00A45729 /* AFURLResponseSerialization.m */; };
 		9B0A5ADF1D06C8CD00A45729 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A5AD71D06C8CD00A45729 /* AFURLSessionManager.m */; };
 		9B0A5AE01D06C8CD00A45729 /* NetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A5AD91D06C8CD00A45729 /* NetManager.m */; };
-		9B1344CA1CC0B497000DE0CC /* CALayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1344C91CC0B497000DE0CC /* CALayerDelegate.swift */; };
 		9B1BB1DB1D17DD7F0033334D /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1BB1D81D17DD7F0033334D /* AwesomeMenu.m */; };
 		9B1BB1DC1D17DD7F0033334D /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1BB1DA1D17DD7F0033334D /* AwesomeMenuItem.m */; };
 		9B1F8BAB1D828FE50047A1CB /* AboutSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F8BAA1D828FE50047A1CB /* AboutSettingsViewController.swift */; };
@@ -26,6 +25,7 @@
 		9B3512911D34DC22009699DF /* YZPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35128E1D34DC22009699DF /* YZPresentationController.swift */; };
 		9B3512921D34DC22009699DF /* YZTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35128F1D34DC22009699DF /* YZTransition.swift */; };
 		9B49AA411D1BBD7800D3A1A6 /* SuperForthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49AA401D1BBD7800D3A1A6 /* SuperForthViewController.swift */; };
+		9B6CCB4C1D8E323100D32EFA /* LayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CCB4B1D8E323100D32EFA /* LayerDelegate.swift */; };
 		9B75777C1CB5EFF800FC75D2 /* BuDeJieTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75777B1CB5EFF800FC75D2 /* BuDeJieTabBarViewController.swift */; };
 		9B75777E1CB5F01B00FC75D2 /* BuDeJieSuperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75777D1CB5F01B00FC75D2 /* BuDeJieSuperViewController.swift */; };
 		9B7577831CB5F06B00FC75D2 /* BuDeJiePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75777F1CB5F06B00FC75D2 /* BuDeJiePictureViewController.swift */; };
@@ -244,7 +244,6 @@
 		9B0A5AD71D06C8CD00A45729 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		9B0A5AD81D06C8CD00A45729 /* NetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetManager.h; sourceTree = "<group>"; };
 		9B0A5AD91D06C8CD00A45729 /* NetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetManager.m; sourceTree = "<group>"; };
-		9B1344C91CC0B497000DE0CC /* CALayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CALayerDelegate.swift; sourceTree = "<group>"; };
 		9B1BB1D71D17DD7F0033334D /* AwesomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenu.h; sourceTree = "<group>"; };
 		9B1BB1D81D17DD7F0033334D /* AwesomeMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenu.m; sourceTree = "<group>"; };
 		9B1BB1D91D17DD7F0033334D /* AwesomeMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenuItem.h; sourceTree = "<group>"; };
@@ -258,6 +257,7 @@
 		9B35128E1D34DC22009699DF /* YZPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YZPresentationController.swift; sourceTree = "<group>"; };
 		9B35128F1D34DC22009699DF /* YZTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YZTransition.swift; sourceTree = "<group>"; };
 		9B49AA401D1BBD7800D3A1A6 /* SuperForthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperForthViewController.swift; sourceTree = "<group>"; };
+		9B6CCB4B1D8E323100D32EFA /* LayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerDelegate.swift; sourceTree = "<group>"; };
 		9B75777B1CB5EFF800FC75D2 /* BuDeJieTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuDeJieTabBarViewController.swift; sourceTree = "<group>"; };
 		9B75777D1CB5F01B00FC75D2 /* BuDeJieSuperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuDeJieSuperViewController.swift; sourceTree = "<group>"; };
 		9B75777F1CB5F06B00FC75D2 /* BuDeJiePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuDeJiePictureViewController.swift; sourceTree = "<group>"; };
@@ -1345,7 +1345,7 @@
 				9B76DEAB1CB4E2470008A487 /* FunnyVideoManage.swift */,
 				9BEFADBA1CB3C51D0076472B /* FunnyManager.swift */,
 				9BEFADBC1CB3C5B40076472B /* FunnyEnumAndMacro.swift */,
-				9B1344C91CC0B497000DE0CC /* CALayerDelegate.swift */,
+				9B6CCB4B1D8E323100D32EFA /* LayerDelegate.swift */,
 				9B86C08B1D4B233D00F29B35 /* FunnyWindowVideo */,
 			);
 			path = FunnyManager;
@@ -1414,19 +1414,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = YZ;
 				TargetAttributes = {
 					9BEFACF01CB3B5380076472B = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = M7R5TQ8AQY;
+						LastSwiftMigration = 0800;
 					};
 					9BEFAD041CB3B5390076472B = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9BEFACF01CB3B5380076472B;
 					};
 					9BEFAD0F1CB3B5390076472B = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9BEFACF01CB3B5380076472B;
 					};
 				};
@@ -1529,7 +1532,6 @@
 				9B76DE991CB4DC430008A487 /* TextSuperTableViewCell.swift in Sources */,
 				9B76DE851CB4BF390008A487 /* ExtentTabBarViewController.swift in Sources */,
 				9B7578161CB5FFED00FC75D2 /* WalfareVideoViewController.swift in Sources */,
-				9B1344CA1CC0B497000DE0CC /* CALayerDelegate.swift in Sources */,
 				9B7578711CB61E4900FC75D2 /* SinaNewsModel.swift in Sources */,
 				9B0A5ADE1D06C8CD00A45729 /* AFURLResponseSerialization.m in Sources */,
 				9B7578531CB60D4A00FC75D2 /* NetEaseHeadLineViewController.swift in Sources */,
@@ -1601,6 +1603,7 @@
 				9B75778D1CB5F0B900FC75D2 /* BuDeJieTextTableViewCell.swift in Sources */,
 				9B7578571CB60D4A00FC75D2 /* NetEaseSuperViewController.swift in Sources */,
 				9B7578151CB5FFED00FC75D2 /* WalfareTextViewController.swift in Sources */,
+				9B6CCB4C1D8E323100D32EFA /* LayerDelegate.swift in Sources */,
 				9B7578961CB622FF00FC75D2 /* SecretLockViewController.swift in Sources */,
 				9BEFADAC1CB3B9F60076472B /* UIView+WebCacheOperation.m in Sources */,
 				9B75784B1CB60CDD00FC75D2 /* NetEaseTabBarViewController.swift in Sources */,
@@ -1724,8 +1727,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1769,8 +1774,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1789,6 +1796,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1809,6 +1817,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.Funny;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Funny/Funny-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1828,6 +1837,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.Funny;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Funny/Funny-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1839,6 +1849,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.FunnyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Funny.app/Funny";
 			};
 			name = Debug;
@@ -1851,6 +1862,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.FunnyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Funny.app/Funny";
 			};
 			name = Release;
@@ -1862,6 +1874,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.FunnyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Funny;
 			};
 			name = Debug;
@@ -1873,6 +1886,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.FunnyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Funny;
 			};
 			name = Release;

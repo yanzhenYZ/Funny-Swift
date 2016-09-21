@@ -41,7 +41,7 @@ class GifShowVideoModel: NSObject {
     var main_mv_url: String!
     /**        时间       */
     var timestamp: NSNumber!
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }
@@ -53,7 +53,7 @@ class GifShowOutModel: NSObject {
     var pcursor: NSNumber!
     var result: NSNumber!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }

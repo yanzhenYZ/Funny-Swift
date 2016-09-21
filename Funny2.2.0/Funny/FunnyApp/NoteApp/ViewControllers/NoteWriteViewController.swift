@@ -12,7 +12,7 @@ class NoteWriteViewController: UIViewController {
 
     var noteShowVC: NoteShowViewController!
     var isModify: Bool = false
-    var indexPath: NSIndexPath!
+    var indexPath: IndexPath!
     var noteModel: NoteModel!
     
     @IBOutlet weak var textView: UITextView!
@@ -23,7 +23,7 @@ class NoteWriteViewController: UIViewController {
         if isModify {
             textView.text = noteModel.noteTitle;
         }
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(self.saveButtonClick));
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.saveButtonClick));
         self.textView.becomeFirstResponder();
     }
 
@@ -40,14 +40,14 @@ class NoteWriteViewController: UIViewController {
                 model.noteTime = self.noteTimeString();
                 noteShowVC.addNewItemToShowVC(model);
             }
-            self.navigationController?.popViewControllerAnimated(true);
+            self.navigationController!.popViewController(animated: true);
         }
     }
     
-    private func noteTimeString() ->String {
-        let format = NSDateFormatter();
+    fileprivate func noteTimeString() ->String {
+        let format = DateFormatter();
         format.dateFormat = "dd/MM HH:mm";
-        return format.stringFromDate(NSDate());
+        return format.string(from: Date());
     }
     
 }

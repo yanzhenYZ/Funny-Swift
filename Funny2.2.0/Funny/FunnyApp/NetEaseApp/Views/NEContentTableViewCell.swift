@@ -25,19 +25,19 @@ class NEContentTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = UITableViewCellSelectionStyle.None;
+        self.selectionStyle = UITableViewCellSelectionStyle.none;
         self.backgroundColor = FunnyManager.manager.color(246.0, G: 246.0, B: 246.0);
         self.configUI();
     }
 
-    private func configUI() {
-        backView = UIView(frame: CGRectMake(10, 10, WIDTH-20, 0));
-        backView.backgroundColor = UIColor.whiteColor();
+    fileprivate func configUI() {
+        backView = UIView(frame: CGRect(x: 10, y: 10, width: WIDTH-20, height: 0));
+        backView.backgroundColor = UIColor.white;
         self.contentView.addSubview(backView);
         
-        mainTextLabel = UILabel(frame: CGRectMake(5, 5, WIDTH-30, 0));
+        mainTextLabel = UILabel(frame: CGRect(x: 5, y: 5, width: WIDTH-30, height: 0));
         mainTextLabel.numberOfLines = 0;
-        mainTextLabel.font = UIFont.systemFontOfSize(ContentMainTextFont);
+        mainTextLabel.font = UIFont.systemFont(ofSize: ContentMainTextFont);
         backView.addSubview(mainTextLabel);
     }
     

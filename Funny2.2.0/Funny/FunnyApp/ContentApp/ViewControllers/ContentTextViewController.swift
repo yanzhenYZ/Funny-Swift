@@ -10,49 +10,50 @@ import UIKit
 
 class ContentTextViewController: ContentSuperViewController {
 
-    private var cell: ContentTextTableViewCell?
-    private var dataGroup = [ContextTextGroupModel]()
-    private var dataSource = [ContentTextModel]()
+    fileprivate var cell: ContentTextTableViewCell?
+    fileprivate var dataGroup = [ContextTextGroupModel]()
+    fileprivate var dataSource = [ContentTextModel]()
    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.getNetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let dataDict = responseObj["data"] as! Dictionary<String,AnyObject>;
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let dataDict = responseDic["data"] as! Dictionary<String,AnyObject>;
             let outModel = ContextTextOutModel();
-            outModel.setValuesForKeysWithDictionary(dataDict);
-            if baseView == nil && refresh == MJRefresh.Nomal {
-                self.minTime = String(outModel.min_time.intValue);
-                self.maxTime = String(outModel.max_time.intValue);
-            }else if baseView != nil && refresh != MJRefresh.Pull {
-                self.minTime = String(outModel.min_time.intValue);
+            outModel.setValuesForKeys(dataDict);
+            if baseView == nil && refresh == MJRefresh.nomal {
+                self.minTime = String(outModel.min_time.int32Value);
+                self.maxTime = String(outModel.max_time.int32Value);
+            }else if baseView != nil && refresh != MJRefresh.pull {
+                self.minTime = String(outModel.min_time.int32Value);
             }else{
-                self.maxTime = String(outModel.max_time.intValue);
+                self.maxTime = String(outModel.max_time.int32Value);
             }
             
             let dataArray = dataDict["data"] as! Array<AnyObject>;
-            for (_, value) in dataArray.enumerate() {
+            for (_, value) in dataArray.enumerated() {
                 let type = value["type"] as! NSNumber;
-                if type.intValue == 5 {
+                if type.int32Value == 5 {
                     continue;
                 }
                 let valueDict = value["group"] as! Dictionary<String,AnyObject>;
                 let groupModel = ContextTextGroupModel();
-                groupModel.setValuesForKeysWithDictionary(valueDict);
+                groupModel.setValuesForKeys(valueDict);
                 let commentsArray = value["comments"] as! Array<AnyObject>;
                 let textModel = ContentTextModel();
                 if commentsArray.count > 0 {
                     let commentsD = commentsArray[0] as! Dictionary<String,AnyObject>;
-                    textModel.setValuesForKeysWithDictionary(commentsD);
+                    textModel.setValuesForKeys(commentsD);
                 }else{
                     textModel.text = NOTEXT;
                 }
-                if refresh == MJRefresh.Pull {
-                    self.dataGroup.insert(groupModel, atIndex: 0);
-                    self.dataSource.insert(textModel, atIndex: 0);
+                if refresh == MJRefresh.pull {
+                    self.dataGroup.insert(groupModel, at: 0);
+                    self.dataSource.insert(textModel, at: 0);
                 }else{
                     self.dataGroup.append(groupModel);
                     self.dataSource.append(textModel);
@@ -65,10 +66,10 @@ class ContentTextViewController: ContentSuperViewController {
         }
     }
     
-    private func getNetURL(refresh: MJRefresh) -> String {
-        if refresh == MJRefresh.Nomal {
+    fileprivate func getNetURL(_ refresh: MJRefresh) -> String {
+        if refresh == MJRefresh.nomal {
             return ContextTextHeaderURL + FunnyManager.manager.currentTime() + ContextTextTailUrl;
-        }else if refresh == MJRefresh.Pull {
+        }else if refresh == MJRefresh.pull {
             return ContextTextHeaderURL + self.maxTime! + ContextTextTailUrl;
         }else {
             return ConTentTextFooterURL + minTime! + ConTentTextTailerURL;
@@ -76,38 +77,38 @@ class ContentTextViewController: ContentSuperViewController {
     }
     
     //MARK: - tableView
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.TextCell(tableView, indexPath: indexPath);
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let textCell = self.TextCell(tableView, indexPath: indexPath);
         return textCell.rowHeight;
     }
     
-    func TextCell(tableView: UITableView,indexPath: NSIndexPath) ->ContentTextTableViewCell {
-        cell = tableView.dequeueReusableCellWithIdentifier("ContentTextCell") as?ContentTextTableViewCell;
+    func TextCell(_ tableView: UITableView,indexPath: IndexPath) ->ContentTextTableViewCell {
+        cell = tableView.dequeueReusableCell(withIdentifier: "ContentTextCell") as?ContentTextTableViewCell;
         if cell == nil {
-            cell = ContentTextTableViewCell(style:.Default, reuseIdentifier:"ContentTextCell");
+            cell = ContentTextTableViewCell(style:.default, reuseIdentifier:"ContentTextCell");
         }
-        cell?.groupModel = self.dataGroup[indexPath.row];
-        let textModel = self.dataSource[indexPath.row] as ContentTextModel;
+        cell?.groupModel = self.dataGroup[(indexPath as NSIndexPath).row];
+        let textModel = self.dataSource[(indexPath as NSIndexPath).row] as ContentTextModel;
         if textModel.text == NOTEXT {
-            cell?.smallView.hidden = true;
+            cell?.smallView.isHidden = true;
         }else{
-            cell?.smallView.hidden = false;
+            cell?.smallView.isHidden = false;
             cell?.textModel = textModel;
         }
         return cell!;
     }
     
     override
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let model = self.dataGroup[indexPath.row];
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.dataGroup[(indexPath as NSIndexPath).row];
         let vc = ContentWebViewController(urlStr: model.share_url);
         vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true);

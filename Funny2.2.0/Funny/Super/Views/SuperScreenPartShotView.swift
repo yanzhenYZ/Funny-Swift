@@ -7,8 +7,28 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-typealias ScreenShotPartBlock = (rect: CGRect, shot: Bool) -> Void
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
+
+typealias ScreenShotPartBlock = (_ rect: CGRect, _ shot: Bool) -> Void
 
 class SuperScreenPartShotView: UIView {
     var block: ScreenShotPartBlock?
@@ -21,76 +41,76 @@ class SuperScreenPartShotView: UIView {
         
     }
 
-    private func configUI() {
+    fileprivate func configUI() {
         self.prepareShapeLayer();
         self.prepareUI();
         let pan=UIPanGestureRecognizer(target: self, action: #selector(self.panAction(_:)));
         self.addGestureRecognizer(pan);
     }
     
-    private func prepareShapeLayer() {
+    fileprivate func prepareShapeLayer() {
         shapeLayer=CAShapeLayer();
         shapeLayer?.lineWidth=2.0;
-        shapeLayer?.strokeColor=UIColor.redColor().CGColor;
-        shapeLayer?.fillColor=UIColor.grayColor().colorWithAlphaComponent(0.15).CGColor;
+        shapeLayer?.strokeColor=UIColor.red.cgColor;
+        shapeLayer?.fillColor=UIColor.gray.withAlphaComponent(0.15).cgColor;
         shapeLayer?.lineDashPattern=[5,5];
-        shotRect = CGRectInset(self.bounds, 20.0, 150.0);
-        let path=CGPathCreateWithRect(shotRect!, nil);
+        shotRect = self.bounds.insetBy(dx: 20.0, dy: 150.0);
+        let path=CGPath(rect: shotRect!, transform: nil);
         shapeLayer?.path=path;
         self.layer.addSublayer(shapeLayer!);
     
     }
     
-    func panAction(pan: UIPanGestureRecognizer) {
+    func panAction(_ pan: UIPanGestureRecognizer) {
         //static var startPoint
-        if pan.state == UIGestureRecognizerState.Began{
+        if pan.state == UIGestureRecognizerState.began{
             shapeLayer?.path=nil;
-            startPoint=pan.locationInView(self);
+            startPoint=pan.location(in: self);
             if startPoint?.x <= 20.0 {
                 startPoint?.x=1.0;
             }
             
-        }else if pan.state == UIGestureRecognizerState.Changed
+        }else if pan.state == UIGestureRecognizerState.changed
         {
-            let currentPoint=pan.locationInView(self);
+            let currentPoint=pan.location(in: self);
             let x=startPoint!.x;
             let y=startPoint!.y;
-            shotRect=CGRectMake(CGFloat(x), CGFloat(y), CGFloat(currentPoint.x)-CGFloat(x), CGFloat(currentPoint.y)-CGFloat(y));
-            let path=CGPathCreateWithRect(shotRect!, nil);
+            shotRect=CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(currentPoint.x)-CGFloat(x), height: CGFloat(currentPoint.y)-CGFloat(y));
+            let path=CGPath(rect: shotRect!, transform: nil);
             shapeLayer?.path=path;
         }
     }
     
     func cancelBtnClick() {
-        block!(rect: CGRectZero, shot: false);
+        block!(CGRect.zero, false);
     }
     
     func sureBtnAction() {
 
-        let myRect=CGRectMake(shotRect!.origin.x, shotRect!.origin.y, shotRect!.size.width, shotRect!.size.height)
-        block!(rect: myRect, shot: true);
+        let myRect=CGRect(x: shotRect!.origin.x, y: shotRect!.origin.y, width: shotRect!.size.width, height: shotRect!.size.height)
+        block!(myRect, true);
     }
     
-    func initBlock(myBlock: ScreenShotPartBlock?){
+    func initBlock(_ myBlock: ScreenShotPartBlock?){
         block=myBlock;
     }
     
-    private func prepareUI() {
-        let smallView=UIView(frame: CGRectMake(10.0, self.bounds.size.height-35.0, WIDTH-20, 35.0));
-        smallView.backgroundColor=UIColor.redColor();
+    fileprivate func prepareUI() {
+        let smallView=UIView(frame: CGRect(x: 10.0, y: self.bounds.size.height-35.0, width: WIDTH-20, height: 35.0));
+        smallView.backgroundColor=UIColor.red;
         smallView.layer.cornerRadius=5.0;
         self.addSubview(smallView);
         //
-        let sureBtn=UIButton(frame: CGRectMake(self.bounds.size.width-60.0, self.bounds.size.height-30.0, 40.0, 25.0));
-        sureBtn.setTitle("确定", forState: UIControlState.Normal);
-        sureBtn.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal);
-        sureBtn.addTarget(self, action: #selector(self.sureBtnAction), forControlEvents: UIControlEvents.TouchUpInside);
+        let sureBtn=UIButton(frame: CGRect(x: self.bounds.size.width-60.0, y: self.bounds.size.height-30.0, width: 40.0, height: 25.0));
+        sureBtn.setTitle("确定", for: UIControlState());
+        sureBtn.setTitleColor(UIColor.blue, for: UIControlState());
+        sureBtn.addTarget(self, action: #selector(self.sureBtnAction), for: UIControlEvents.touchUpInside);
         self.addSubview(sureBtn);
         
-        let cancelBtn=UIButton(frame: CGRectMake(20.0, self.bounds.size.height-30.0, 40.0, 25.0));
-        cancelBtn.setTitle("取消", forState: UIControlState.Normal);
-        cancelBtn.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal);
-        cancelBtn.addTarget(self, action: #selector(self.cancelBtnClick), forControlEvents: UIControlEvents.TouchUpInside);
+        let cancelBtn=UIButton(frame: CGRect(x: 20.0, y: self.bounds.size.height-30.0, width: 40.0, height: 25.0));
+        cancelBtn.setTitle("取消", for: UIControlState());
+        cancelBtn.setTitleColor(UIColor.blue, for: UIControlState());
+        cancelBtn.addTarget(self, action: #selector(self.cancelBtnClick), for: UIControlEvents.touchUpInside);
         self.addSubview(cancelBtn);
     }
     

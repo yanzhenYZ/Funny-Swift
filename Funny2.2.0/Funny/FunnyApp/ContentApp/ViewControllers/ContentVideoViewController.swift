@@ -10,14 +10,14 @@ import UIKit
 
 class ContentVideoViewController: ContentSuperViewController,VideoPlayBtnActionDelegate {
 
-    private var cell: ContentVideoTableViewCell?
-    private var groupArray = [ContentVideoCommentsModel]()
-    private var dataSource = [ContentVideoModel]()
-    private var currentCell :ContentVideoTableViewCell? = nil;
-    override func viewWillDisappear(animated: Bool) {
+    fileprivate var cell: ContentVideoTableViewCell?
+    fileprivate var groupArray = [ContentVideoCommentsModel]()
+    fileprivate var dataSource = [ContentVideoModel]()
+    fileprivate var currentCell :ContentVideoTableViewCell? = nil;
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
         if (currentCell != nil) {
-            if currentCell?.playButton.hidden == true {
+            if currentCell?.playButton.isHidden == true {
                 FunnyVideoManage.shareVideoManage.tableViewReload();
             }
         }
@@ -30,12 +30,12 @@ class ContentVideoViewController: ContentSuperViewController,VideoPlayBtnActionD
     }
     
 //MARK: - playVideo
-    func playVideoStart(button: UIButton) {
+    func playVideoStart(_ button: UIButton) {
         currentCell = button.superview?.superview as? ContentVideoTableViewCell;
-        let indexPath = tableView.indexPathForCell(currentCell!);
-        let currentM = dataSource[indexPath!.row];
+        let indexPath = tableView.indexPath(for: currentCell!);
+        let currentM = dataSource[(indexPath! as NSIndexPath).row];
         if WindowViewManager.shareWindowVideoManage.isWindowViewShow() {
-            currentCell?.playButton.selected = false;
+            currentCell?.playButton.isSelected = false;
             WindowViewManager.shareWindowVideoManage.videoPlayWithVideoUrlString(currentM.url);
         }else{
             FunnyVideoManage.shareVideoManage.playVideo(currentCell!, urlString: currentM.url);
@@ -43,40 +43,41 @@ class ContentVideoViewController: ContentSuperViewController,VideoPlayBtnActionD
         
     }
     
-    func playVideoOnWindow(videoCell: VideoSuperTableViewCell) {
+    func playVideoOnWindow(_ videoCell: VideoSuperTableViewCell) {
         currentCell = videoCell as? ContentVideoTableViewCell;
-        let indexPath = tableView.indexPathForCell(videoCell);
-        let currentM = dataSource[indexPath!.row];
+        let indexPath = tableView.indexPath(for: videoCell);
+        let currentM = dataSource[(indexPath! as NSIndexPath).row];
         FunnyVideoManage.shareVideoManage.tableViewReload();
         WindowViewManager.shareWindowVideoManage.videoPlayWithVideoUrlString(currentM.url);
     }
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.getNetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let dataDict = responseObj["data"] as! Dictionary<String,AnyObject>;
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let dataDict = responseDic["data"] as! Dictionary<String,AnyObject>;
             let dataModel = ContentVideoDataModel();
-            dataModel.setValuesForKeysWithDictionary(dataDict);
-            if (baseView == nil && MJRefresh.Nomal == refresh) {
-                self.minTime = String(dataModel.min_time.intValue);
-                self.maxTime = String(dataModel.max_time.intValue);
-            }else if (baseView != nil && refresh != MJRefresh.Pull){
-                self.minTime = String(dataModel.min_time.intValue);
+            dataModel.setValuesForKeys(dataDict);
+            if (baseView == nil && MJRefresh.nomal == refresh) {
+                self.minTime = String(dataModel.min_time.int32Value);
+                self.maxTime = String(dataModel.max_time.int32Value);
+            }else if (baseView != nil && refresh != MJRefresh.pull){
+                self.minTime = String(dataModel.min_time.int32Value);
             }else{
-                self.maxTime = String(dataModel.max_time.intValue);
+                self.maxTime = String(dataModel.max_time.int32Value);
             }
             
             let dataArray = dataDict["data"] as! Array<AnyObject>;
-            for (_, value) in dataArray.enumerate() {
+            for (_, value) in dataArray.enumerated() {
                 let type = value["type"] as! NSNumber;
-                if type.intValue == 5 {
+                if type.int32Value == 5 {
                     continue;
                 }
                 let commentsArray = value["comments"] as! Array<AnyObject>;
                 let commentsModel = ContentVideoCommentsModel();
                 if commentsArray.count > 0 {
                     let commentsD = commentsArray[0] as! Dictionary<String,AnyObject>;
-                    commentsModel.setValuesForKeysWithDictionary(commentsD);
+                    commentsModel.setValuesForKeys(commentsD);
                 }else{
                     commentsModel.text = NOTEXT;
                 }
@@ -105,9 +106,9 @@ class ContentVideoViewController: ContentSuperViewController,VideoPlayBtnActionD
                 let videoListArray = videoDict["url_list"] as! Array<AnyObject>;
                 groupModel.url=videoListArray[0]["url"] as! String;
                 
-                if refresh == MJRefresh.Pull {
-                    self.groupArray.insert(commentsModel, atIndex: 0);
-                    self.dataSource.insert(groupModel, atIndex: 0);
+                if refresh == MJRefresh.pull {
+                    self.groupArray.insert(commentsModel, at: 0);
+                    self.dataSource.insert(groupModel, at: 0);
                 }else{
                     self.groupArray.append(commentsModel);
                     self.dataSource.append(groupModel);
@@ -120,52 +121,52 @@ class ContentVideoViewController: ContentSuperViewController,VideoPlayBtnActionD
         }
     }
     
-    private func getNetURL(refresh: MJRefresh) -> String {
-        if refresh == MJRefresh.Nomal {
+    fileprivate func getNetURL(_ refresh: MJRefresh) -> String {
+        if refresh == MJRefresh.nomal {
             return ConTentVideoMaxHeadURL + FunnyManager.manager.currentTime() + ContentVideoMaxFootURL;
-        }else if refresh == MJRefresh.Pull {
+        }else if refresh == MJRefresh.pull {
             return ConTentVideoMaxHeadURL + self.maxTime! + ContentVideoMaxFootURL;
         }else {
             return ContentVideoMinHeadURL + minTime! + ContentVideoMinFootURL;
         }
     }
     //MARK: - tableView
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.VideoCell(tableView, indexPath: indexPath);
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let videoCell = self.VideoCell(tableView, indexPath: indexPath);
         return videoCell.rowHeight;
     }
     
-    func VideoCell(tableView: UITableView, indexPath: NSIndexPath) ->ContentVideoTableViewCell {
-        cell = tableView.dequeueReusableCellWithIdentifier("ContentRecommentCell") as?ContentVideoTableViewCell;
+    func VideoCell(_ tableView: UITableView, indexPath: IndexPath) ->ContentVideoTableViewCell {
+        cell = tableView.dequeueReusableCell(withIdentifier: "ContentRecommentCell") as?ContentVideoTableViewCell;
         if cell == nil {
-            cell = ContentVideoTableViewCell(style:.Default, reuseIdentifier:"ContentRecommentCell");
+            cell = ContentVideoTableViewCell(style:.default, reuseIdentifier:"ContentRecommentCell");
             cell!.delegate = self;
         }
-        cell!.groupModel = dataSource[indexPath.row];
-        let commentModel = groupArray[indexPath.row];
+        cell!.groupModel = dataSource[(indexPath as NSIndexPath).row];
+        let commentModel = groupArray[(indexPath as NSIndexPath).row];
         if commentModel.text == NOTEXT {
-            cell!.smallView.hidden = true;
+            cell!.smallView.isHidden = true;
         }else{
-            cell!.smallView.hidden = false;
+            cell!.smallView.isHidden = false;
             cell!.commentModel = commentModel;
         }
         if cell!.refresh(){
             FunnyVideoManage.shareVideoManage.tableViewReload();
-            cell?.playButton.selected = false;
+            cell?.playButton.isSelected = false;
         }
         return cell!;
     }
     
     override
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let model = dataSource[indexPath.row];
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = dataSource[(indexPath as NSIndexPath).row];
         let vc = ContentWebViewController(urlStr: model.share_url);
         vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true);

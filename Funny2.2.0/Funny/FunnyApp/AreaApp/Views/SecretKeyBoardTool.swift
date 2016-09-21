@@ -10,29 +10,29 @@ import UIKit
 
 enum SecretKBTool: Int {
     /**  上一个  */
-    case Pre
+    case pre
     /**  下一个  */
-    case Next
+    case next
     /**  完成   */
-    case Done
+    case done
 }
 
 protocol SecretKeyBoardToolProtocol : NSObjectProtocol {
-    func SecretKeyBoardItemAction(index: Int);
+    func SecretKeyBoardItemAction(_ index: Int);
 }
 class SecretKeyBoardTool: UIView {
 
     weak var delegate: SecretKeyBoardToolProtocol?
-    @IBAction func pre(sender: AnyObject) {
-        self.delegate?.SecretKeyBoardItemAction(SecretKBTool.Pre.rawValue);
+    @IBAction func pre(_ sender: AnyObject) {
+        self.delegate?.SecretKeyBoardItemAction(SecretKBTool.pre.rawValue);
     }
     
-    @IBAction func next(sender: AnyObject) {
-        self.delegate?.SecretKeyBoardItemAction(SecretKBTool.Next.rawValue);
+    @IBAction func next(_ sender: AnyObject) {
+        self.delegate?.SecretKeyBoardItemAction(SecretKBTool.next.rawValue);
     }
     
-    @IBAction func done(sender: AnyObject) {
-        self.delegate?.SecretKeyBoardItemAction(SecretKBTool.Done.rawValue);
+    @IBAction func done(_ sender: AnyObject) {
+        self.delegate?.SecretKeyBoardItemAction(SecretKBTool.done.rawValue);
     }
 
 }

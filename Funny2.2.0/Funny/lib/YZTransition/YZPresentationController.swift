@@ -11,11 +11,11 @@ import UIKit
 class YZPresentationController: UIPresentationController {
 
     override func presentationTransitionWillBegin() {
-        self.presentedView()?.frame = self.containerView!.bounds;
-        self.containerView?.addSubview(self.presentedView()!);
+        self.presentedView?.frame = self.containerView!.bounds;
+        self.containerView?.addSubview(self.presentedView!);
     }
     
-    override func dismissalTransitionDidEnd(completed: Bool) {
-        self.presentedView()?.removeFromSuperview();
+    override func dismissalTransitionDidEnd(_ completed: Bool) {
+        self.presentedView?.removeFromSuperview();
     }
 }

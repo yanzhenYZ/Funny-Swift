@@ -10,13 +10,13 @@ import UIKit
 
 class BuDeJieRankViewController: BuDeJieSuperViewController,VideoPlayBtnActionDelegate {
 
-    private var dataSource = [BuDeJieVideoModel]()
-    private var currentCell :BuDeJieVideoTableViewCell? = nil;
+    fileprivate var dataSource = [BuDeJieVideoModel]()
+    fileprivate var currentCell :BuDeJieVideoTableViewCell? = nil;
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
         if (currentCell != nil) {
-            if currentCell?.playButton.hidden == true {
+            if currentCell?.playButton.isHidden == true {
                 FunnyVideoManage.shareVideoManage.tableViewReload();
             }
         }
@@ -29,12 +29,12 @@ class BuDeJieRankViewController: BuDeJieSuperViewController,VideoPlayBtnActionDe
     }
     
 //MARK: - playVideo
-    func playVideoStart(button: UIButton) {
+    func playVideoStart(_ button: UIButton) {
         currentCell = button.superview?.superview as? BuDeJieVideoTableViewCell;
-        let indexPath = tableView.indexPathForCell(currentCell!);
-        let currentM = dataSource[indexPath!.row];
+        let indexPath = tableView.indexPath(for: currentCell!);
+        let currentM = dataSource[(indexPath! as NSIndexPath).row];
         if WindowViewManager.shareWindowVideoManage.isWindowViewShow() {
-            currentCell?.playButton.selected = false;
+            currentCell?.playButton.isSelected = false;
             WindowViewManager.shareWindowVideoManage.videoPlayWithVideoUrlString(currentM.videouri);
         }else{
             FunnyVideoManage.shareVideoManage.playVideo(currentCell!, urlString: currentM.videouri);
@@ -42,25 +42,26 @@ class BuDeJieRankViewController: BuDeJieSuperViewController,VideoPlayBtnActionDe
         
     }
     
-    func playVideoOnWindow(videoCell: VideoSuperTableViewCell) {
+    func playVideoOnWindow(_ videoCell: VideoSuperTableViewCell) {
         currentCell = videoCell as? BuDeJieVideoTableViewCell;
-        let indexPath = tableView.indexPathForCell(currentCell!);
-        let currentM = dataSource[indexPath!.row];
+        let indexPath = tableView.indexPath(for: currentCell!);
+        let currentM = dataSource[(indexPath! as NSIndexPath).row];
         FunnyVideoManage.shareVideoManage.tableViewReload();
         WindowViewManager.shareWindowVideoManage.videoPlayWithVideoUrlString(currentM.videouri);
     }
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.netURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let infoDict=responseObj["info"] as! Dictionary<String,AnyObject>;
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let infoDict=responseDic["info"] as! Dictionary<String,AnyObject>;
             self.maxtime = infoDict["maxtime"] as? String;
-            let listArray = responseObj["list"] as! Array<AnyObject>;
-            for (index, value) in listArray.enumerate() {
+            let listArray = responseDic["list"] as! Array<AnyObject>;
+            for (index, value) in listArray.enumerated() {
                 let valueDict = value as! Dictionary<String,AnyObject>;
                 let model = BuDeJieVideoModel();
-                model.setValuesForKeysWithDictionary(valueDict);
-                if index == 0 && self.dataSource.count > 0 && refresh == MJRefresh.Pull {
+                model.setValuesForKeys(valueDict);
+                if index == 0 && self.dataSource.count > 0 && refresh == MJRefresh.pull {
                     let testModel = self.dataSource[0];
                     if testModel.videouri == model.videouri {
                         break;
@@ -71,8 +72,8 @@ class BuDeJieRankViewController: BuDeJieSuperViewController,VideoPlayBtnActionDe
                 if Int(type) != 41 {
                     continue;
                 }
-                if refresh == MJRefresh.Pull {
-                    self.dataSource.insert(model, atIndex: 0);
+                if refresh == MJRefresh.pull {
+                    self.dataSource.insert(model, at: 0);
                 }else {
                     self.dataSource.append(model);
                 }
@@ -87,38 +88,38 @@ class BuDeJieRankViewController: BuDeJieSuperViewController,VideoPlayBtnActionDe
     
     
 //MARK: - tableView    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.VideoCell(tableView, indexPath: indexPath);
     }
     
-    private func VideoCell(tableView: UITableView, indexPath: NSIndexPath) -> BuDeJieVideoTableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("BuDeJieRankCell") as? BuDeJieVideoTableViewCell;
+    fileprivate func VideoCell(_ tableView: UITableView, indexPath: IndexPath) -> BuDeJieVideoTableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "BuDeJieRankCell") as? BuDeJieVideoTableViewCell;
         if cell == nil {
-            cell = BuDeJieVideoTableViewCell(style:.Default, reuseIdentifier:"BuDeJieRankCell");
+            cell = BuDeJieVideoTableViewCell(style:.default, reuseIdentifier:"BuDeJieRankCell");
             cell!.delegate = self;
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         if cell!.refresh(){
             FunnyVideoManage.shareVideoManage.tableViewReload();
-            cell!.playButton.selected = false;
+            cell!.playButton.isSelected = false;
         }
         return cell!;
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return self.VideoCell(tableView, indexPath: indexPath).rowHeight;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 
-    private func netURL(refresh: MJRefresh) ->String {
-        if refresh == MJRefresh.Push {
+    fileprivate func netURL(_ refresh: MJRefresh) ->String {
+        if refresh == MJRefresh.push {
             return BuDeJieRankingPushHeadURL + self.maxtime! + BuDeJieDefaultPushFooterURL;
         }else {
             return BudeJieRankingDefaultURL;

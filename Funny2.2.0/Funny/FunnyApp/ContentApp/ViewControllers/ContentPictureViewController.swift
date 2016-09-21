@@ -10,34 +10,35 @@ import UIKit
 
 class ContentPictureViewController: ContentSuperViewController {
 
-    private var cell: ContentPictureTableViewCell?
-    private var commentsArray = [ContentPictureCommentModel]()
-    private var dataSource = [ContentPictureGroupModel]()
+    fileprivate var cell: ContentPictureTableViewCell?
+    fileprivate var commentsArray = [ContentPictureCommentModel]()
+    fileprivate var dataSource = [ContentPictureGroupModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
     }
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.getNetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let dataDict = responseObj["data"] as! Dictionary<String,AnyObject>;
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let dataDict = responseDic["data"] as! Dictionary<String,AnyObject>;
             let outModel = ContentPictureDataModel();
-            outModel.setValuesForKeysWithDictionary(dataDict);
-            if baseView == nil && refresh == MJRefresh.Nomal {
-                self.minTime = String(outModel.min_time.intValue);
-                self.maxTime = String(outModel.max_time.intValue);
-            }else if baseView != nil && refresh != MJRefresh.Pull {
-                self.minTime = String(outModel.min_time.intValue);
+            outModel.setValuesForKeys(dataDict);
+            if baseView == nil && refresh == MJRefresh.nomal {
+                self.minTime = String(outModel.min_time.int32Value);
+                self.maxTime = String(outModel.max_time.int32Value);
+            }else if baseView != nil && refresh != MJRefresh.pull {
+                self.minTime = String(outModel.min_time.int32Value);
             }else{
-                self.maxTime = String(outModel.max_time.intValue);
+                self.maxTime = String(outModel.max_time.int32Value);
             }
             
             let dataArray = dataDict["data"] as! Array<AnyObject>;
-            for (_, value) in dataArray.enumerate() {
+            for (_, value) in dataArray.enumerated() {
                 let type = value["type"] as! NSNumber;
-                if type.intValue == 5 {
+                if type.int32Value == 5 {
                     continue;
                 }
                 
@@ -45,7 +46,7 @@ class ContentPictureViewController: ContentSuperViewController {
                 let commentModel = ContentPictureCommentModel();
                 if commentsArray.count > 0 {
                     let commentsD = commentsArray[0] as! Dictionary<String,AnyObject>;
-                    commentModel.setValuesForKeysWithDictionary(commentsD);
+                    commentModel.setValuesForKeys(commentsD);
                 }else{
                     commentModel.text = NOTEXT;
                 }
@@ -71,9 +72,9 @@ class ContentPictureViewController: ContentSuperViewController {
                 groupModel.avatar_url=userDict["avatar_url"] as! String;
                 groupModel.name=userDict["name"] as! String;
                 
-                if refresh == MJRefresh.Pull {
-                    self.dataSource.insert(groupModel, atIndex: 0);
-                    self.commentsArray.insert(commentModel, atIndex: 0);
+                if refresh == MJRefresh.pull {
+                    self.dataSource.insert(groupModel, at: 0);
+                    self.commentsArray.insert(commentModel, at: 0);
                 }else{
                     self.dataSource.append(groupModel);
                     self.commentsArray.append(commentModel);
@@ -86,10 +87,10 @@ class ContentPictureViewController: ContentSuperViewController {
         }
     }
     
-    private func getNetURL(refresh: MJRefresh) -> String {
-        if refresh == MJRefresh.Nomal {
+    fileprivate func getNetURL(_ refresh: MJRefresh) -> String {
+        if refresh == MJRefresh.nomal {
             return ContentPictureMaxHeadURL + FunnyManager.manager.currentTime() + ContentPictureMaxTailURL;
-        }else if refresh == MJRefresh.Pull {
+        }else if refresh == MJRefresh.pull {
             return ContentPictureMaxHeadURL + self.maxTime! + ContentPictureMaxTailURL;
         }else {
             return ContentPictureMinHeadURL + minTime! + ContentPictureMinTailURL;
@@ -97,39 +98,39 @@ class ContentPictureViewController: ContentSuperViewController {
     }
     
     //MARK: - tableView
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         return self.PictureCell(tableView, indexPath: indexPath);
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let commentCell = self.PictureCell(tableView, indexPath: indexPath);
         return commentCell.rowHeight;
     }
     
-    private func PictureCell(tableView: UITableView,indexPath: NSIndexPath) ->ContentPictureTableViewCell {
-        cell = tableView.dequeueReusableCellWithIdentifier("ContentPictureCell") as?ContentPictureTableViewCell;
+    fileprivate func PictureCell(_ tableView: UITableView,indexPath: IndexPath) ->ContentPictureTableViewCell {
+        cell = tableView.dequeueReusableCell(withIdentifier: "ContentPictureCell") as?ContentPictureTableViewCell;
         if cell == nil {
-            cell = ContentPictureTableViewCell(style:.Default, reuseIdentifier:"ContentPictureCell");
+            cell = ContentPictureTableViewCell(style:.default, reuseIdentifier:"ContentPictureCell");
         }
-        cell?.groupModel = self.dataSource[indexPath.row];
-        let commentModel = self.commentsArray[indexPath.row];
+        cell?.groupModel = self.dataSource[(indexPath as NSIndexPath).row];
+        let commentModel = self.commentsArray[(indexPath as NSIndexPath).row];
         if commentModel.text == NOTEXT {
-            cell?.smallView.hidden = true;
+            cell?.smallView.isHidden = true;
         }else{
-            cell?.smallView.hidden = false;
+            cell?.smallView.isHidden = false;
             cell?.commentModel = commentModel;
         }
         return cell!;
     }
     
     override
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let model = self.dataSource[indexPath.row];
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.dataSource[(indexPath as NSIndexPath).row];
         let vc = ContentWebViewController(urlStr: model.share_url);
         vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true);

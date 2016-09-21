@@ -10,29 +10,30 @@ import UIKit
 
 class WhatSomePicturesViewController: GifShowSuperViewController {
 
-    private var maxTime: String?
-    private var cell: SomeWhatPictureTableViewCell?
-    private var dataSource = [SomeWhatPictureModel]()
+    fileprivate var maxTime: String?
+    fileprivate var cell: SomeWhatPictureTableViewCell?
+    fileprivate var dataSource = [SomeWhatPictureModel]()
     override func viewDidLoad() {
         maxTime = FunnyManager.manager.currentTime();
         super.viewDidLoad()
 
     }
 
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.netURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let dataDict = responseObj["data"] as! Dictionary<String,AnyObject>;
-            if refresh != MJRefresh.Pull {
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let dataDict = responseDic["data"] as! Dictionary<String,AnyObject>;
+            if refresh != MJRefresh.pull {
                 let time = dataDict["max_time"] as! NSNumber;
-                self.maxTime = String(time.intValue);
+                self.maxTime = String(time.int32Value);
             }
             let dataArray = dataDict["data"] as! Array<AnyObject>;
-            for (_,value) in dataArray.enumerate() {
+            for (_,value) in dataArray.enumerated() {
                 let valueDict = value as! Dictionary<String,AnyObject>;
                 let groupDict=valueDict["group"] as! Dictionary<String,AnyObject>;
                 let type = groupDict["type"] as! NSNumber;
-                if type.intValue != 1 {
+                if type.int32Value != 1 {
                     continue;
                 }
                 
@@ -47,8 +48,8 @@ class WhatSomePicturesViewController: GifShowSuperViewController {
                 model.r_height = middle_imageDict["r_height"] as! NSNumber;
                 model.r_width = middle_imageDict["r_width"] as! NSNumber;
                 model.url=url_listArray[0]["url"] as! String;
-                if refresh == MJRefresh.Pull {
-                    self.dataSource.insert(model, atIndex: 0);
+                if refresh == MJRefresh.pull {
+                    self.dataSource.insert(model, at: 0);
                 } else {
                     self.dataSource.append(model);
                 }
@@ -60,39 +61,39 @@ class WhatSomePicturesViewController: GifShowSuperViewController {
         }
     }
     
-    private func netURL(refresh: MJRefresh) ->String {
-        if refresh == MJRefresh.Nomal {
+    fileprivate func netURL(_ refresh: MJRefresh) ->String {
+        if refresh == MJRefresh.nomal {
             return SomeWhatDefaultPictureURL;
-        }else if refresh == MJRefresh.Pull {
+        }else if refresh == MJRefresh.pull {
             return SomeWhatPullHeadURL + FunnyManager.manager.currentTime()  + SomeWhatDefaultFootURL;
         }else {
             return SomeWhatPushHeadURL + self.maxTime! + SomeWhatDefaultFootURL;
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.pictureCell(tableView, indexPath: indexPath);
     }
     
-    func pictureCell(tableView: UITableView,indexPath: NSIndexPath) -> SomeWhatPictureTableViewCell {
-        cell = tableView.dequeueReusableCellWithIdentifier("SomeWhatPictureCell") as? SomeWhatPictureTableViewCell;
+    func pictureCell(_ tableView: UITableView,indexPath: IndexPath) -> SomeWhatPictureTableViewCell {
+        cell = tableView.dequeueReusableCell(withIdentifier: "SomeWhatPictureCell") as? SomeWhatPictureTableViewCell;
         if cell == nil {
-            cell = SomeWhatPictureTableViewCell(style:.Default, reuseIdentifier:"SomeWhatPictureCell");
+            cell = SomeWhatPictureTableViewCell(style:.default, reuseIdentifier:"SomeWhatPictureCell");
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         return cell!;
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let pictureCell = self.pictureCell(tableView, indexPath: indexPath);
         return pictureCell.rowHeight;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 }

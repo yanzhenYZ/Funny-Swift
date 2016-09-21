@@ -14,11 +14,11 @@ class GifShowVideoTableViewCell: VideoSuperTableViewCell {
         didSet {
             let mainHeight = (WIDTH - 100) / 3 * 4;
             rightSpace = 170.0;
-            mainImageView.frame = CGRectMake(50.0, 70.0, WIDTH - 100.0, mainHeight);
+            mainImageView.frame = CGRect(x: 50.0, y: 70.0, width: WIDTH - 100.0, height: mainHeight);
             let maxMainY = mainImageView.maxY;
-            progressView.frame = CGRectMake(50.0, maxMainY, WIDTH - 100.0, 2.0);
-            playButton.frame = CGRectMake(mainImageView.maxX - 70, maxMainY - 62, 70, 62);
-            _backView.frame = CGRectMake(5.0, 5.0, WIDTH - 10.0, maxMainY + 5);
+            progressView.frame = CGRect(x: 50.0, y: maxMainY, width: WIDTH - 100.0, height: 2.0);
+            playButton.frame = CGRect(x: mainImageView.maxX - 70, y: maxMainY - 62, width: 70, height: 62);
+            _backView.frame = CGRect(x: 5.0, y: 5.0, width: WIDTH - 10.0, height: maxMainY + 5);
             rowHeight = maxMainY + 7.5;
             
             var urlStr = model.main_url;
@@ -27,8 +27,8 @@ class GifShowVideoTableViewCell: VideoSuperTableViewCell {
             }
             
             shareURL = model.main_mv_url;
-            _headView.headImageView(urlStr, name: model.user_name, time: FunnyManager.manager.timeIntervalWithDateString(model.time));
-            mainImageView.sd_setImageWithURL(NSURL(string: model.thumbnail_url), placeholderImage: BigImage);
+            _headView.headImageView(urlStr!, name: model.user_name, time: FunnyManager.manager.timeIntervalWithDateString(model.time));
+            mainImageView.sd_setImage(with: URL(string: model.thumbnail_url), placeholderImage: BigImage);
         }
     }
     

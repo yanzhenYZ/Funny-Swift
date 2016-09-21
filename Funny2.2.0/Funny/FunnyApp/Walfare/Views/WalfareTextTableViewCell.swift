@@ -17,8 +17,8 @@ class WalfareTextTableViewCell: WalfareSuperTableViewCell {
             
             let newSize = FunnyManager.manager.LabelSize(model.wbody, width: WIDTH - 20, font: ContentMainTextFont);
             mainTextLabel.height = newSize.height;
-            backView.height = CGRectGetMaxY(mainTextLabel.frame) + 4.0;
-            rowHeight = CGRectGetMaxY(mainTextLabel.frame) + 8.0;
+            backView.height = mainTextLabel.frame.maxY + 4.0;
+            rowHeight = mainTextLabel.frame.maxY + 8.0;
         }
     }
 

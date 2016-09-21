@@ -10,31 +10,32 @@ import UIKit
 
 class BuDeJieTextViewController: BuDeJieSuperViewController {
 
-    private var dataSource = [BuDeJieTextModel]()
+    fileprivate var dataSource = [BuDeJieTextModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
 
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.netURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let infoDict=responseObj["info"] as! Dictionary<String,AnyObject>;
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>;
+            let infoDict=responseDic["info"] as! Dictionary<String,AnyObject>;
             self.maxid = infoDict["maxid"] as? String;
-            let listArray = responseObj["list"] as! Array<AnyObject>;
-            for (index, value) in listArray.enumerate() {
+            let listArray = responseDic["list"] as! Array<AnyObject>;
+            for (index, value) in listArray.enumerated() {
                 let valueDict = value as! Dictionary<String,AnyObject>;
                 let model = BuDeJieTextModel();
-                model.setValuesForKeysWithDictionary(valueDict);
-                if index == 0 && self.dataSource.count > 0 && refresh == MJRefresh.Pull {
+                model.setValuesForKeys(valueDict);
+                if index == 0 && self.dataSource.count > 0 && refresh == MJRefresh.pull {
                     let testModel = self.dataSource[0];
                     if testModel.text == model.text {
                         break;
                     }
                 }
             
-                if refresh == MJRefresh.Pull {
-                    self.dataSource.insert(model, atIndex: 0);
+                if refresh == MJRefresh.pull {
+                    self.dataSource.insert(model, at: 0);
                 }else {
                     self.dataSource.append(model);
                 }
@@ -46,8 +47,8 @@ class BuDeJieTextViewController: BuDeJieSuperViewController {
         }
     }
     
-    private func netURL(refresh: MJRefresh) ->String {
-        if refresh == MJRefresh.Push {
+    fileprivate func netURL(_ refresh: MJRefresh) ->String {
+        if refresh == MJRefresh.push {
             return BuDeJieTextPushHeaderURL + self.maxid! + BuDeJieTextPushFooterURL;
         }else {
             return BuDeJieTextUrl;
@@ -55,29 +56,29 @@ class BuDeJieTextViewController: BuDeJieSuperViewController {
     }
     
 //MARK: - tableView
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.TextCell(tableView, indexPath: indexPath);
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let textCell = self.TextCell(tableView, indexPath: indexPath);
         return textCell.rowHeight;
     }
     
-    private func TextCell(tableView: UITableView,indexPath: NSIndexPath) -> BuDeJieTextTableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("BuDeJieTextCell") as? BuDeJieTextTableViewCell;
+    fileprivate func TextCell(_ tableView: UITableView,indexPath: IndexPath) -> BuDeJieTextTableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "BuDeJieTextCell") as? BuDeJieTextTableViewCell;
         if cell == nil {
-            cell = BuDeJieTextTableViewCell(style:.Default, reuseIdentifier:"BuDeJieTextCell");
+            cell = BuDeJieTextTableViewCell(style:.default, reuseIdentifier:"BuDeJieTextCell");
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         return cell!;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     

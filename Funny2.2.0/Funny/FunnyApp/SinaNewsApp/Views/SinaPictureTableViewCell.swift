@@ -10,16 +10,16 @@ import UIKit
 
 class SinaPictureTableViewCell: UITableViewCell {
 
-    @IBOutlet private weak var titleLab: UILabel!
-    @IBOutlet private weak var onlyImageView: UIImageView!
-    @IBOutlet private weak var subTitleLabel: UILabel!
+    @IBOutlet fileprivate weak var titleLab: UILabel!
+    @IBOutlet fileprivate weak var onlyImageView: UIImageView!
+    @IBOutlet fileprivate weak var subTitleLabel: UILabel!
     
     var model: SinaNewsModel! {
         didSet{
             titleLab.text = model.title;
             subTitleLabel.text = model.intro;
             
-            onlyImageView.sd_setImageWithURL(NSURL(string: model.kpic), placeholderImage: SmallImage);
+            onlyImageView.sd_setImage(with: URL(string: model.kpic), placeholderImage: SmallImage);
         }
     }
 }

@@ -12,15 +12,15 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
     
     var recordVC: SecretRecordViewController!
     var model: SecretModel!
-    var indexPath: NSIndexPath!
+    var indexPath: IndexPath!
     var titleIndex: Int!
     var isModify: Bool! = false
     var keyBoardFrame: CGRect?
-    @IBOutlet private weak var rowTextField: YZTextField!
-    @IBOutlet private weak var companyTF: YZTextField!
-    @IBOutlet private weak var accountTF: YZTextField!
-    @IBOutlet private weak var passwordTF: YZTextField!
-    @IBOutlet private weak var remarksTF: YZTextField!
+    @IBOutlet fileprivate weak var rowTextField: YZTextField!
+    @IBOutlet fileprivate weak var companyTF: YZTextField!
+    @IBOutlet fileprivate weak var accountTF: YZTextField!
+    @IBOutlet fileprivate weak var passwordTF: YZTextField!
+    @IBOutlet fileprivate weak var remarksTF: YZTextField!
     var textFields = [YZTextField]()
     
     override func viewDidLoad() {
@@ -62,10 +62,10 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
             model.remarks = remarksTF.text;
             recordVC.addNewItem(titleIndex, model: model);
         }
-        self.navigationController?.popViewControllerAnimated(true);
+        self.navigationController!.popViewController(animated: true);
     }
     
-    private func oneTextFieldIsNil() ->Bool {
+    fileprivate func oneTextFieldIsNil() ->Bool {
         
         if rowTextField.text!.isEmpty {
             self.view.makeCenterToast("请选择分组");
@@ -83,27 +83,27 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
         return true;
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.hiddenTitleView();
         
-        for (_,value) in textFields.enumerate() {
-            if value.isFirstResponder() {
+        for (_,value) in textFields.enumerated() {
+            if value.isFirstResponder {
                 value.resignFirstResponder();
             }
         }
     }
     //MARK: - KeyBoardToolDelegate
-    func SecretKeyBoardItemAction(index: Int) {
-        if index == SecretKBTool.Pre.rawValue{
+    func SecretKeyBoardItemAction(_ index: Int) {
+        if index == SecretKBTool.pre.rawValue{
             self.pre();
-        }else if index == SecretKBTool.Next.rawValue {
+        }else if index == SecretKBTool.next.rawValue {
             self.next();
-        }else if index == SecretKBTool.Done.rawValue {
+        }else if index == SecretKBTool.done.rawValue {
             self.done();
         }
     }
     
-    private func pre() {
+    fileprivate func pre() {
         let index = self.currentResponderIndex() - 1;
         if index >= 1 {
             let textField = textFields[index];
@@ -112,7 +112,7 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
         }
     }
     
-    private func next() {
+    fileprivate func next() {
         let index = self.currentResponderIndex() + 1;
         if index < textFields.count {
             let textField = textFields[index];
@@ -122,23 +122,23 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
         
     }
     
-    private func done() {
+    fileprivate func done() {
         self.view.endEditing(true);
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
-            self.view.transform = CGAffineTransformIdentity;
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+            self.view.transform = CGAffineTransform.identity;
         })
     }
     
-    private func currentResponderIndex() ->Int {
-        for (index,value) in textFields.enumerate() {
-            if value.isFirstResponder() {
+    fileprivate func currentResponderIndex() ->Int {
+        for (index,value) in textFields.enumerated() {
+            if value.isFirstResponder {
                 return index;
             }
         }
         return -1;
     }
     
-    private func changeKeyBoardFrame() {
+    fileprivate func changeKeyBoardFrame() {
         let frame = keyBoardFrame;
         let kbEndY = frame!.origin.y;
         let currentIndex = self.currentResponderIndex();
@@ -146,70 +146,70 @@ class SecretNewItemViewController: UIViewController,SecretKeyBoardToolProtocol,S
             return;
         }
         let currentTf = textFields[currentIndex];
-        let tfMaxY = CGRectGetMaxY(currentTf.frame);
+        let tfMaxY = currentTf.frame.maxY;
         if tfMaxY > kbEndY {
-            UIView.animateWithDuration(0.15, animations: { () -> Void in
-                self.view.transform = CGAffineTransformMakeTranslation(0, kbEndY - tfMaxY);
+            UIView.animate(withDuration: 0.15, animations: { () -> Void in
+                self.view.transform = CGAffineTransform(translationX: 0, y: kbEndY - tfMaxY);
             })
         }else{
-            self.view.transform = CGAffineTransformIdentity;
+            self.view.transform = CGAffineTransform.identity;
         }
     }
     
-    func keyboardFrameChange(notifi: NSNotification) {
-        let userInfo = notifi.userInfo as! Dictionary<String,AnyObject>;
+    func keyboardFrameChange(_ notifi: Notification) {
+        let userInfo = (notifi as NSNotification).userInfo as! Dictionary<String,AnyObject>;
         let frame: AnyObject? = userInfo[UIKeyboardFrameEndUserInfoKey];
-        keyBoardFrame = frame?.CGRectValue();
+        keyBoardFrame = frame?.cgRectValue;
         self.changeKeyBoardFrame();
     }
     
     //MARK: - UI
     
-    private func configUI() {
+    fileprivate func configUI() {
         textFields = [rowTextField,companyTF,accountTF,passwordTF,remarksTF];
-        let keyBoardTool = NSBundle.mainBundle().loadNibNamed("SecretKeyBoardTool", owner: self, options: nil).last as! SecretKeyBoardTool;
+        let keyBoardTool = Bundle.main.loadNibNamed("SecretKeyBoardTool", owner: self, options: nil)?.last as! SecretKeyBoardTool;
         keyBoardTool.delegate = self;
-        for (_,value) in textFields.enumerate() {
+        for (_,value) in textFields.enumerated() {
             value.inputAccessoryView = keyBoardTool;
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardFrameChange(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardFrameChange(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil);
         
-        let rowButton = UIButton(type:UIButtonType.System);
-        rowButton.frame = CGRectMake(30.0, rowTextField.y, WIDTH - 60, rowTextField.height);
-        rowButton.backgroundColor = UIColor.clearColor();
+        let rowButton = UIButton(type:UIButtonType.system);
+        rowButton.frame = CGRect(x: 30.0, y: rowTextField.y, width: WIDTH - 60, height: rowTextField.height);
+        rowButton.backgroundColor = UIColor.clear;
         rowButton.layer.masksToBounds = true;
         rowButton.layer.cornerRadius = 6.0;
-        rowButton.addTarget(self, action: #selector(self.rowButtonAction), forControlEvents: UIControlEvents.TouchUpInside);
+        rowButton.addTarget(self, action: #selector(self.rowButtonAction), for: UIControlEvents.touchUpInside);
         self.view.addSubview(rowButton);
         //
-        let saveBtn = UIButton(type:UIButtonType.System);
-        saveBtn.frame = CGRectMake(0, 0, 40, 40);
-        saveBtn.backgroundColor = UIColor.clearColor();
-        saveBtn.setTitle("确定", forState: UIControlState.Normal);
-        saveBtn.addTarget(self, action: #selector(self.saveButtonAction), forControlEvents: UIControlEvents.TouchUpInside);
+        let saveBtn = UIButton(type:UIButtonType.system);
+        saveBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
+        saveBtn.backgroundColor = UIColor.clear;
+        saveBtn.setTitle("确定", for: UIControlState());
+        saveBtn.addTarget(self, action: #selector(self.saveButtonAction), for: UIControlEvents.touchUpInside);
         let rightBarButtonItem = UIBarButtonItem(customView: saveBtn);
         self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     }
     //MARK: - titleView
     lazy var titleView: SecretTitleView = {
-        let titleView = SecretTitleView(frame: CGRectMake(30, CGRectGetMaxY(self.rowTextField.frame), WIDTH - 60.0, 0));
+        let titleView = SecretTitleView(frame: CGRect(x: 30, y: self.rowTextField.frame.maxY, width: WIDTH - 60.0, height: 0));
         titleView.delegate = self;
         self.view.addSubview(titleView);
         return titleView;
         }()
     
-    func SecretTitleViewSelect(indexPath: NSIndexPath) {
-        self.rowTextField.text = secretTitleArray[indexPath.row];
-        titleIndex = indexPath.row;
+    func SecretTitleViewSelect(_ indexPath: IndexPath) {
+        self.rowTextField.text = secretTitleArray[(indexPath as NSIndexPath).row];
+        titleIndex = (indexPath as NSIndexPath).row;
     }
     
-    private func hiddenTitleView() {
+    fileprivate func hiddenTitleView() {
         if !self.titleView.isHidden {
             self.titleView.toggleSecretTitleView();
         }
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NotificationCenter.default.removeObserver(self);
     }
 }

@@ -19,10 +19,10 @@ class BuDeJiePictureTableViewCell: PictureSuperTableViewCell {
             
             let scale = CGFloat(Int(model.width)!) / (WIDTH - 20.0);
             let height = CGFloat(Int(model.height)!) / scale;
-            _mainPictureImgaeV.sd_setImageWithURL(NSURL(string: model.cdn_img), placeholderImage: BigImage);
-            _mainPictureImgaeV.frame = CGRectMake(10.0, CGRectGetMaxY(_userTextLabel.frame) + 8.0, WIDTH - 20.0, height);
+            _mainPictureImgaeV.sd_setImage(with: URL(string: model.cdn_img), placeholderImage: BigImage);
+            _mainPictureImgaeV.frame = CGRect(x: 10.0, y: _userTextLabel.frame.maxY + 8.0, width: WIDTH - 20.0, height: height);
             
-            let maxHeight = CGRectGetMaxY(_mainPictureImgaeV.frame);
+            let maxHeight = _mainPictureImgaeV.frame.maxY;
             _backView.height = maxHeight + 4.0;
             rowHeight = maxHeight + 8.0;
         }

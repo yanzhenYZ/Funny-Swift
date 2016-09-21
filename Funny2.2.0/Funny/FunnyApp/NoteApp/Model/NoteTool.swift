@@ -11,24 +11,24 @@ import UIKit
 class NoteTool: NSObject {
    
     /**      添加数据       */
-    func addNewNoteItem(model: NoteModel) {
+    func addNewNoteItem(_ model: NoteModel) {
         var array = self.noteArrayOfFilePath();
         array?.append(model);
         NSKeyedArchiver.archiveRootObject(array!, toFile: NotePath);
     }
     
     /**      删除数据       */
-    func deleteNoteItem(index: Int) {
+    func deleteNoteItem(_ index: Int) {
         var array = self.noteArrayOfFilePath();
-        array?.removeAtIndex(index);
+        array?.remove(at: index);
         NSKeyedArchiver.archiveRootObject(array!, toFile: NotePath);
     }
     
     /**      修改数据       */
-    func modifyNoteItem(index: Int, model: NoteModel) {
+    func modifyNoteItem(_ index: Int, model: NoteModel) {
         var array = self.noteArrayOfFilePath();
-        array?.removeAtIndex(index);
-        array?.insert(model, atIndex: index);
+        array?.remove(at: index);
+        array?.insert(model, at: index);
         NSKeyedArchiver.archiveRootObject(array!, toFile: NotePath);
     }
     
@@ -36,9 +36,9 @@ class NoteTool: NSObject {
     func noteArrayOfFilePath() ->Array<AnyObject>? {
         var array = [NoteModel]();
         
-        let exist = NSFileManager.defaultManager().fileExistsAtPath(NotePath);
+        let exist = FileManager.default.fileExists(atPath: NotePath);
         if exist {
-            array = NSKeyedUnarchiver.unarchiveObjectWithFile(NotePath) as! Array<NoteModel>;
+            array = NSKeyedUnarchiver.unarchiveObject(withFile: NotePath) as! Array<NoteModel>;
         }
         return array;
     }

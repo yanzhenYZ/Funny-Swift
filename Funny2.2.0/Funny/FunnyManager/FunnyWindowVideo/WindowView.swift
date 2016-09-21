@@ -7,10 +7,30 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol WindowViewProtocol: NSObjectProtocol{
     func closeWindowView()
-    func videoPlayOrPause(playBtn: UIButton)
+    func videoPlayOrPause(_ playBtn: UIButton)
     func loadingViewDismissForFail()
 }
 
@@ -21,24 +41,24 @@ class WindowView: UIView, WindowLoadingViewProtocol {
     var progressView: UIProgressView!
     var playBtn: UIButton!
     var loadingView: WindowLoadingView!
-    private var effectView: UIVisualEffectView!
-    private var closeBtn: UIButton!
-    private var topLineView: UIView!
-    private var yzView: UIView!
-    private var yzLayer: CALayer!
-    private var layerDelegate: CALayerDelegate!
-    private var beginPoint: CGPoint!
+    fileprivate var effectView: UIVisualEffectView!
+    fileprivate var closeBtn: UIButton!
+    fileprivate var topLineView: UIView!
+    fileprivate var yzView: UIView!
+    fileprivate var yzLayer: CALayer!
+    fileprivate var layerDelegate: LayerDelegate!
+    fileprivate var beginPoint: CGPoint!
     
     override init(frame: CGRect) {
         super.init(frame: frame);
         self.configUI();
     }
 //MARK: - Action
-    func closeBtnAction(btn: UIButton) {
+    func closeBtnAction(_ btn: UIButton) {
         delegate?.closeWindowView();
     }
     
-    func playBtnAction(btn: UIButton) {
+    func playBtnAction(_ btn: UIButton) {
         delegate?.videoPlayOrPause(btn);
     }
     
@@ -48,10 +68,10 @@ class WindowView: UIView, WindowLoadingViewProtocol {
     }
     
 //MARK: - UI
-    private func configUI() {
-        let effect = UIBlurEffect(style: .Light);
+    fileprivate func configUI() {
+        let effect = UIBlurEffect(style: .light);
         effectView = UIVisualEffectView(effect: effect);
-        effectView.userInteractionEnabled = false;
+        effectView.isUserInteractionEnabled = false;
         self.addSubview(effectView);
         
         topLineView = UIView();
@@ -66,30 +86,30 @@ class WindowView: UIView, WindowLoadingViewProtocol {
         self.addSubview(progressView);
         
         yzView = UIView();
-        yzView.backgroundColor = UIColor.clearColor();
+        yzView.backgroundColor = UIColor.clear;
         yzLayer = CALayer();
-        yzLayer.backgroundColor = UIColor.clearColor().CGColor;
-        layerDelegate = CALayerDelegate();
+        yzLayer.backgroundColor = UIColor.clear.cgColor;
+        layerDelegate = LayerDelegate();
         layerDelegate.left = true;
         yzLayer.delegate = layerDelegate;
         yzView.layer.addSublayer(yzLayer);
         yzLayer.setNeedsDisplay();
         self.addSubview(yzView);
         
-        closeBtn = UIButton(type: .Custom);
-        closeBtn.backgroundColor = UIColor.clearColor();
-        closeBtn.setBackgroundImage(UIImage(named: "closeWindowView"), forState: .Normal);
-        closeBtn.addTarget(self, action: #selector(self.closeBtnAction(_:)), forControlEvents: .TouchUpInside);
+        closeBtn = UIButton(type: .custom);
+        closeBtn.backgroundColor = UIColor.clear;
+        closeBtn.setBackgroundImage(UIImage(named: "closeWindowView"), for: UIControlState());
+        closeBtn.addTarget(self, action: #selector(self.closeBtnAction(_:)), for: .touchUpInside);
         self.addSubview(closeBtn);
         
-        playBtn = UIButton(type: .Custom);
-        playBtn.setImage(UIImage(named: "WindowViewPause"), forState: .Selected);
-        playBtn.addTarget(self, action: #selector(self.playBtnAction(_:)), forControlEvents: .TouchUpInside);
+        playBtn = UIButton(type: .custom);
+        playBtn.setImage(UIImage(named: "WindowViewPause"), for: .selected);
+        playBtn.addTarget(self, action: #selector(self.playBtnAction(_:)), for: .touchUpInside);
         self.addSubview(playBtn);
         
-        loadingView = WindowLoadingView(frame: CGRectZero);
+        loadingView = WindowLoadingView(frame: CGRect.zero);
         loadingView.delegate = self;
-        loadingView.hidden = true;
+        loadingView.isHidden = true;
         self.addSubview(loadingView);
     }
     
@@ -100,21 +120,21 @@ class WindowView: UIView, WindowLoadingViewProtocol {
         let height = self.height;
         
         effectView.frame = self.bounds;
-        topLineView.frame = CGRectMake(0, 0, width, 2);
-        progressView.frame = CGRectMake(0, height - 2, width, 2);
-        mainImageView.frame = CGRectMake(0, 2, width, height - 4);
-        yzView.frame = CGRectMake(0, 2, width, height - 4);
+        topLineView.frame = CGRect(x: 0, y: 0, width: width, height: 2);
+        progressView.frame = CGRect(x: 0, y: height - 2, width: width, height: 2);
+        mainImageView.frame = CGRect(x: 0, y: 2, width: width, height: height - 4);
+        yzView.frame = CGRect(x: 0, y: 2, width: width, height: height - 4);
         yzLayer.frame = yzView.bounds;
         
         
-        closeBtn.frame = CGRectMake(width - 30.0, 2 , 30.0, 30.0);
-        playBtn.frame = CGRectMake(0, 0, 70 * 1.5, 70 * 1.5);
-        playBtn.center = CGPointMake(width * 0.5, height * 0.5);
+        closeBtn.frame = CGRect(x: width - 30.0, y: 2 , width: 30.0, height: 30.0);
+        playBtn.frame = CGRect(x: 0, y: 0, width: 70 * 1.5, height: 70 * 1.5);
+        playBtn.center = CGPoint(x: width * 0.5, y: height * 0.5);
         
-        loadingView.frame = CGRectMake(0, 0, 70, 70);
-        loadingView.center = CGPointMake(width * 0.5, height * 0.5);
+        loadingView.frame = CGRect(x: 0, y: 0, width: 70, height: 70);
+        loadingView.center = CGPoint(x: width * 0.5, y: height * 0.5);
         if mainImageView.layer.sublayers?.count > 0 {
-            for (_,value) in mainImageView.layer.sublayers!.enumerate() {
+            for (_,value) in mainImageView.layer.sublayers!.enumerated() {
                 value.frame = mainImageView.bounds;
             }
         }

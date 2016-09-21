@@ -13,11 +13,11 @@ class SuperForthViewController: SuperThirdViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.netRequestWithMJRefresh(.Nomal, baseView: nil);
+        self.netRequestWithMJRefresh(.nomal, baseView: nil);
         self.refresh();
     }
     
-    func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?){
+    func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?){
         
     }
     
@@ -29,10 +29,10 @@ class SuperForthViewController: SuperThirdViewController {
         
         unowned let blockSelf = self
         self.header!.beginRefreshingBlock = {(baseView) -> Void in
-            blockSelf.netRequestWithMJRefresh(.Pull, baseView: baseView);
+            blockSelf.netRequestWithMJRefresh(.pull, baseView: baseView);
         }
         self.footer!.beginRefreshingBlock = {(baseView) -> Void in
-            blockSelf.netRequestWithMJRefresh(.Push, baseView: baseView);
+            blockSelf.netRequestWithMJRefresh(.push, baseView: baseView);
         }
     }
 

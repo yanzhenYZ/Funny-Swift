@@ -19,22 +19,22 @@ class WalfareSuperViewController: SuperForthViewController {
 
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell();
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 
-    func NetURL(refresh: MJRefresh) ->String {
-        if refresh == MJRefresh.Push {
+    func NetURL(_ refresh: MJRefresh) ->String {
+        if refresh == MJRefresh.push {
             return self.pushHeadURL + self.max_timestamp + WalfarePushDefaultMiddleURL + self.latest_viewed_ts + WalfareDefaultFootURL;
-        }else if refresh == MJRefresh.Pull {
+        }else if refresh == MJRefresh.pull {
             return self.pullHeadURL + self.latest_viewed_ts + WalfareDefaultFootURL;
         }else{
             self.latest_viewed_ts = FunnyManager.manager.currentTime();

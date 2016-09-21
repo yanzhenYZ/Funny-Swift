@@ -15,9 +15,9 @@ class AboutSettingsViewController: SuperTableViewController {
 
     var dataSource = [[String]]()
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default);
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default);
         self.navigationController?.navigationBar.shadowImage = nil;
     }
     
@@ -26,51 +26,51 @@ class AboutSettingsViewController: SuperTableViewController {
 
         self.tableView.rowHeight = SETTINGS_ROWHEIGHT;
         self.tableView.backgroundColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 237/255.0, alpha: 1);
-        self.tableView.separatorStyle = .None;
+        self.tableView.separatorStyle = .none;
         dataSource.append(["隐私设置"]);
         dataSource.append(["打开WIFI"]);
         dataSource.append(["打开移动网络"]);
         print(dataSource);
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let items = dataSource[section];
         return items.count;
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("SETTINGS_CELL");
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "SETTINGS_CELL");
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: "SETTINGS_CELL");
-            cell?.accessoryType = .DisclosureIndicator;
+            cell = UITableViewCell(style: .default, reuseIdentifier: "SETTINGS_CELL");
+            cell?.accessoryType = .disclosureIndicator;
         }
-        print(indexPath.section);
-        let items = dataSource[indexPath.section];
-        cell?.textLabel?.text = items[indexPath.row];
+        print((indexPath as NSIndexPath).section);
+        let items = dataSource[(indexPath as NSIndexPath).section];
+        cell?.textLabel?.text = items[(indexPath as NSIndexPath).row];
         return cell!;
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return SETTINGS_SECTIONHEIGHTERH;
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView();
         view.backgroundColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 237/255.0, alpha: 1);
         return view;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true);
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true);
         let str = [UIApplicationOpenSettingsURLString,"prefs:root=WIFI","prefs:root=MOBILE_DATA_SETTINGS_ID"];
-        print(indexPath.section);
-        let url = NSURL(string: str[indexPath.section]);
-        if UIApplication.sharedApplication().canOpenURL(url!) {
-            UIApplication.sharedApplication().openURL(url!);
+        print((indexPath as NSIndexPath).section);
+        let url = URL(string: str[(indexPath as NSIndexPath).section]);
+        if UIApplication.shared.canOpenURL(url!) {
+            UIApplication.shared.openURL(url!);
         }
     }
 }

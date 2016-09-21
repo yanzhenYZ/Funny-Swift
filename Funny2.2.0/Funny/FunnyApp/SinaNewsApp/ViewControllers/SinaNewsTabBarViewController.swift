@@ -19,8 +19,8 @@ class SinaNewsTabBarViewController: ExtentTabBarViewController {
             vc.titleName = array[2];
             let selectedImageName = array[1] + "_s";
             let unSelectedImageName = array[1] + "_u";
-            let unSelectedImage = UIImage(named: unSelectedImageName)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
-            let selectedImage = UIImage(named: selectedImageName)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
+            let unSelectedImage = UIImage(named: unSelectedImageName)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal);
+            let selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal);
             nvc.tabBarItem.image = unSelectedImage;
             nvc.tabBarItem.selectedImage = selectedImage;
             return nvc;

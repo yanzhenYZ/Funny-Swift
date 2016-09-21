@@ -13,24 +13,25 @@ class NetEaseContentViewController: NetEaseSuperViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none;
     }
 
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.NetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let keyArray = responseObj[self.key] as! Array<AnyObject>;
-            for (_,value) in keyArray.enumerate() {
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>;
+            let keyArray = responseDic[self.key] as! Array<AnyObject>;
+            for (_,value) in keyArray.enumerated() {
                 let valueDict = value as! Dictionary<String,AnyObject>;
                 let model = NetEaseModel();
-                model.setValuesForKeysWithDictionary(valueDict);
-                if refresh == MJRefresh.Pull {
+                model.setValuesForKeys(valueDict);
+                if refresh == MJRefresh.pull {
                     if self.dataSource.count > 0 {
                         let testModel = self.dataSource[0];
                         if testModel.digest == model.digest {
                             break;
                         }
-                        self.dataSource.insert(model, atIndex: 0);
+                        self.dataSource.insert(model, at: 0);
                     }
                 }else{
                     self.dataSource.append(model);
@@ -45,33 +46,33 @@ class NetEaseContentViewController: NetEaseSuperViewController {
     }
     
 //MARK: - tableView
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     override
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.TextCell(tableView, indexPath: indexPath);
     }
     
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return self.TextCell(tableView, indexPath: indexPath).rowHeight;
     }
     
-    private func TextCell(tableView: UITableView, indexPath: NSIndexPath) -> NEContentTableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("NETextCell") as? NEContentTableViewCell;
+    fileprivate func TextCell(_ tableView: UITableView, indexPath: IndexPath) -> NEContentTableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "NETextCell") as? NEContentTableViewCell;
         if cell == nil {
-            cell = NEContentTableViewCell(style:.Default, reuseIdentifier:"NETextCell");
+            cell = NEContentTableViewCell(style:.default, reuseIdentifier:"NETextCell");
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         return cell!;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
 //MARK: - URL
-    override func NetURL(refresh: MJRefresh) -> String {
+    override func NetURL(_ refresh: MJRefresh) -> String {
         return self.defaultURL;
     }
 

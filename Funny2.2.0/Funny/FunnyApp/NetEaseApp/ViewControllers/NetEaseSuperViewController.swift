@@ -20,14 +20,15 @@ class NetEaseSuperViewController: SuperForthViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.separatorStyle = .SingleLine;
+        self.tableView.separatorStyle = .singleLine;
     }
 
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.NetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let keyArray = responseObj[self.key] as! Array<AnyObject>;
-            for (_,value) in keyArray.enumerate() {
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let keyArray = responseDic[self.key] as! Array<AnyObject>;
+            for (_,value) in keyArray.enumerated() {
                 let valueDict = value as! Dictionary<String,AnyObject>;
                 if valueDict["url"]  == nil {
                     continue;
@@ -36,14 +37,14 @@ class NetEaseSuperViewController: SuperForthViewController {
                     continue;
                 }
                 let model = NetEaseModel();
-                model.setValuesForKeysWithDictionary(valueDict);
-                if refresh == MJRefresh.Pull {
+                model.setValuesForKeys(valueDict);
+                if refresh == MJRefresh.pull {
                     if self.dataSource.count > 0 {
                         let testModel = self.dataSource[0];
                         if testModel.url == model.url {
                             break;
                         }
-                        self.dataSource.insert(model, atIndex: 0);
+                        self.dataSource.insert(model, at: 0);
                     }
                 }else{
                     self.dataSource.append(model);
@@ -56,31 +57,31 @@ class NetEaseSuperViewController: SuperForthViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
 override     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let model = self.dataSource[indexPath.row];
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = self.dataSource[(indexPath as NSIndexPath).row];
         if model.imgextra.count != 0{
-            var cell = tableView.dequeueReusableCellWithIdentifier("NEThreePicturesCell") as? NEThreePicturesTableViewCell;
+            var cell = tableView.dequeueReusableCell(withIdentifier: "NEThreePicturesCell") as? NEThreePicturesTableViewCell;
             if cell == nil {
-                cell = NSBundle.mainBundle().loadNibNamed("NEThreePicturesTableViewCell", owner: self, options: nil).last as? NEThreePicturesTableViewCell;
+                cell = Bundle.main.loadNibNamed("NEThreePicturesTableViewCell", owner: self, options: nil)?.last as? NEThreePicturesTableViewCell;
             }
             cell?.model = model;
             return cell!;
         }else{
-            var cell = tableView.dequeueReusableCellWithIdentifier("NEPictureCell") as? NEPictureTableViewCell;
+            var cell = tableView.dequeueReusableCell(withIdentifier: "NEPictureCell") as? NEPictureTableViewCell;
             if cell == nil {
-                cell = NSBundle.mainBundle().loadNibNamed("NEPictureTableViewCell", owner: self, options: nil).last as? NEPictureTableViewCell;
+                cell = Bundle.main.loadNibNamed("NEPictureTableViewCell", owner: self, options: nil)?.last as? NEPictureTableViewCell;
             }
             cell?.model = model;
             return cell!;
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let model = self.dataSource[indexPath.row];
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let model = self.dataSource[(indexPath as NSIndexPath).row];
         if model.imgextra.count != 0{
             return 130.0;
         }else{
@@ -89,8 +90,8 @@ override
 
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let model = self.dataSource[indexPath.row];
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = self.dataSource[(indexPath as NSIndexPath).row];
         let vc = NetEaseWebViewController(urlStr: model.url_3w);
         vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true);
@@ -98,8 +99,8 @@ override
     }
 //MARK: - MJRefresh
     
-    func NetURL(refresh: MJRefresh) ->String {
-        if refresh == MJRefresh.Push {
+    func NetURL(_ refresh: MJRefresh) ->String {
+        if refresh == MJRefresh.push {
             let pageCount = page! * 20;
             page! += 1;
             return self.pushURL + String(pageCount) + NetEaseDefaultFooterURL;

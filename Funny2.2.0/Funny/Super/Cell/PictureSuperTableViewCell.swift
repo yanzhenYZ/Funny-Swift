@@ -18,7 +18,7 @@ class PictureSuperTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = UITableViewCellSelectionStyle.None;
+        self.selectionStyle = UITableViewCellSelectionStyle.none;
         self.backgroundColor = FunnyManager.manager.color(246.0, G: 246.0, B: 246.0);
         self.configSuperUI();
         self.configSecondSuperUI();
@@ -27,19 +27,19 @@ class PictureSuperTableViewCell: UITableViewCell {
     
 
     func configSuperUI() {
-        _backView = UIView(frame: CGRectMake(5.0, 5.0, WIDTH - 10.0, 0.0));
-        _backView.backgroundColor = UIColor.whiteColor();
+        _backView = UIView(frame: CGRect(x: 5.0, y: 5.0, width: WIDTH - 10.0, height: 0.0));
+        _backView.backgroundColor = UIColor.white;
         self.contentView.addSubview(_backView);
         
-        _headView = ContentHeadView(frame: CGRectMake(10.0, 10.0, WIDTH - 20, 50.0));
+        _headView = ContentHeadView(frame: CGRect(x: 10.0, y: 10.0, width: WIDTH - 20, height: 50.0));
         self.contentView.addSubview(_headView);
         
-        _userTextLabel = UILabel(frame: CGRectMake(15.0, 65.0, WIDTH - 25.0, 20.0));
-        _userTextLabel.font = UIFont.systemFontOfSize(ContentMainTextFont);
+        _userTextLabel = UILabel(frame: CGRect(x: 15.0, y: 65.0, width: WIDTH - 25.0, height: 20.0));
+        _userTextLabel.font = UIFont.systemFont(ofSize: ContentMainTextFont);
         _userTextLabel.numberOfLines = 0;
         self.contentView.addSubview(_userTextLabel);
         
-        _mainPictureImgaeV = UIImageView(frame: CGRectMake(10, CGRectGetMaxY(_userTextLabel.frame) + 5, WIDTH - 20, 0));
+        _mainPictureImgaeV = UIImageView(frame: CGRect(x: 10, y: _userTextLabel.frame.maxY + 5, width: WIDTH - 20, height: 0));
         self.contentView.addSubview(_mainPictureImgaeV);
         
     }

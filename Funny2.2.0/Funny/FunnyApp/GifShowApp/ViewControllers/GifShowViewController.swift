@@ -9,15 +9,15 @@
 import UIKit
 
 class GifShowViewController: GifShowSuperViewController,VideoPlayBtnActionDelegate {
-    private var dataSource = [GifShowVideoModel]()
-    private var pushIndex: Int = 0
-    private var pullIndex: Int = 0
-    private var refres: Int = 0;
-    private var currentCell :GifShowVideoTableViewCell? = nil;
-    override func viewWillDisappear(animated: Bool) {
+    fileprivate var dataSource = [GifShowVideoModel]()
+    fileprivate var pushIndex: Int = 0
+    fileprivate var pullIndex: Int = 0
+    fileprivate var refres: Int = 0;
+    fileprivate var currentCell :GifShowVideoTableViewCell? = nil;
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
         if (currentCell != nil) {
-            if currentCell?.playButton.hidden == true {
+            if currentCell?.playButton.isHidden == true {
                 FunnyVideoManage.shareVideoManage.tableViewReload();
             }
         }
@@ -29,12 +29,12 @@ class GifShowViewController: GifShowSuperViewController,VideoPlayBtnActionDelega
     }
 
 //MARK: - playVideo
-    func playVideoStart(button: UIButton) {
+    func playVideoStart(_ button: UIButton) {
         currentCell = button.superview?.superview as? GifShowVideoTableViewCell;
-        let indexPath = tableView.indexPathForCell(currentCell!);
-        let currentM = dataSource[indexPath!.row];
+        let indexPath = tableView.indexPath(for: currentCell!);
+        let currentM = dataSource[(indexPath! as NSIndexPath).row];
         if WindowViewManager.shareWindowVideoManage.isWindowViewShow() {
-            currentCell?.playButton.selected = false;
+            currentCell?.playButton.isSelected = false;
             WindowViewManager.shareWindowVideoManage.videoPlayWithVideoUrlString(currentM.main_mv_url);
         }else{
             FunnyVideoManage.shareVideoManage.playVideo(currentCell!, urlString: currentM.main_mv_url);
@@ -42,76 +42,78 @@ class GifShowViewController: GifShowSuperViewController,VideoPlayBtnActionDelega
         
     }
     
-    func playVideoOnWindow(videoCell: VideoSuperTableViewCell) {
+    func playVideoOnWindow(_ videoCell: VideoSuperTableViewCell) {
         currentCell = videoCell as? GifShowVideoTableViewCell;
-        let indexPath = tableView.indexPathForCell(currentCell!);
-        let currentM = dataSource[indexPath!.row];
+        let indexPath = tableView.indexPath(for: currentCell!);
+        let currentM = dataSource[(indexPath! as NSIndexPath).row];
         FunnyVideoManage.shareVideoManage.tableViewReload();
         WindowViewManager.shareWindowVideoManage.videoPlayWithVideoUrlString(currentM.main_mv_url);
     }
 
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
-        let request = NSMutableURLRequest(URL: NSURL(string: GifShowHeadURL)!);
-        request.HTTPMethod = "POST";
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+        let request = NSMutableURLRequest(url: URL(string: GifShowHeadURL)!);
+        request.httpMethod = "POST";
         var bodyString: String? = nil;
-        if refresh == MJRefresh.Pull {
+        if refresh == MJRefresh.pull {
             let index = pullIndex % self.downArray.count;
             bodyString = self.downArray[index];
-        }else if refresh == MJRefresh.Push {
+        }else if refresh == MJRefresh.push {
             let index = pushIndex % self.pageArray.count;
             bodyString = self.pageArray[index];
         }else{
             bodyString = GifShowTest;
         }
         self.refres = refresh.rawValue;
-        let bodyData = bodyString!.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false);
-        request.HTTPBody = bodyData;
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true;
+        let bodyData = bodyString!.data(using: String.Encoding.utf8, allowLossyConversion: false);
+        request.httpBody = bodyData;
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true;
         //
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration();
-        let urlSession = NSURLSession(configuration: config);
-        let task = urlSession.dataTaskWithRequest(request) { (data, response, error) in
-            dispatch_async(dispatch_get_main_queue(), {
-                if data != nil {
-                    self.parsingData(data!);
-                    if baseView != nil {
-                        baseView?.endRefreshing();
-                    }
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
-                    self.tableView.reloadData();
-                }
-            });
-        }
-        task.resume();
+        let config = URLSessionConfiguration.default;
+        let urlSession = URLSession(configuration: config);
+        
+//        let task = urlSession.dataTask(with: request) { (data, response, error) in
+//            DispatchQueue.main.async(execute: {
+//                if data != nil {
+//                    self.parsingData(data!);
+//                    if baseView != nil {
+//                        baseView?.endRefreshing();
+//                    }
+//                    UIApplication.shared.isNetworkActivityIndicatorVisible = false;
+//                    self.tableView.reloadData();
+//                }
+//            });
+//
+//        }
+//        task.resume();
     }
 //MARK: - tableView 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("GifShowVideoCell") as? GifShowVideoTableViewCell;
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "GifShowVideoCell") as? GifShowVideoTableViewCell;
         if cell == nil {
-            cell = GifShowVideoTableViewCell(style:.Default, reuseIdentifier:"GifShowVideoCell");
+            cell = GifShowVideoTableViewCell(style:.default, reuseIdentifier:"GifShowVideoCell");
             cell!.delegate = self;
         }
-        cell!.model = dataSource[indexPath.row];
+        cell!.model = dataSource[(indexPath as NSIndexPath).row];
         if cell!.refresh() {
             FunnyVideoManage.shareVideoManage.tableViewReload();
-            cell?.playButton.selected = false;
+            cell?.playButton.isSelected = false;
         }
         return cell!;
     }
     
-    private func parsingData(data: NSData) {
-        let dict = (try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)) as! Dictionary<String,AnyObject>;
+    fileprivate func parsingData(_ data: Data) {
+        let dict = (try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)) as! Dictionary<String,AnyObject>;
         let feedsArray = dict["feeds"] as! Array<AnyObject>;
-        for (_,value) in feedsArray.enumerate() {
+        for (_,value) in feedsArray.enumerated() {
             let valueDict = value as! Dictionary<String,AnyObject>;
             let model = GifShowVideoModel();
-            model.setValuesForKeysWithDictionary(valueDict);
-            if self.refres == MJRefresh.Pull.rawValue {
-                self.dataSource.insert(model, atIndex: 0);
+            model.setValuesForKeys(valueDict);
+            if self.refres == MJRefresh.pull.rawValue {
+                self.dataSource.insert(model, at: 0);
             }else{
                 self.dataSource.append(model);
             }

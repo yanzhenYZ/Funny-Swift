@@ -23,32 +23,32 @@ class WindowLoadingView: UIView {
         self.configUI();
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if !tipLabel.hidden {
-            self.hidden = true;
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if !tipLabel.isHidden {
+            self.isHidden = true;
             self.delegate?.windowLoadingViewDismiss();
         }
     }
     
-    private func configUI() {
-        indicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge);
+    fileprivate func configUI() {
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge);
         indicator.color = FunnyColor;
         indicator.hidesWhenStopped = true;
         self.addSubview(indicator);
         
         tipLabel = UILabel();
         tipLabel.text = "加载失败";
-        tipLabel.textAlignment = .Center;
+        tipLabel.textAlignment = .center;
         tipLabel.textColor = FunnyColor;
-        tipLabel.font = UIFont.systemFontOfSize(15);
-        tipLabel.hidden = true;
+        tipLabel.font = UIFont.systemFont(ofSize: 15);
+        tipLabel.isHidden = true;
         self.addSubview(tipLabel);
     }
     
     override func layoutSubviews() {
         super.layoutSubviews();
-        indicator.center = CGPointMake(self.width * 0.5, self.height * 0.5 - 7);
-        tipLabel.frame = CGRectMake(0, self.height - 25, self.width, 25);
+        indicator.center = CGPoint(x: self.width * 0.5, y: self.height * 0.5 - 7);
+        tipLabel.frame = CGRect(x: 0, y: self.height - 25, width: self.width, height: 25);
     }
     
     required init?(coder aDecoder: NSCoder) {

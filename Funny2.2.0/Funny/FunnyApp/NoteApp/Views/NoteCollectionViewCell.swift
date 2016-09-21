@@ -9,14 +9,14 @@
 import UIKit
 
 protocol NoteCellProtocol : NSObjectProtocol{
-    func modifyNote(noteCell: NoteCollectionViewCell)
-    func deleteNote(noteCell: NoteCollectionViewCell)
+    func modifyNote(_ noteCell: NoteCollectionViewCell)
+    func deleteNote(_ noteCell: NoteCollectionViewCell)
 }
 class NoteCollectionViewCell: UICollectionViewCell {
 
     weak var delegate: NoteCellProtocol?
-    @IBOutlet private weak var timeLabel: UILabel!
-    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet fileprivate weak var timeLabel: UILabel!
+    @IBOutlet fileprivate weak var textView: UITextView!
     @IBOutlet weak var deleteBtn: UIButton!
     var model: NoteModel! {
         didSet{
@@ -32,12 +32,12 @@ class NoteCollectionViewCell: UICollectionViewCell {
         self.textView.addGestureRecognizer(tap);
     }
 
-    @IBAction func deleteBtnClick(sender: UIButton) {
+    @IBAction func deleteBtnClick(_ sender: UIButton) {
         //可以把自己传过去
         delegate?.deleteNote(self);
     }
     
-    func tapAction(tap: UITapGestureRecognizer) {
+    func tapAction(_ tap: UITapGestureRecognizer) {
         delegate?.modifyNote(self);
     }
 }

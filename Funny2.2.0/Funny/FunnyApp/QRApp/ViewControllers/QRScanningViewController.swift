@@ -10,41 +10,41 @@ import UIKit
 
 class QRScanningViewController: UIViewController {
 
-    private var transition: YZTransition!
-    @IBOutlet private weak var openURLBtn: UIButton!
-    @IBOutlet private weak var textView: UITextView!
+    fileprivate var transition: YZTransition!
+    @IBOutlet fileprivate weak var openURLBtn: UIButton!
+    @IBOutlet fileprivate weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
-    @IBAction func startScanning(sender: UIButton) {
+    @IBAction func startScanning(_ sender: UIButton) {
         self.textView.text = "";
-        openURLBtn.hidden = true;
+        openURLBtn.isHidden = true;
         
         let vc = QRStartScanViewController(isFromWindow: false);
         vc.scanVC = self;
         transition = YZTransition();
-        transition.type = .FromTop;
-        vc.modalPresentationStyle = .Custom;
+        transition.type = .fromTop;
+        vc.modalPresentationStyle = .custom;
         vc.transitioningDelegate = transition;
-        self.navigationController?.presentViewController(vc, animated: true, completion: { 
+        self.navigationController?.present(vc, animated: true, completion: { 
 //            self.transition.type = .FromLeft;
         });
         
     }
 
-    @IBAction func openURL(sender: UIButton) {
+    @IBAction func openURL(_ sender: UIButton) {
         if textView.text.isEmpty {
             return;
         }
-        UIApplication.sharedApplication().openURL(NSURL(string: textView.text)!);
+        UIApplication.shared.openURL(URL(string: textView.text)!);
     }
     
-    func scanningDone(result: String) {
-        openURLBtn.hidden = !FunnyManager.manager.isNetURL(result);
-        textView.hidden = false;
+    func scanningDone(_ result: String) {
+        openURLBtn.isHidden = !FunnyManager.manager.isNetURL(result);
+        textView.isHidden = false;
         textView.text = result;
     }
     

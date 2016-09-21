@@ -9,15 +9,15 @@
 import UIKit
 
 protocol LockViewProtocol: NSObjectProtocol {
-    func lockPasswordString(password: String);
+    func lockPasswordString(_ password: String);
 }
 class LockView: UIView {
 
     weak var delegate: LockViewProtocol?
     var btnsArray = [UIButton]()
-    var movePoint: CGPoint! = CGPointZero
+    var movePoint: CGPoint! = CGPoint.zero
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         if btnsArray.count <= 0 {
             return;
         }
@@ -26,57 +26,57 @@ class LockView: UIView {
         for i in 0 ..< btnsArray.count {
             let btn = btnsArray[i];
             if i == 0 {
-                path.moveToPoint(btn.center);
+                path.move(to: btn.center);
             }else{
-                path.addLineToPoint(btn.center);
+                path.addLine(to: btn.center);
             }
         }
-        path.addLineToPoint(movePoint);
-        UIColor.greenColor().set();
+        path.addLine(to: movePoint);
+        UIColor.green.set();
         path.lineWidth = 3.0;
-        path.lineJoinStyle = CGLineJoin.Round;
+        path.lineJoinStyle = CGLineJoin.round;
         path.stroke();
     }
     
 //MARK: - Touch
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.isFirstDraw();
         let t = touches as NSSet;
         let touch = t.anyObject() as! UITouch;
-        let point = touch.locationInView(self);
+        let point = touch.location(in: self);
         let touchButton = self.buttonWithPoint(point);
-        if touchButton != nil && touchButton?.selected == false{
-            touchButton?.selected = true;
+        if touchButton != nil && touchButton?.isSelected == false{
+            touchButton?.isSelected = true;
             btnsArray.append(touchButton!);
         }
         
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let t = touches as NSSet;
         let touch = t.anyObject() as! UITouch;
-        movePoint = touch.locationInView(self);
+        movePoint = touch.location(in: self);
         let touchButton = self.buttonWithPoint(movePoint);
-        if touchButton != nil && touchButton?.selected == false{
-            touchButton?.selected = true;
+        if touchButton != nil && touchButton?.isSelected == false{
+            touchButton?.isSelected = true;
             btnsArray.append(touchButton!);
         }
         self.setNeedsDisplay();
 
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.isPasswordRight();
     }
     
 //MARK: - private
     
-    private func isPasswordRight() {
+    fileprivate func isPasswordRight() {
         if btnsArray.count <= 0 {
             return;
         }
         var passwordString = "";
-        for (index,_) in btnsArray.enumerate() {
+        for (index,_) in btnsArray.enumerated() {
             let btn = btnsArray[index];
             passwordString += String(btn.tag - 10000);
         }
@@ -85,14 +85,14 @@ class LockView: UIView {
         self.renewOriginalStatus();
     }
     
-    private func isFirstDraw() {
+    fileprivate func isFirstDraw() {
         self.renewOriginalStatus();
     }
     
-    private func buttonWithPoint(point: CGPoint) ->UIButton? {
-        for (_,value) in self.subviews.enumerate() {
+    fileprivate func buttonWithPoint(_ point: CGPoint) ->UIButton? {
+        for (_,value) in self.subviews.enumerated() {
             let btn = value as! UIButton;
-            if CGRectContainsPoint(btn.frame, point){
+            if btn.frame.contains(point){
                 return btn;
             }
         }
@@ -119,28 +119,28 @@ class LockView: UIView {
             let btn = self.subviews[i] as! UIButton;
             btnX = space + (space + btnWH) * CGFloat(col);
             btnY = (space + btnWH) * CGFloat(row) + 20.0;
-            btn.frame = CGRectMake(btnX, btnY, btnWH, btnWH);
+            btn.frame = CGRect(x: btnX, y: btnY, width: btnWH, height: btnWH);
         }
     }
     
-    private func addBtns() {
+    fileprivate func addBtns() {
         for i in 0 ..< 9 {
-            let btn = UIButton(type: UIButtonType.Custom);
-            btn.setImage(UIImage(named: "gesture_node_normal"), forState: UIControlState.Normal);
-            btn.setImage(UIImage(named: "gesture_node_highlighted"), forState: UIControlState.Selected);
+            let btn = UIButton(type: UIButtonType.custom);
+            btn.setImage(UIImage(named: "gesture_node_normal"), for: UIControlState());
+            btn.setImage(UIImage(named: "gesture_node_highlighted"), for: UIControlState.selected);
             btn.tag = 10000+i;
-            btn.userInteractionEnabled = false;
+            btn.isUserInteractionEnabled = false;
             self.addSubview(btn);
         }
     }
 //MARK: - public 
     func renewOriginalStatus() {
         if btnsArray.count > 0 {
-            for (index,_) in btnsArray.enumerate() {
+            for (index,_) in btnsArray.enumerated() {
                 let btn = btnsArray[index];
-                btn.selected = false;
+                btn.isSelected = false;
             }
-            btnsArray.removeAll(keepCapacity: false);
+            btnsArray.removeAll(keepingCapacity: false);
         }
         self.setNeedsDisplay();
     }

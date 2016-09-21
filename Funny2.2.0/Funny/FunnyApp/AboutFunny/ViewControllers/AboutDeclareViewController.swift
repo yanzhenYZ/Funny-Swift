@@ -10,9 +10,9 @@ import UIKit
 
 class AboutDeclareViewController: UIViewController {
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default);
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default);
         self.navigationController?.navigationBar.shadowImage = nil;
     }
 
@@ -24,10 +24,10 @@ class AboutDeclareViewController: UIViewController {
         
     }
 
-    private func configUI() {
+    fileprivate func configUI() {
         
-        let declareLabel = UILabel(frame: CGRectMake(20, 80, WIDTH-40, 0));
-        declareLabel.font = UIFont.systemFontOfSize(20.0);
+        let declareLabel = UILabel(frame: CGRect(x: 20, y: 80, width: WIDTH-40, height: 0));
+        declareLabel.font = UIFont.systemFont(ofSize: 20.0);
         declareLabel.numberOfLines = 0;
         //declareLabel.textColor = UIColor.blackColor();
         declareLabel.text = "Most of the resources of the App are from the network, the App does not do business purposes, will not have any resource owners infringement.This app's system is swift2.2. \n\n该App支持iPhone6和iPhone6s,其他设备会出现适配问题。";
@@ -36,9 +36,9 @@ class AboutDeclareViewController: UIViewController {
         let newSize = FunnyManager.manager.LabelSize(declareLabel.text!, width: WIDTH - 40, font: 20.0);
         declareLabel.height = newSize.height;
         
-        let myLabel = UILabel(frame: CGRectMake(20, CGRectGetMaxY(declareLabel.frame) + 10, WIDTH - 40, 25));
+        let myLabel = UILabel(frame: CGRect(x: 20, y: declareLabel.frame.maxY + 10, width: WIDTH - 40, height: 25));
         myLabel.text = "----- Y&Z";
-        myLabel.textAlignment = NSTextAlignment.Right;
+        myLabel.textAlignment = NSTextAlignment.right;
         self.view.addSubview(myLabel);
 
         

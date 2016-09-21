@@ -18,13 +18,13 @@ class SinaRecommendViewController: SinaNewsSuperViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func NetURL(refresh: MJRefresh) -> String {
+    override func NetURL(_ refresh: MJRefresh) -> String {
         
-        if refresh == MJRefresh.Push{
+        if refresh == MJRefresh.push{
             let url = SinaRecommendPushHeadURL + String(page!) + SinaNewsDefaultFootURL + self.titleName;
             page! += 20;
             return url;
-        }else if refresh == MJRefresh.Pull{
+        }else if refresh == MJRefresh.pull{
             let url = SinaRecommendPullHeadURL + String(page!) + SinaNewsDefaultFootURL + self.titleName;
             page! += 6;
             return url;

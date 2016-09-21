@@ -30,7 +30,7 @@ class SomeWhatPictureModel: NSObject {
     /**         图片地址           */
     var url: String!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
     

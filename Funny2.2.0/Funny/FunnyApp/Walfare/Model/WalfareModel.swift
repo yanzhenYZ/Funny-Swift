@@ -73,6 +73,6 @@ class WalfareModel: NSObject {
     /**      描述文字      */
     var wbody: String!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
     }
 }

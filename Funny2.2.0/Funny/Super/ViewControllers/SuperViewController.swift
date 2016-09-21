@@ -11,14 +11,14 @@ import AudioToolbox
 
 class SuperViewController: UIViewController {
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.netStatusChange), name: kReachabilityChangedNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.netStatusChange), name: NSNotification.Name.reachabilityChanged, object: nil);
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: kReachabilityChangedNotification, object: nil);
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.reachabilityChanged, object: nil);
     }
     
     override func viewDidLoad() {
@@ -29,11 +29,11 @@ class SuperViewController: UIViewController {
     }
     
     func configSuperUI() {
-        let superBtn = UIButton(type: UIButtonType.System);
-        superBtn.frame = CGRectMake(0, 0, 40, 40);
-        let imageS = UIImage(named: "weibo_profile_s")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
-        superBtn.setImage(imageS, forState: UIControlState.Normal);
-        superBtn.addTarget(self, action: #selector(self.aboutMy), forControlEvents: UIControlEvents.TouchUpInside);
+        let superBtn = UIButton(type: UIButtonType.system);
+        superBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
+        let imageS = UIImage(named: "weibo_profile_s")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal);
+        superBtn.setImage(imageS, for: UIControlState());
+        superBtn.addTarget(self, action: #selector(self.aboutMy), for: UIControlEvents.touchUpInside);
         let superRightItem = UIBarButtonItem(customView: superBtn);
         self.navigationItem.rightBarButtonItem = superRightItem;
     }
@@ -49,8 +49,8 @@ class SuperViewController: UIViewController {
         if netStatus != ReachableViaWiFi {
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
             let hud = MBProgressHUD.showMessage("WIFI中断,请退出程序");
-            hud.labelColor = UIColor.redColor();
-            hud.hide(true, afterDelay: 2.0);
+            hud?.labelColor = UIColor.red;
+            hud?.hide(true, afterDelay: 2.0);
         }
     }
 }

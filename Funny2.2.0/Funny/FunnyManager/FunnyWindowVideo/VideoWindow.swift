@@ -7,12 +7,32 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class VideoWindow: UIWindow {
 
-    private var videoView: UIView?
-    private var beginPoint: CGPoint!
-    private var scale: CGFloat! = 1.0
+    fileprivate var videoView: UIView?
+    fileprivate var beginPoint: CGPoint!
+    fileprivate var scale: CGFloat! = 1.0
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -21,7 +41,7 @@ class VideoWindow: UIWindow {
         self.addGestureRecognizer(pin);
     }
     
-    func pinGestureAction(pin: UIPinchGestureRecognizer) {
+    func pinGestureAction(_ pin: UIPinchGestureRecognizer) {
         scale = pin.scale;
         if scale > 1.0 {
             if self.width * scale > WIDTH {
@@ -32,9 +52,9 @@ class VideoWindow: UIWindow {
                 scale = 200.0 / self.width;
             }
         }
-        self.transform = CGAffineTransformScale(self.transform, scale, scale);
+        self.transform = self.transform.scaledBy(x: scale, y: scale);
         pin.scale = 1.0;
-        if pin.state == .Ended {
+        if pin.state == .ended {
             self.resetFrame();
         }
     }
@@ -43,14 +63,14 @@ class VideoWindow: UIWindow {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func makeWindowView(view: UIView) {
+    func makeWindowView(_ view: UIView) {
         if videoView == view {
             return;
         }
         videoView = view;
         self.frame = view.frame;
         if self.subviews.count > 0 {
-            for (_,value) in self.subviews.enumerate() {
+            for (_,value) in self.subviews.enumerated() {
                 value.removeFromSuperview();
             }
         }
@@ -59,24 +79,24 @@ class VideoWindow: UIWindow {
     
     
 //MARK: - Touch
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         beginPoint = self.myPoint(touches);
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let nowPoint = self.myPoint(touches);
         let offsetX = nowPoint.x - beginPoint.x;
         let offsetY = nowPoint.y - beginPoint.y;
         let centerX = self.center.x + offsetX;
         let centerY = self.center.y + offsetY;
-        self.center = CGPointMake(centerX, centerY);
+        self.center = CGPoint(x: centerX, y: centerY);
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.resetFrame();
     }
     
-    private func resetFrame() {
+    fileprivate func resetFrame() {
         var centerX = self.center.x;
         var centerY = self.center.y;
         if(centerX < self.width / 2)
@@ -97,15 +117,15 @@ class VideoWindow: UIWindow {
             centerY = HEIGHT - self.height / 2;
         }
         
-        UIView.animateWithDuration(0.25) {
-            self.center = CGPointMake(centerX, centerY);
-        }
+        UIView.animate(withDuration: 0.25, animations: {
+            self.center = CGPoint(x: centerX, y: centerY);
+        }) 
     }
     
-    private func myPoint(touches: Set<NSObject>) ->CGPoint{
+    fileprivate func myPoint(_ touches: Set<NSObject>) ->CGPoint{
         let t = touches as NSSet;
         let touch = t.anyObject() as! UITouch;
-        return touch.locationInView(self);
+        return touch.location(in: self);
     }
     
     override func layoutSubviews() {

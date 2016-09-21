@@ -10,10 +10,10 @@ import UIKit
 
 class SecretTableViewCell: UITableViewCell {
 
-    @IBOutlet private weak var companyLabel: UILabel!
-    @IBOutlet private weak var accountLabel: UILabel!
-    @IBOutlet private weak var passwordLabel: UILabel!
-    @IBOutlet private weak var remarksLabel: UILabel!
+    @IBOutlet fileprivate weak var companyLabel: UILabel!
+    @IBOutlet fileprivate weak var accountLabel: UILabel!
+    @IBOutlet fileprivate weak var passwordLabel: UILabel!
+    @IBOutlet fileprivate weak var remarksLabel: UILabel!
     
     
     var model: SecretModel! {

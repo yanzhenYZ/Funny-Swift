@@ -9,23 +9,22 @@
 import UIKit
 
 protocol SecretTitleViewDelegate : NSObjectProtocol{
-    func SecretTitleViewSelect(indexPath: NSIndexPath)
+    func SecretTitleViewSelect(_ indexPath: IndexPath)
 }
 class SecretTitleView: UIView ,UITableViewDataSource,UITableViewDelegate{
 
     weak var delegate: SecretTitleViewDelegate?
-    var isHidden: Bool!
+    var isHidden1: Bool = true;
     var tableView: UITableView!
     
     override init(frame: CGRect) {
         super.init(frame: frame);
-        isHidden = true;
         self.clipsToBounds = true;
         self.configUI();
     }
 
-    private func configUI() {
-        tableView = UITableView(frame: CGRectMake(0, 0, self.width, 132));
+    fileprivate func configUI() {
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.width, height: 132));
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.rowHeight = 44.0;
@@ -33,38 +32,38 @@ class SecretTitleView: UIView ,UITableViewDataSource,UITableViewDelegate{
     }
     
 //MARK: - tableview
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return secretTitleArray.count;
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("SecretTitleViewCell");
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "SecretTitleViewCell");
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "SecretTitleViewCell");
+            cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "SecretTitleViewCell");
         }
-        cell!.textLabel!.text = secretTitleArray[indexPath.row];
+        cell!.textLabel!.text = secretTitleArray[(indexPath as NSIndexPath).row];
         return cell!;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.SecretTitleViewSelect(indexPath);
         self.toggleSecretTitleView();
     }
 
     func toggleSecretTitleView() {
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             var height: CGFloat = 0.0;
-            if self.isHidden == true {
+            if self.isHidden1 == true {
                 height = 132.0;
             }
-            self.frame = CGRectMake(self.x, self.y, self.width, height)
-        }) { (finished) -> Void in
-            self.isHidden = !self.isHidden;
-        }
+            self.frame = CGRect(x: self.x, y: self.y, width: self.width, height: height)
+        }, completion: { (finished) -> Void in
+            self.isHidden1 = !self.isHidden1;
+        }) 
     }
     
     

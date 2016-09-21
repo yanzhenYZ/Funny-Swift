@@ -40,7 +40,7 @@ class SinaNewsModel: NSObject {
     var pics: Dictionary<String,AnyObject>!
     
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
     }
 
 }

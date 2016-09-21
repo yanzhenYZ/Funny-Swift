@@ -11,38 +11,38 @@ import UIKit
 class SecretRecordViewController: SuperSecondViewController,UITableViewDataSource, UITableViewDelegate {
     
     var dataSource = [Array<AnyObject>]()
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var tableView: UITableView!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        self.navigationController?.navigationBarHidden = false;
+        self.navigationController?.isNavigationBarHidden = false;
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let error: NSErrorPointer = nil;
-        let exist = NSFileManager.defaultManager().fileExistsAtPath(SecretPathHeader);
+        let error: NSErrorPointer? = nil;
+        let exist = FileManager.default.fileExists(atPath: SecretPathHeader);
         if !exist {
             do {
-                try NSFileManager.defaultManager().createDirectoryAtPath(SecretPathHeader, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: SecretPathHeader, withIntermediateDirectories: true, attributes: nil)
             } catch let error1 as NSError {
-                error.memory = error1
+                error??.pointee = error1
             };
         }
-        let rightItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(self.rightButtonAction));
+        let rightItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(self.rightButtonAction));
         self.navigationItem.rightBarButtonItem = rightItem;
         
-        self.tableView.registerNib(UINib(nibName: "SecretTableViewCell", bundle: nil), forCellReuseIdentifier: "SecretTableViewCell");
+        self.tableView.register(UINib(nibName: "SecretTableViewCell", bundle: nil), forCellReuseIdentifier: "SecretTableViewCell");
         self.loadData();
     }
     
     //MARK: - 加载数据
     func loadData() {
         if dataSource.count > 0 {
-            self.dataSource.removeAll(keepCapacity: true);
+            self.dataSource.removeAll(keepingCapacity: true);
         }
-        for (index,_) in secretFilePathArray.enumerate() {
+        for (index,_) in secretFilePathArray.enumerated() {
             let array = SecretTool().secretArrayOfFilePath(secretFilePathArray[index]);
             dataSource.append(array!);
         }
@@ -50,11 +50,11 @@ class SecretRecordViewController: SuperSecondViewController,UITableViewDataSourc
     
     
     //MARK: - tableView
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count;
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if dataSource.count > section
         {
             let array = dataSource[section];
@@ -63,71 +63,71 @@ class SecretRecordViewController: SuperSecondViewController,UITableViewDataSourc
         return 0;
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell=tableView.dequeueReusableCellWithIdentifier("SecretTableViewCell", forIndexPath: indexPath) as! SecretTableViewCell;
-        let array = dataSource[indexPath.section];
-        cell.model = array[indexPath.row] as! SecretModel;
+        let cell=tableView.dequeueReusableCell(withIdentifier: "SecretTableViewCell", for: indexPath) as! SecretTableViewCell;
+        let array = dataSource[(indexPath as NSIndexPath).section];
+        cell.model = array[(indexPath as NSIndexPath).row] as! SecretModel;
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longGestureAction(_:)));
         cell.addGestureRecognizer(longGesture);
         return cell;
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return secretTitleArray[section];
     }
     
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete;
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.delete;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = SecretNewItemViewController(nibName: "SecretNewItemViewController", bundle: nil);
         vc.recordVC = self;
         vc.indexPath = indexPath;
-        var array = dataSource[indexPath.section];
-        vc.model = array[indexPath.row] as! SecretModel;
+        var array = dataSource[(indexPath as NSIndexPath).section];
+        vc.model = array[(indexPath as NSIndexPath).row] as! SecretModel;
         vc.isModify = true;
         self.navigationController?.pushViewController(vc, animated: true);
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
             self.deleteItem(indexPath);
         }
     }
     
     //MARK: - Add Delete Modify
-    func addNewItem(index: Int, model: SecretModel) {
+    func addNewItem(_ index: Int, model: SecretModel) {
         SecretTool().addNewSecretItem(secretFilePathArray[index], model: model);
         
         var array = dataSource[index];
         array.append(model);
-        dataSource.removeAtIndex(index);
-        dataSource.insert(array, atIndex: index);
+        dataSource.remove(at: index);
+        dataSource.insert(array, at: index);
         tableView.reloadData();
     }
     
-    func deleteItem(indexPath: NSIndexPath) {
-        SecretTool().deleteSecretItem(secretFilePathArray[indexPath.section], index: indexPath.row);
+    func deleteItem(_ indexPath: IndexPath) {
+        SecretTool().deleteSecretItem(secretFilePathArray[(indexPath as NSIndexPath).section], index: (indexPath as NSIndexPath).row);
         
-        var array = dataSource[indexPath.section];
-        array.removeAtIndex(indexPath.row);
-        dataSource.removeAtIndex(indexPath.section);
-        dataSource.insert(array, atIndex: indexPath.section);
+        var array = dataSource[(indexPath as NSIndexPath).section];
+        array.remove(at: (indexPath as NSIndexPath).row);
+        dataSource.remove(at: (indexPath as NSIndexPath).section);
+        dataSource.insert(array, at: (indexPath as NSIndexPath).section);
         tableView.reloadData();
         
     }
     
-    func modifyItem(indexPath: NSIndexPath, model: SecretModel) {
-        SecretTool().modifySecretItem(secretFilePathArray[indexPath.section], index: indexPath.row, model: model);
+    func modifyItem(_ indexPath: IndexPath, model: SecretModel) {
+        SecretTool().modifySecretItem(secretFilePathArray[(indexPath as NSIndexPath).section], index: (indexPath as NSIndexPath).row, model: model);
         
-        var array = dataSource[indexPath.section];
-        array.removeAtIndex(indexPath.row);
-        array.insert(model, atIndex: indexPath.row);
-        dataSource.removeAtIndex(indexPath.section);
-        dataSource.insert(array, atIndex: indexPath.section);
+        var array = dataSource[(indexPath as NSIndexPath).section];
+        array.remove(at: (indexPath as NSIndexPath).row);
+        array.insert(model, at: (indexPath as NSIndexPath).row);
+        dataSource.remove(at: (indexPath as NSIndexPath).section);
+        dataSource.insert(array, at: (indexPath as NSIndexPath).section);
         tableView.reloadData();
     }
     
@@ -138,11 +138,11 @@ class SecretRecordViewController: SuperSecondViewController,UITableViewDataSourc
         self.navigationController?.pushViewController(vc, animated: true);
     }
     
-    func longGestureAction(longGesture: UILongPressGestureRecognizer) {
-        if longGesture.state != UIGestureRecognizerState.Began{
+    func longGestureAction(_ longGesture: UILongPressGestureRecognizer) {
+        if longGesture.state != UIGestureRecognizerState.began{
             return;
         }
-        self.tableView.editing = !self.tableView.editing;
+        self.tableView.isEditing = !self.tableView.isEditing;
     }
     
 }

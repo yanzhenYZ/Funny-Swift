@@ -16,7 +16,7 @@ class DrawPicturePath: UIBezierPath {
         super.init();
         self.lineWidth = lineWidth;
         self.color = lineColor;
-        self.moveToPoint(startPoint);
+        self.move(to: startPoint);
     }
 
     required init(coder aDecoder: NSCoder) {

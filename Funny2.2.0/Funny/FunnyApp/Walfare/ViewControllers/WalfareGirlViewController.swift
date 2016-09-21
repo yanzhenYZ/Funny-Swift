@@ -16,12 +16,12 @@ class WalfareGirlViewController: WalfarePictureViewController{
         // Do any additional setup after loading the view.
     }
     
-    private func PictureCell(tableView: UITableView, indexPath: NSIndexPath) ->WalfareGirlTableViewCell{
-        var cell = tableView.dequeueReusableCellWithIdentifier("WalfareGirlCell") as? WalfareGirlTableViewCell;
+    fileprivate func PictureCell(_ tableView: UITableView, indexPath: IndexPath) ->WalfareGirlTableViewCell{
+        var cell = tableView.dequeueReusableCell(withIdentifier: "WalfareGirlCell") as? WalfareGirlTableViewCell;
         if cell == nil {
-            cell = WalfareGirlTableViewCell(style:.Default, reuseIdentifier:"WalfareGirlCell");
+            cell = WalfareGirlTableViewCell(style:.default, reuseIdentifier:"WalfareGirlCell");
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         return cell!;
     }
 }

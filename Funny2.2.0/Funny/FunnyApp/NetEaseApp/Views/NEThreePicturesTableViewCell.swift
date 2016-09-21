@@ -10,22 +10,22 @@ import UIKit
 
 class NEThreePicturesTableViewCell: UITableViewCell {
 
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var leftImageView: UIImageView!
-    @IBOutlet private weak var rightImageView: UIImageView!
-    @IBOutlet private weak var middleImageView: UIImageView!
+    @IBOutlet fileprivate weak var titleLabel: UILabel!
+    @IBOutlet fileprivate weak var leftImageView: UIImageView!
+    @IBOutlet fileprivate weak var rightImageView: UIImageView!
+    @IBOutlet fileprivate weak var middleImageView: UIImageView!
     
     var model: NetEaseModel! {
         didSet{
             titleLabel.text = model.title;
-            leftImageView.sd_setImageWithURL(NSURL(string: model.imgsrc), placeholderImage: SmallImage);
+            leftImageView.sd_setImage(with: URL(string: model.imgsrc), placeholderImage: SmallImage);
             
             print(model.imgextra);
             let middleImageURL = model.imgextra[0]["imgsrc"] as! String;
-            middleImageView.sd_setImageWithURL(NSURL(string: middleImageURL), placeholderImage: SmallImage);
+            middleImageView.sd_setImage(with: URL(string: middleImageURL), placeholderImage: SmallImage);
             
             let rightImageURL = model.imgextra[1]["imgsrc"] as! String;
-            rightImageView.sd_setImageWithURL(NSURL(string: rightImageURL), placeholderImage: SmallImage);
+            rightImageView.sd_setImage(with: URL(string: rightImageURL), placeholderImage: SmallImage);
             
         }
     }

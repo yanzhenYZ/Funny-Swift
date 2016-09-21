@@ -17,7 +17,7 @@ class ContentVideoTableViewCell: VideoSuperTableViewCell {
     var smallView: ContentOtherUserView!
     
     override func configSuperSecondUI() {
-        smallView = ContentOtherUserView(frame: CGRectMake(10.0, CGRectGetMaxY(mainImageView.frame)+10, WIDTH - 20.0, 0));
+        smallView = ContentOtherUserView(frame: CGRect(x: 10.0, y: mainImageView.frame.maxY+10, width: WIDTH - 20.0, height: 0));
         self.contentView.addSubview(smallView);
 //        self.noShare = true;
     }
@@ -27,13 +27,13 @@ class ContentVideoTableViewCell: VideoSuperTableViewCell {
             _headView.headImageView(groupModel.avatar_url, name: groupModel.name, time: groupModel.create_time);
             
             if groupModel.text.isEmpty {
-                _userTextLabel.frame = CGRectMake(15.0, 65.0, WIDTH - 25.0, 0);
+                _userTextLabel.frame = CGRect(x: 15.0, y: 65.0, width: WIDTH - 25.0, height: 0);
             }else{
                 _userTextLabel.text = groupModel.text;
                 let newSize = FunnyManager.manager.LabelSize(groupModel.text, width: WIDTH - 25.0, font: ContentMainTextFont)
                 _userTextLabel.height = newSize.height;
             }
-            var originW = groupModel.width.integerValue;
+            var originW = groupModel.width.intValue;
             if originW == 0 {
                 originW = 1;
             }
@@ -41,18 +41,18 @@ class ContentVideoTableViewCell: VideoSuperTableViewCell {
             shareURL = groupModel.url;
             shareTitle = groupModel.text;
             
-            let originH = groupModel.height.integerValue;
+            let originH = groupModel.height.intValue;
             let scale = mainImageView.frame.size.width / CGFloat(originW);
             let imageHeight = CGFloat(originH) * scale;
-            mainImageView.frame = CGRectMake(10.0, CGRectGetMaxY(_userTextLabel.frame)+10, WIDTH-20, imageHeight);
-            let mainImageURL = NSURL(string: groupModel.imageURL);
-            mainImageView.sd_setImageWithURL(mainImageURL, placeholderImage:BigImage);
+            mainImageView.frame = CGRect(x: 10.0, y: _userTextLabel.frame.maxY+10, width: WIDTH-20, height: imageHeight);
+            let mainImageURL = URL(string: groupModel.imageURL);
+            mainImageView.sd_setImage(with: mainImageURL, placeholderImage:BigImage);
             
-            playButton.frame = CGRectMake(mainImageView.maxX - 70, mainImageView.maxY - 62, 70, 62);
-            progressView.frame = CGRectMake(10.0, CGRectGetMaxY(mainImageView.frame), WIDTH - 20.0, 2.0);
+            playButton.frame = CGRect(x: mainImageView.maxX - 70, y: mainImageView.maxY - 62, width: 70, height: 62);
+            progressView.frame = CGRect(x: 10.0, y: mainImageView.frame.maxY, width: WIDTH - 20.0, height: 2.0);
             
-            _backView.height = CGRectGetMaxY(mainImageView.frame)+9;
-            rowHeight = CGRectGetMaxY(_backView.frame) + 2.5;
+            _backView.height = mainImageView.frame.maxY+9;
+            rowHeight = _backView.frame.maxY + 2.5;
         }
     }
     
@@ -61,9 +61,9 @@ class ContentVideoTableViewCell: VideoSuperTableViewCell {
             if commentModel.avatar_url == nil {
                 commentModel.avatar_url = "http://imgsrc.baidu.com/forum/w=580/sign=4a2ae49304087bf47dec57e1c2d1575e/f66bf21fbe096b63a19b85880a338744eaf8ac12.jpg"
             }
-            smallView.otherUserView(CGRectGetMaxY(mainImageView.frame)+10, urlString:commentModel.avatar_url, name: commentModel.user_name, text: commentModel.text);
-            _backView.height = CGRectGetMaxY(smallView.frame)+5;
-            rowHeight = CGRectGetMaxY(_backView.frame) + 2.5;
+            smallView.otherUserView(mainImageView.frame.maxY+10, urlString:commentModel.avatar_url, name: commentModel.user_name, text: commentModel.text);
+            _backView.height = smallView.frame.maxY+5;
+            rowHeight = _backView.frame.maxY + 2.5;
         }
     }
 }

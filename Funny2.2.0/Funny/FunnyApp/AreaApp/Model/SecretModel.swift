@@ -15,20 +15,20 @@ class SecretModel: NSObject,NSCoding {
     var password: String! = nil
     var remarks: String! = nil
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(company, forKey: COMPANY);
-        aCoder.encodeObject(account, forKey: ACCOUNT);
-        aCoder.encodeObject(password, forKey: PASSWORD);
-        aCoder.encodeObject(remarks, forKey: REMARKS);
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(company, forKey: COMPANY);
+        aCoder.encode(account, forKey: ACCOUNT);
+        aCoder.encode(password, forKey: PASSWORD);
+        aCoder.encode(remarks, forKey: REMARKS);
         
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init();
-        company = aDecoder.decodeObjectForKey(COMPANY) as! String;
-        account = aDecoder.decodeObjectForKey(ACCOUNT) as! String;
-        password = aDecoder.decodeObjectForKey(PASSWORD) as! String;
-        remarks = aDecoder.decodeObjectForKey(REMARKS) as! String;
+        company = aDecoder.decodeObject(forKey: COMPANY) as! String;
+        account = aDecoder.decodeObject(forKey: ACCOUNT) as! String;
+        password = aDecoder.decodeObject(forKey: PASSWORD) as! String;
+        remarks = aDecoder.decodeObject(forKey: REMARKS) as! String;
     }
     
     override init() {

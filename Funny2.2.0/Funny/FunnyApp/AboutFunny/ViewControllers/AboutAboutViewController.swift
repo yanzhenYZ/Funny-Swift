@@ -10,12 +10,12 @@ import UIKit
 
 class AboutAboutViewController: UIViewController,UIViewControllerPreviewingDelegate {
 
-    @IBOutlet private weak var versonLabel: UILabel!
-    @IBOutlet private weak var aboutImageView: UIImageView!
+    @IBOutlet fileprivate weak var versonLabel: UILabel!
+    @IBOutlet fileprivate weak var aboutImageView: UIImageView!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default);
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default);
         self.navigationController?.navigationBar.shadowImage = nil;
     }
     
@@ -27,18 +27,18 @@ class AboutAboutViewController: UIViewController,UIViewControllerPreviewingDeleg
         aboutImageView.layer.masksToBounds = true;
         aboutImageView.layer.cornerRadius = aboutImageView.width / 2;
         
-        let dict = NSBundle.mainBundle().infoDictionary;
+        let dict = Bundle.main.infoDictionary;
         let verson = dict![String(kCFBundleVersionKey)] as! String;
         versonLabel.text = verson;
-        self.registerForPreviewingWithDelegate(self, sourceView: self.view);
+        self.registerForPreviewing(with: self, sourceView: self.view);
     }
 
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let vc = Verson3DTouchViewController();
         return vc;
     }
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
-        self.showViewController(viewControllerToCommit, sender: self);
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: self);
     }
 }

@@ -17,8 +17,8 @@ class BuDeJieTextTableViewCell: TextSuperTableViewCell {
             _userTextLabel.text = model.text;
             _userTextLabel.height =  newSize.height;
             
-            _backView.height = CGRectGetMaxY(_userTextLabel.frame) + 4.0;
-            rowHeight = CGRectGetMaxY(_userTextLabel.frame) + 8.0;
+            _backView.height = _userTextLabel.frame.maxY + 4.0;
+            rowHeight = _userTextLabel.frame.maxY + 8.0;
         }
     }
     

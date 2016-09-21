@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class YZActionSheetItem: NSObject {
     /**     标题     */
@@ -25,7 +45,7 @@ class YZActionSheetItem: NSObject {
 }
 //MARK: YZActionSheet
 protocol YZActionSheetDelegate : NSObjectProtocol{
-    func yzActionSheet(actionSheet: YZActionSheet!, index: Int)
+    func yzActionSheet(_ actionSheet: YZActionSheet!, index: Int)
 }
 
 class YZActionSheet: UIView {
@@ -34,7 +54,7 @@ class YZActionSheet: UIView {
     var showDuration: Float = 0.5
     /**     动画消失的时间(默认0.25)     */
     var dismissDuration: Float = 0.25
-    private
+    fileprivate
     var titleItem: YZActionSheetItem?
     weak var delegate: YZActionSheetDelegate?
     var cancelItem: YZActionSheetItem?
@@ -42,7 +62,7 @@ class YZActionSheet: UIView {
     var backView: UIView!
 
     init(titleItem: YZActionSheetItem?, delegate: YZActionSheetDelegate?, cancelItem: YZActionSheetItem?,itemsArray: [YZActionSheetItem]!){
-        super.init(frame: CGRectMake(0, 0, 0, 0));
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0));
         self.titleItem = titleItem;
         self.cancelItem = cancelItem;
         self.delegate = delegate;
@@ -50,50 +70,50 @@ class YZActionSheet: UIView {
         self.configUI();
     }
     
-    func showInView(view: UIView?) {
-        self.backgroundColor = UIColor.clearColor();
+    func showInView(_ view: UIView?) {
+        self.backgroundColor = UIColor.clear;
         self.removeFromSuperview();
-        let window: UIView! = UIApplication.sharedApplication().windows.last;
+        let window: UIView! = UIApplication.shared.windows.last;
         var showView = window;
         if view != nil {
             showView = view;
         }
-        showView.addSubview(self);
-        self.frame = CGRectMake(0, 0, showView.frame.size.width, showView.frame.size.height);
-        backView.frame = CGRectMake(0, showView.frame.size.height, 0, 0);
+        showView?.addSubview(self);
+        self.frame = CGRect(x: 0, y: 0, width: (showView?.frame.size.width)!, height: (showView?.frame.size.height)!);
+        backView.frame = CGRect(x: 0, y: (showView?.frame.size.height)!, width: 0, height: 0);
         self.resetFrame();
         self.show();
     }
     
 //MARK: private
     
-    private func show() {
-        UIView.animateWithDuration(NSTimeInterval(showDuration)) {
-            self.backView.frame = CGRectMake(0, self.frame.size.height - self.backView.frame.size.height, self.frame.size.width, self.backView.frame.size.height);
+    fileprivate func show() {
+        UIView.animate(withDuration: TimeInterval(showDuration), animations: {
+            self.backView.frame = CGRect(x: 0, y: self.frame.size.height - self.backView.frame.size.height, width: self.frame.size.width, height: self.backView.frame.size.height);
             self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2);
-        }
+        }) 
     }
     
-    private func dismiss() {
-        self.backgroundColor = UIColor.clearColor();
-        UIView.animateWithDuration(NSTimeInterval(dismissDuration), animations: { 
-            self.backView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, self.backView.frame.size.height);
-            }) { (finished) in
+    fileprivate func dismiss() {
+        self.backgroundColor = UIColor.clear;
+        UIView.animate(withDuration: TimeInterval(dismissDuration), animations: { 
+            self.backView.frame = CGRect(x: 0, y: self.frame.size.height, width: self.frame.size.width, height: self.backView.frame.size.height);
+            }, completion: { (finished) in
             self.removeFromSuperview();
-        }
+        }) 
     }
     
-    func btnAction(btn: UIButton) {
+    func btnAction(_ btn: UIButton) {
         delegate?.yzActionSheet(self, index: btn.tag - 100);
         self.dismiss();
     }
    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.dismiss();
     }
     
 //MARK: UI
-    private func resetFrame() {
+    fileprivate func resetFrame() {
         let width = self.frame.size.width;
         var itemHeight: CGFloat = 0.0;
         if itemsArray != nil {
@@ -103,33 +123,33 @@ class YZActionSheet: UIView {
         if titleItem != nil {
             backViewHeight += (1 + 60);
             let label = backView.viewWithTag(1000);
-            label!.frame = CGRectMake(0, 0, width, 60);
+            label!.frame = CGRect(x: 0, y: 0, width: width, height: 60);
         }else{
             if itemHeight < 1 {
                 backViewHeight -= 5;
             }
         }
-        backView.frame = CGRectMake(0, backView.frame.origin.y, width, backViewHeight);
+        backView.frame = CGRect(x: 0, y: backView.frame.origin.y, width: width, height: backViewHeight);
         
         let cancel = backView.viewWithTag(100);
-        cancel!.frame = CGRectMake(0, backViewHeight - 50, width, 50);
+        cancel!.frame = CGRect(x: 0, y: backViewHeight - 50, width: width, height: 50);
         if itemsArray != nil {
             for i: Int in 0 ..< (itemsArray?.count)! {
                 let itemBtn = backView.viewWithTag(101 + i);
-                itemBtn!.frame = CGRectMake(0, backViewHeight - 55 - 50.5 * CGFloat(i + 1), width, 50);
+                itemBtn!.frame = CGRect(x: 0, y: backViewHeight - 55 - 50.5 * CGFloat(i + 1), width: width, height: 50);
             }
         }
     }
     
-    private func configUI() {
-        self.backgroundColor = UIColor.clearColor();
+    fileprivate func configUI() {
+        self.backgroundColor = UIColor.clear;
         self.backView = UIView();
         self.backView.clipsToBounds = true;
         self.backView.backgroundColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 231/255.0, alpha: 1.0);
         self.addSubview(self.backView);
         //取消
-        let cancel = UIButton(type: .System);
-        cancel.backgroundColor = UIColor.whiteColor();
+        let cancel = UIButton(type: .system);
+        cancel.backgroundColor = UIColor.white;
         cancel.tag = 100;
         var cancelTitle = "取消";
         var cancelColor = UIColor(red: 22/255.0, green: 22/255.0, blue: 22/255.0, alpha: 1.0);
@@ -147,17 +167,17 @@ class YZActionSheet: UIView {
                 }
             }
         }
-        cancel.setTitle(cancelTitle, forState: .Normal);
-        cancel.setTitleColor(cancelColor, forState: .Normal);
-        cancel.titleLabel?.font = UIFont.systemFontOfSize(cancelFont);
-        cancel.addTarget(self, action: #selector(self.btnAction(_:)), forControlEvents: .TouchUpInside);
+        cancel.setTitle(cancelTitle, for: UIControlState());
+        cancel.setTitleColor(cancelColor, for: UIControlState());
+        cancel.titleLabel?.font = UIFont.systemFont(ofSize: cancelFont);
+        cancel.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside);
         backView.addSubview(cancel);
         //item
         if itemsArray != nil {
             for i: Int in 0 ..< itemsArray!.count {
                 let item = itemsArray![i];
-                let itemBtn = UIButton(type: .System);
-                itemBtn.backgroundColor = UIColor.whiteColor();
+                let itemBtn = UIButton(type: .system);
+                itemBtn.backgroundColor = UIColor.white;
                 itemBtn.tag = 101 + i;
                 var itemColor = UIColor(red: 222/255.0, green: 63/255.0, blue: 65/255.0, alpha: 1.0);
                 var itemFont = CGFloat(18);
@@ -169,10 +189,10 @@ class YZActionSheet: UIView {
                         itemFont = item.titleFont!;
                     }
                 }
-                itemBtn.setTitle(item.title, forState: .Normal);
-                itemBtn.setTitleColor(itemColor, forState: .Normal);
-                itemBtn.titleLabel?.font = UIFont.systemFontOfSize(itemFont);
-                itemBtn.addTarget(self, action: #selector(self.btnAction(_:)), forControlEvents: .TouchUpInside);
+                itemBtn.setTitle(item.title, for: UIControlState());
+                itemBtn.setTitleColor(itemColor, for: UIControlState());
+                itemBtn.titleLabel?.font = UIFont.systemFont(ofSize: itemFont);
+                itemBtn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside);
                 backView.addSubview(itemBtn);
             }
         }
@@ -180,8 +200,8 @@ class YZActionSheet: UIView {
         if titleItem != nil {
             let label = UILabel();
             label.tag = 1000;
-            label.backgroundColor = UIColor.whiteColor();
-            label.textAlignment = .Center;
+            label.backgroundColor = UIColor.white;
+            label.textAlignment = .center;
             label.text = titleItem?.title;
             var labelColor = UIColor(red: 147/255.0, green: 148/255.0, blue: 149/255.0, alpha: 1.0);
             var labelFont = CGFloat(15);
@@ -194,7 +214,7 @@ class YZActionSheet: UIView {
                 }
             }
             label.textColor = labelColor;
-            label.font = UIFont.systemFontOfSize(labelFont);
+            label.font = UIFont.systemFont(ofSize: labelFont);
             backView.addSubview(label);
         }
 

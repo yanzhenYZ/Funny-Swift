@@ -10,8 +10,8 @@ import UIKit
 
 class DrawPicturesViewController: SuperSecondViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DrawPictureImageViewProtocol{
 
-    @IBOutlet private weak var paintView: DrawPicturePaintView!
-    private var dpView: DrawPictureImageView!
+    @IBOutlet fileprivate weak var paintView: DrawPicturePaintView!
+    fileprivate var dpView: DrawPictureImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,35 +21,35 @@ class DrawPicturesViewController: SuperSecondViewController,UIImagePickerControl
     }
     
 //MARK: - ToolBar-Action
-    @IBAction func cancel(sender: AnyObject) {
+    @IBAction func cancel(_ sender: AnyObject) {
         paintView.undo();
     }
     
-    @IBAction func clear(sender: AnyObject) {
+    @IBAction func clear(_ sender: AnyObject) {
         paintView.clearScreen();
     }
    
-    @IBAction func eraser(sender: AnyObject) {
-        paintView.lineColor = UIColor.whiteColor();
+    @IBAction func eraser(_ sender: AnyObject) {
+        paintView.lineColor = UIColor.white;
     }
     
-    @IBAction func photo(sender: AnyObject) {
+    @IBAction func photo(_ sender: AnyObject) {
         paintView.clearScreen();
         let imagePicker = UIImagePickerController();
-        imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
+        imagePicker.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum;
         imagePicker.delegate = self;
-        self.presentViewController(imagePicker, animated: true, completion: nil);
+        self.present(imagePicker, animated: true, completion: nil);
         paintView.clearScreen();
         
     }
     
-    @IBAction func drawInPicture(sender: AnyObject) {
+    @IBAction func drawInPicture(_ sender: AnyObject) {
         if dpView != nil {
             dpView.drawInPictureStart();
         }
     }
     
-    @IBAction func save(sender: AnyObject) {
+    @IBAction func save(_ sender: AnyObject) {
         if !paintView.isDrawInView() {
             self.view.makeCenterToast("您没进行任何操作");
             return;
@@ -58,29 +58,29 @@ class DrawPicturesViewController: SuperSecondViewController,UIImagePickerControl
         FunnyManager.manager.saveImage(image);
     }
 //MARK: - delegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage;
         dpView = DrawPictureImageView(frame: paintView.frame);
         dpView.delegate = self;
         dpView.image = image;
         self.view.addSubview(dpView);
-        paintView.lineColor = UIColor.blackColor();
-        self.dismissViewControllerAnimated(true, completion: nil);
+        paintView.lineColor = UIColor.black;
+        self.dismiss(animated: true, completion: nil);
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil);
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil);
     }
     
-    func drawImage(image: UIImage) {
+    func drawImage(_ image: UIImage) {
         paintView.image = image;
     }
     
 //MARK: - bottomView - Action
-    @IBAction func sliderChangeValue(sender: UISlider) {
+    @IBAction func sliderChangeValue(_ sender: UISlider) {
         paintView.lineWidth = CGFloat(sender.value);
     }
-    @IBAction func colorBtnClick(sender: UIButton) {
+    @IBAction func colorBtnClick(_ sender: UIButton) {
         paintView.lineColor = sender.backgroundColor;
     }
     

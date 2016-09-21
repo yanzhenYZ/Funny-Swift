@@ -23,7 +23,7 @@ class ContentTextModel: NSObject {
     var user_name: String!
     var user_profile_image_url: String!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }
@@ -34,7 +34,7 @@ class ContextTextOutModel: NSObject {
     var max_time: NSNumber!
     var min_time: NSNumber!
     var tip: String!
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }
@@ -47,7 +47,7 @@ class ContextTextGroupModel: NSObject {
     var text: String!
     var user: Dictionary<String,AnyObject>!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }

@@ -12,48 +12,51 @@ class DrawPicturePaintView: UIView {
 
     var lineWidth: CGFloat!
     var lineColor: UIColor!
-    private var path: UIBezierPath!
-    private var paths = [AnyObject]()
+    fileprivate var path: UIBezierPath!
+    fileprivate var paths = [AnyObject]()
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         if paths.count > 0 {
-            for (_,value) in paths.enumerate() {
-                if value.isKindOfClass(UIImage) {
-                    let image = value as! UIImage;
-                    image.drawAtPoint(CGPointZero);
-                }else{
-                    let onePath = value as! DrawPicturePath;
-                    onePath.color.set();
-                    onePath.stroke();
-                }
+            for (_,value) in paths.enumerated() {
+//                if value.isKind(of: UIImage()) {
+//                    
+//                }
+//                if value.isKind(of: UIImage()) {
+//                    let image = value as! UIImage;
+//                    image.draw(at: CGPoint.zero);
+//                }else{
+//                    let onePath = value as! DrawPicturePath;
+//                    onePath.color.set();
+//                    onePath.stroke();
+//                }
             }
         }
     }
     
 //MARK: - touch
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let point = self.myPoint(touches);
         let firstPath = DrawPicturePath(lineWidth: lineWidth, lineColor: lineColor, startPoint: point);
         path = firstPath;
         paths.append(firstPath);
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let point = self.myPoint(touches);
-        path.addLineToPoint(point);
+        path.addLine(to: point);
         self.setNeedsDisplay();
     }
     
-    private func myPoint(touches: Set<NSObject>) ->CGPoint{
+    fileprivate func myPoint(_ touches: Set<NSObject>) ->CGPoint{
         let t = touches as NSSet;
         let touch = t.anyObject() as! UITouch;
-        return touch.locationInView(self);
+        return touch.location(in: self);
     }
     
 //MARK: - Out-Method
     
     func clearScreen() {
-        paths.removeAll(keepCapacity: false);
+        paths.removeAll(keepingCapacity: false);
         self.setNeedsDisplay();
     }
     
@@ -73,7 +76,7 @@ class DrawPicturePaintView: UIView {
 //MARK: - other
     override func awakeFromNib() {
         lineWidth = 2;
-        lineColor = UIColor.blackColor();
+        lineColor = UIColor.black;
     }
 
     var image: UIImage! {

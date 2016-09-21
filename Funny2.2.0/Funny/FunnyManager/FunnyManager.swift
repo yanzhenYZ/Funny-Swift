@@ -9,27 +9,28 @@
 import UIKit
 
 class FunnyManager: NSObject {
+
 //MARK: - 清除缓存
     
-    func fileSize(filePath: String) ->Int {
+    func fileSize(_ filePath: String) ->Int {
         var fileSize: Int = 0;
-        let fileManager = NSFileManager.defaultManager();
+        let fileManager = FileManager.default;
         var isDir = ObjCBool(false);
-        let exist = fileManager.fileExistsAtPath(filePath, isDirectory: &isDir);
+        let exist = fileManager.fileExists(atPath: filePath, isDirectory: &isDir);
         if exist {
-            if isDir {
-                let subPaths = fileManager.subpathsAtPath(filePath);
-                for (_,value) in subPaths!.enumerate() {
+            if isDir.boolValue {
+                let subPaths = fileManager.subpaths(atPath: filePath);
+                for (_,value) in subPaths!.enumerated() {
                     let path = filePath + "/" + value;
                     var isDirectory = ObjCBool(false);
-                    fileManager.fileExistsAtPath(path, isDirectory: &isDirectory);
-                    if !isDirectory{
-                        fileSize += try! (fileManager.attributesOfItemAtPath(path)[NSFileSize]?.integerValue)!;
+                    fileManager.fileExists(atPath: path, isDirectory: &isDirectory);
+                    if !isDirectory.boolValue{
+//                        fileSize += try! ((fileManager.attributesOfItem(atPath: path)[FileAttributeKey.size] as AnyObject).intValue)!;
                     }
                 }
                 
             }else{
-                fileSize = try! (fileManager.attributesOfItemAtPath(filePath)[NSFileSize]?.integerValue)!;
+                fileSize = try! ((fileManager.attributesOfItem(atPath: filePath)[FileAttributeKey.size] as AnyObject).intValue)!;
             }
         }
         
@@ -43,10 +44,10 @@ class FunnyManager: NSObject {
         manage.imageCache.clearDisk();
         
         //let file = cachePath + "/default";
-        let exist = NSFileManager.defaultManager().fileExistsAtPath(cachePath);
+        let exist = FileManager.default.fileExists(atPath: cachePath);
         if exist {
             do {
-                try NSFileManager.defaultManager().removeItemAtPath(cachePath)
+                try FileManager.default.removeItem(atPath: cachePath)
             } catch {
                 
             }
@@ -59,45 +60,45 @@ class FunnyManager: NSObject {
         }
     }
     /**  label.size  */
-    func LabelSize(text: String, width: CGFloat, font: CGFloat) ->CGSize {
+    func LabelSize(_ text: String, width: CGFloat, font: CGFloat) ->CGSize {
         
-        let oldSize = CGSizeMake(width, 9999.0);
-        let newSize = text.boundingRectWithSize(oldSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(font)], context: nil).size;
+        let oldSize = CGSize(width: width, height: 9999.0);
+        let newSize = text.boundingRect(with: oldSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: font)], context: nil).size;
         return newSize;
     }
 
 //MARK: - date
-    func dateWithTimeInterval(time: Int32) ->String {
+    func dateWithTimeInterval(_ time: Int32) ->String {
         
-        let date = NSDate(timeIntervalSince1970: Double(time));
-        let format = NSDateFormatter();
+        let date = Date(timeIntervalSince1970: Double(time));
+        let format = DateFormatter();
         format.dateFormat = "yyyy-MM-dd HH:mm:ss";
-        return format.stringFromDate(date);
+        return format.string(from: date);
     }
     
     func currentTime() ->String {
-        let currentTime = NSDate().timeIntervalSince1970;
+        let currentTime = Date().timeIntervalSince1970;
         let intTime = Int32(currentTime);
         return String(intTime);
     }
     
-    func timeIntervalWithDateString(dateString: String) ->NSNumber {
-        let f = NSDateFormatter();
+    func timeIntervalWithDateString(_ dateString: String) ->NSNumber {
+        let f = DateFormatter();
         f.dateFormat = "yyyy-MM-dd HH:mm:ss";
-        let date = f.dateFromString(dateString);
+        let date = f.date(from: dateString);
         let time = date?.timeIntervalSince1970;
-        return NSNumber(int: Int32(time!));
+        return NSNumber(value: Int32(time!) as Int32);
     }
 //MARK: - 网址判断
     /**       判断是不是网址           */
-    func isNetURL(str: String) ->Bool {
+    func isNetURL(_ str: String) ->Bool {
         var url: String!
         if !str.hasPrefix("http://") {
             url = "http://" + str;
         }else{
             url = str;
         }
-        let range = url.rangeOfString("^http://([\\w-]+\\.)+[\\w-]+[\\w:]+(/[\\w-./?%&=]*)?$", options: NSStringCompareOptions.RegularExpressionSearch, range: nil, locale: nil);
+        let range = url.range(of: "^http://([\\w-]+\\.)+[\\w-]+[\\w:]+(/[\\w-./?%&=]*)?$", options: NSString.CompareOptions.regularExpression, range: nil, locale: nil);
         if range != nil {
             if !range!.isEmpty {
                 return true;
@@ -108,73 +109,76 @@ class FunnyManager: NSObject {
     }
 
     /**  圆   */
-    func cornerRadian(view: UIView) {
+    func cornerRadian(_ view: UIView) {
         view.layer.masksToBounds = true;
         view.layer.cornerRadius = view.frame.size.width / 2;
     }
     
 //MARK: - color
-    func color(R: CGFloat,G: CGFloat,B: CGFloat) ->UIColor {
+    func color(_ R: CGFloat,G: CGFloat,B: CGFloat) ->UIColor {
         return UIColor(red: R / 255.0, green: G / 255.0, blue: B / 255.0, alpha: 1);
     }
 //MARK: - 单例
+    struct Static {
+        static var onceToken: Int = 0;
+        static var instance: FunnyManager? = nil;
+    }
+    
+    private static var __once: () = {
+        Static.instance = FunnyManager();
+    }()
+    
     class var manager : FunnyManager {
         
-        struct Static {
-            static var onceToken: dispatch_once_t = 0;
-            static var instance: FunnyManager? = nil;
-        }
-        dispatch_once(&Static.onceToken) {
-            Static.instance = FunnyManager();
-        }
+        _ = FunnyManager.__once
         return Static.instance!
     }
 //MARK: - 截图
     /*  全屏截图  */
-    func ScreenShot(view: UIView) ->UIImage{
+    func ScreenShot(_ view: UIView) ->UIImage{
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0);
         let ctx=UIGraphicsGetCurrentContext();
-        view.layer.renderInContext(ctx!);
+        view.layer.render(in: ctx!);
         let image=UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        return image;
+        return image!;
     }
     
     /**   部分截图   */
-    func ScreenShotPart(view: UIView,rect: CGRect) ->UIImage{
+    func ScreenShotPart(_ view: UIView,rect: CGRect) ->UIImage{
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0);
         let ctx=UIGraphicsGetCurrentContext();
-        view.layer.renderInContext(ctx!);
+        view.layer.render(in: ctx!);
         let image=UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        return self.shotPart(image, rect: rect);
+        return self.shotPart(image!, rect: rect);
     }
     
-    func shotPart(oldImage: UIImage,rect: CGRect) ->UIImage{
-        let scale = UIScreen.mainScreen().scale;
-        let frame = CGRectMake(rect.origin.x * scale, rect.origin.y * scale, rect.size.width * scale, rect.size.height * scale);
-        let imageRef=oldImage.CGImage;
-        let subImageRef=CGImageCreateWithImageInRect(imageRef, CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height));
+    func shotPart(_ oldImage: UIImage,rect: CGRect) ->UIImage{
+        let scale = UIScreen.main.scale;
+        let frame = CGRect(x: rect.origin.x * scale, y: rect.origin.y * scale, width: rect.size.width * scale, height: rect.size.height * scale);
+        let imageRef=oldImage.cgImage;
+        let subImageRef=imageRef?.cropping(to: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: frame.size.height));
         UIGraphicsBeginImageContext(frame.size);
         
         let context = UIGraphicsGetCurrentContext();
-        CGContextDrawImage(context, frame, subImageRef);
-        let newImage=UIImage(CGImage: subImageRef!);
+        context?.draw(subImageRef!, in: frame);
+        let newImage=UIImage(cgImage: subImageRef!);
         UIGraphicsEndImageContext();
         return newImage;
     }
     
     //MARK: - save-Image
-    func saveImage(image: UIImage) {
+    func saveImage(_ image: UIImage) {
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil);
     }
     
-    func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
+    func image(_ image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
         if didFinishSavingWithError != nil {
-            MBProgressHUD.showMessage("保存失败", success: false, stringColor: UIColor.redColor());
+            MBProgressHUD.showMessage("保存失败", success: false, stringColor: UIColor.red);
             return
         }
-        MBProgressHUD.showMessage("截图成功,已保存到相册", success: true, stringColor: UIColor.redColor());
+        MBProgressHUD.showMessage("截图成功,已保存到相册", success: true, stringColor: UIColor.red);
     }
 
 

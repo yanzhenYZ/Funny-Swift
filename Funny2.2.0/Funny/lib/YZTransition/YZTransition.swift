@@ -16,28 +16,28 @@ struct Rotation {
 }
 
 enum YZTransitionType: Int {
-    case System
-    case FromTop
-    case FromLeft
-    case FromRight
-    case Custom
+    case system
+    case fromTop
+    case fromLeft
+    case fromRight
+    case custom
 }
 
 class YZTransition: NSObject,UIViewControllerTransitioningDelegate {
 
     var rotation: Rotation! = Rotation(x: 1, y: 0, z: 0, angle: CGFloat(M_PI_2));
-    var type: YZTransitionType = .System
+    var type: YZTransitionType = .system
     var duration: CGFloat = 0.53
     
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        return YZPresentationController(presentedViewController: presented, presentingViewController: presenting);
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return YZPresentationController(presentedViewController: presented, presenting: presenting);
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return YZAnimatedTransitioning(type: type, rotation: rotation, duration: duration, presented: false);
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return YZAnimatedTransitioning(type: type, rotation: rotation, duration: duration, presented: true);
     }
     

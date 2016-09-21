@@ -17,26 +17,26 @@ class UCNewsSuperViewController: SuperForthViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.separatorStyle = .SingleLine;
+        self.tableView.separatorStyle = .singleLine;
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let model = self.dataSource[indexPath.row];
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = self.dataSource[(indexPath as NSIndexPath).row];
         if model.thumbnails.count >= 3 {
-            var cell = tableView.dequeueReusableCellWithIdentifier("UCThreePictureCell") as? UCNewsThreePicturesTableViewCell;
+            var cell = tableView.dequeueReusableCell(withIdentifier: "UCThreePictureCell") as? UCNewsThreePicturesTableViewCell;
             if cell == nil {
-                cell = NSBundle.mainBundle().loadNibNamed("UCNewsThreePicturesTableViewCell", owner: self, options: nil).last as? UCNewsThreePicturesTableViewCell;
+                cell = Bundle.main.loadNibNamed("UCNewsThreePicturesTableViewCell", owner: self, options: nil)?.last as? UCNewsThreePicturesTableViewCell;
             }
             cell?.model = model;
             return cell!;
         }else if model.thumbnails.count == 1{
-            var cell = tableView.dequeueReusableCellWithIdentifier("UCPictureCell") as? UCNewsPictureTableViewCell;
+            var cell = tableView.dequeueReusableCell(withIdentifier: "UCPictureCell") as? UCNewsPictureTableViewCell;
             if cell == nil {
-                cell = NSBundle.mainBundle().loadNibNamed("UCNewsPictureTableViewCell", owner: self, options: nil).last as? UCNewsPictureTableViewCell;
+                cell = Bundle.main.loadNibNamed("UCNewsPictureTableViewCell", owner: self, options: nil)?.last as? UCNewsPictureTableViewCell;
             }
             cell?.model = model;
             return cell!;
@@ -45,8 +45,8 @@ class UCNewsSuperViewController: SuperForthViewController {
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let model = self.dataSource[indexPath.row];
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let model = self.dataSource[(indexPath as NSIndexPath).row];
         if model.thumbnails.count >= 3 {
             return 128.0;
         }else if model.thumbnails.count == 1 {
@@ -56,8 +56,8 @@ class UCNewsSuperViewController: SuperForthViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let model = dataSource[indexPath.row];
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = dataSource[(indexPath as NSIndexPath).row];
         let vc = SuperWebViewController(urlStr: model.url);
         vc.urlString = model.url;//original_url
         vc.hidesBottomBarWhenPushed = true;
@@ -65,17 +65,18 @@ class UCNewsSuperViewController: SuperForthViewController {
     }
     
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.NetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: JSON, finished: { (responseObj) -> Void in
-            let dataDict=responseObj["data"] as! Dictionary<String,AnyObject>;
+        NetManager.requestData(withURLString: urlString, contentType: JSON, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>
+            let dataDict=responseDic["data"] as! Dictionary<String,AnyObject>;
             let articlesDict=dataDict["articles"] as! Dictionary<String,AnyObject>;
             for (key, _) in articlesDict {
                 let modelDict=articlesDict[key] as! Dictionary<String,AnyObject>;
                 let model = UCNewsModel();
-                model.setValuesForKeysWithDictionary(modelDict);
-                if refresh == MJRefresh.Pull {
-                    self.dataSource.insert(model, atIndex: 0);
+                model.setValuesForKeys(modelDict);
+                if refresh == MJRefresh.pull {
+                    self.dataSource.insert(model, at: 0);
                 }else{
                     self.dataSource.append(model);
                 }
@@ -88,12 +89,14 @@ class UCNewsSuperViewController: SuperForthViewController {
         
     }
     //MARK: - URL + MJRefresh
-    func NetURL(refresh: MJRefresh) ->String {
+    func NetURL(_ refresh: MJRefresh) ->String {
         let time = Int(FunnyManager.manager.currentTime())! * 1000;
-        if refresh == MJRefresh.Nomal {
+        if refresh == MJRefresh.nomal {
             return self.UCNewsHeadURL  + "0" + self.UCNewsMiddleURL + String(time) + self.UCNewsFootURL;
         }else{
-            return self.UCNewsHeadURL + String(time) + self.UCNewsMiddleURL + String(time + 35) + self.UCNewsFootURL;
+            let m1: String! = String(time);
+            let m2: String! = String(time + 35);
+            return self.UCNewsHeadURL + m1 + self.UCNewsMiddleURL + m2 + self.UCNewsFootURL;
         }
     }
     

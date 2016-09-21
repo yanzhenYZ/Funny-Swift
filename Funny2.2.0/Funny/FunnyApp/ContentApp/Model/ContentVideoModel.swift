@@ -38,7 +38,7 @@ class ContentVideoModel: NSObject {
     var height: NSNumber!
     var url: String!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }
@@ -50,7 +50,7 @@ class ContentVideoDataModel: NSObject {
     var max_time: NSNumber!
     var min_time: NSNumber!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }
@@ -61,7 +61,7 @@ class ContentVideoCommentsModel: NSObject {
     var user_name: String!
     var text: String!
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {
         
     }
 }

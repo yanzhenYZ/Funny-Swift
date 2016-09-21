@@ -9,8 +9,8 @@
 import UIKit
 
 protocol VideoPlayBtnActionDelegate : NSObjectProtocol {
-    func playVideoStart(button: UIButton);
-    func playVideoOnWindow(videoCell: VideoSuperTableViewCell)
+    func playVideoStart(_ button: UIButton);
+    func playVideoOnWindow(_ videoCell: VideoSuperTableViewCell)
 }
 class VideoSuperTableViewCell: UITableViewCell {
 
@@ -29,12 +29,12 @@ class VideoSuperTableViewCell: UITableViewCell {
     var isPause: Bool = false
     
     internal func refresh() -> Bool {
-        return playButton.selected || isPause;
+        return playButton.isSelected || isPause;
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = UITableViewCellSelectionStyle.None;
+        self.selectionStyle = UITableViewCellSelectionStyle.none;
         self.backgroundColor = FunnyManager.manager.color(246.0, G: 246.0, B: 246.0);
         let longGesture = UILongPressGestureRecognizer(target: self, action:  #selector(self.longGestureAction(_:)));
         self.addGestureRecognizer(longGesture);
@@ -45,20 +45,20 @@ class VideoSuperTableViewCell: UITableViewCell {
         self.configSuperSecondUI();
     }
     
-    func pinAction(pin: UIPinchGestureRecognizer) {
-        if pin.state == .Began {
-            if self.playButton.selected || self.isPause {
+    func pinAction(_ pin: UIPinchGestureRecognizer) {
+        if pin.state == .began {
+            if self.playButton.isSelected || self.isPause {
                 delegate?.playVideoOnWindow(self);
             }
         }
     }
     
-    func longGestureAction(longGesture: UILongPressGestureRecognizer) {
+    func longGestureAction(_ longGesture: UILongPressGestureRecognizer) {
         //内涵段子不可以分享
         if noShare! {
             return;
         }
-        if longGesture.state == UIGestureRecognizerState.Began {
+        if longGesture.state == UIGestureRecognizerState.began {
             let message = WXMediaMessage();
             if shareTitle != nil {
                 message.title = shareTitle;
@@ -70,14 +70,14 @@ class VideoSuperTableViewCell: UITableViewCell {
             var scale: CGFloat = 0.2;
             for _ in 0 ..< 3 {
                 scale *= 0.5;
-                if (data?.length)! / 1000 > 16 {
+                if (data?.count)! / 1000 > 16 {
                     data = UIImageJPEGRepresentation(mainImageView.image!, scale);
                 }else{
                     break;
                 }
             }
             var image = UIImage(data: data!);
-            if (data?.length)! / 1000 > 17 {
+            if (data?.count)! / 1000 > 17 {
                 image = UIImage(named: "play");
             }
             message.setThumbImage(image);
@@ -94,42 +94,42 @@ class VideoSuperTableViewCell: UITableViewCell {
             req.bText = false;
             req.message = message;
             req.scene = Int32(1);
-            WXApi.sendReq(req);
+            WXApi.send(req);
         }
     }
     
     func configSuperUI() {
-        _backView = UIView(frame: CGRectMake(5.0, 5.0, WIDTH - 10.0, 0.0));
-        _backView.backgroundColor = UIColor.whiteColor();
+        _backView = UIView(frame: CGRect(x: 5.0, y: 5.0, width: WIDTH - 10.0, height: 0.0));
+        _backView.backgroundColor = UIColor.white;
         self.contentView.addSubview(_backView);
         
-        _headView = ContentHeadView(frame: CGRectMake(10.0, 10.0, WIDTH - 20, 50.0));
+        _headView = ContentHeadView(frame: CGRect(x: 10.0, y: 10.0, width: WIDTH - 20, height: 50.0));
         self.contentView.addSubview(_headView);
         
-        _userTextLabel = UILabel(frame: CGRectMake(15.0, 65.0, WIDTH - 25.0, 0.0));
-        _userTextLabel.font = UIFont.systemFontOfSize(ContentMainTextFont);
+        _userTextLabel = UILabel(frame: CGRect(x: 15.0, y: 65.0, width: WIDTH - 25.0, height: 0.0));
+        _userTextLabel.font = UIFont.systemFont(ofSize: ContentMainTextFont);
         _userTextLabel.numberOfLines = 0;
         self.contentView.addSubview(_userTextLabel);
         
-        mainImageView = UIImageView(frame: CGRectMake(10.0, CGRectGetMaxY(_userTextLabel.frame) + 10.0, WIDTH - 20.0, 0));
-        mainImageView.contentMode = UIViewContentMode.ScaleAspectFill;
+        mainImageView = UIImageView(frame: CGRect(x: 10.0, y: _userTextLabel.frame.maxY + 10.0, width: WIDTH - 20.0, height: 0));
+        mainImageView.contentMode = UIViewContentMode.scaleAspectFill;
         mainImageView.clipsToBounds = true;
         self.contentView.addSubview(mainImageView);
         
-        progressView = UIProgressView(frame: CGRectMake(10.0, CGRectGetMaxY(mainImageView.frame), WIDTH - 20.0, 2.0));
+        progressView = UIProgressView(frame: CGRect(x: 10.0, y: mainImageView.frame.maxY, width: WIDTH - 20.0, height: 2.0));
         progressView.progress = 0.0;
         self.contentView.addSubview(progressView);
         
-        playButton = UIButton(frame: CGRectMake(0.0, 0.0, 70.0, 70.0));
-        playButton.backgroundColor = UIColor.clearColor();
-        playButton.setBackgroundImage(UIImage(named: "play_start"), forState: .Normal);
-        playButton.setBackgroundImage(UIImage(named: "play_pause"), forState: .Selected);
-        playButton.addTarget(self, action: #selector(self.playButtonClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+        playButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 70.0, height: 70.0));
+        playButton.backgroundColor = UIColor.clear;
+        playButton.setBackgroundImage(UIImage(named: "play_start"), for: UIControlState());
+        playButton.setBackgroundImage(UIImage(named: "play_pause"), for: .selected);
+        playButton.addTarget(self, action: #selector(self.playButtonClick(_:)), for: UIControlEvents.touchUpInside);
         self.contentView.addSubview(playButton);
     }
     
-    func playButtonClick(button: UIButton) {
-        button.selected = !button.selected;
+    func playButtonClick(_ button: UIButton) {
+        button.isSelected = !button.isSelected;
         self.delegate?.playVideoStart(button);
     }
     

@@ -13,17 +13,17 @@ class NoteModel: NSObject,NSCoding {
     var noteTitle: String!
     var noteTime: String!
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(noteTitle, forKey: NOTETITLE);
-        aCoder.encodeObject(noteTime, forKey: NOTETIME);
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(noteTitle, forKey: NOTETITLE);
+        aCoder.encode(noteTime, forKey: NOTETIME);
         
         
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init();
-        noteTitle = aDecoder.decodeObjectForKey(NOTETITLE) as! String;
-        noteTime = aDecoder.decodeObjectForKey(NOTETIME) as! String;
+        noteTitle = aDecoder.decodeObject(forKey: NOTETITLE) as! String;
+        noteTime = aDecoder.decodeObject(forKey: NOTETIME) as! String;
     }
     
     override init() {

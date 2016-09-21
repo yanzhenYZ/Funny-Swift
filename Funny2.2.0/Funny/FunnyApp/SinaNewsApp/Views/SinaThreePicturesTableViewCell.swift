@@ -10,10 +10,10 @@ import UIKit
 
 class SinaThreePicturesTableViewCell: UITableViewCell {
     
-    @IBOutlet private weak var titleLab: UILabel!
-    @IBOutlet private weak var leftImageView: UIImageView!
-    @IBOutlet private weak var rightImageView: UIImageView!
-    @IBOutlet private weak var middleImageView: UIImageView!
+    @IBOutlet fileprivate weak var titleLab: UILabel!
+    @IBOutlet fileprivate weak var leftImageView: UIImageView!
+    @IBOutlet fileprivate weak var rightImageView: UIImageView!
+    @IBOutlet fileprivate weak var middleImageView: UIImageView!
     
     var model: SinaNewsModel! {
         didSet{
@@ -24,9 +24,9 @@ class SinaThreePicturesTableViewCell: UITableViewCell {
             let image2 = listArray[1]["kpic"] as! String;
             let image3 = listArray[2]["kpic"] as! String;
             
-            leftImageView.sd_setImageWithURL(NSURL(string: image1), placeholderImage: SmallImage);
-            middleImageView.sd_setImageWithURL(NSURL(string: image2), placeholderImage: SmallImage);
-            rightImageView.sd_setImageWithURL(NSURL(string: image3), placeholderImage: SmallImage);
+            leftImageView.sd_setImage(with: URL(string: image1), placeholderImage: SmallImage);
+            middleImageView.sd_setImage(with: URL(string: image2), placeholderImage: SmallImage);
+            rightImageView.sd_setImage(with: URL(string: image3), placeholderImage: SmallImage);
         }
     }
 }

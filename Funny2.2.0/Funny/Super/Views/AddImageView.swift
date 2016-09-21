@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddImageViewProtocol : NSObjectProtocol {
-    func addImageViewTableViewSelect(index: Int)
+    func addImageViewTableViewSelect(_ index: Int)
 }
 class AddImageView: UIImageView ,UITableViewDataSource,UITableViewDelegate{
     weak var delegate: AddImageViewProtocol?
@@ -20,47 +20,47 @@ class AddImageView: UIImageView ,UITableViewDataSource,UITableViewDelegate{
     override init(frame: CGRect) {
         super.init(frame: frame);
         isAddImageViewHidden=true;
-        self.backgroundColor=UIColor.clearColor();
-        self.userInteractionEnabled=true;
+        self.backgroundColor=UIColor.clear;
+        self.isUserInteractionEnabled=true;
         self.clipsToBounds=true;
         let image=UIImage(named: "addView");
         let insetsSecond=UIEdgeInsetsMake(40, 15 , 30 , 15 );
-        self.image=image?.resizableImageWithCapInsets(insetsSecond, resizingMode: UIImageResizingMode.Stretch);
+        self.image=image?.resizableImage(withCapInsets: insetsSecond, resizingMode: UIImageResizingMode.stretch);
         titleSecondArray=["全屏截图","部分截图","主页面","退出"];
-        addSecondTableView=UITableView(frame: CGRectMake(1.0, 5.0, 108.0, CGFloat(titleSecondArray.count) * 45.0));
-        addSecondTableView.registerNib(UINib(nibName: "SuperSecondTableViewCell", bundle: nil), forCellReuseIdentifier: "SuperSecondCell");
+        addSecondTableView=UITableView(frame: CGRect(x: 1.0, y: 5.0, width: 108.0, height: CGFloat(titleSecondArray.count) * 45.0));
+        addSecondTableView.register(UINib(nibName: "SuperSecondTableViewCell", bundle: nil), forCellReuseIdentifier: "SuperSecondCell");
         addSecondTableView.rowHeight=45.0;
         addSecondTableView.delegate=self;
         addSecondTableView.dataSource=self;
         addSecondTableView.scrollsToTop=false;
-        addSecondTableView.separatorStyle=UITableViewCellSeparatorStyle.None;
-        addSecondTableView.backgroundColor=UIColor.clearColor();
+        addSecondTableView.separatorStyle=UITableViewCellSeparatorStyle.none;
+        addSecondTableView.backgroundColor=UIColor.clear;
         self.addSubview(addSecondTableView);
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return titleSecondArray.count;
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
-        let cell=tableView.dequeueReusableCellWithIdentifier("SuperSecondCell", forIndexPath: indexPath) as! SuperSecondTableViewCell;
-        cell.titleSecondLabel.text=titleSecondArray[indexPath.row];
-        if indexPath.row == titleSecondArray.count-1 {
-            cell.bottomSecondImageView.hidden=true;
+        let cell=tableView.dequeueReusableCell(withIdentifier: "SuperSecondCell", for: indexPath) as! SuperSecondTableViewCell;
+        cell.titleSecondLabel.text=titleSecondArray[(indexPath as NSIndexPath).row];
+        if (indexPath as NSIndexPath).row == titleSecondArray.count-1 {
+            cell.bottomSecondImageView.isHidden=true;
         }
         return cell;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        tableView.deselectRow(at: indexPath, animated: true)
         self.toggleAddImageView();
-        self.delegate?.addImageViewTableViewSelect(indexPath.row);
+        self.delegate?.addImageViewTableViewSelect((indexPath as NSIndexPath).row);
     }
     
     func toggleAddImageView() {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             var height:CGFloat = 0.0;
             if self.isAddImageViewHidden == true {
                 self.isAddImageViewHidden=false;
@@ -68,7 +68,7 @@ class AddImageView: UIImageView ,UITableViewDataSource,UITableViewDelegate{
             }else{
                 self.isAddImageViewHidden=true;
             }
-            self.frame=CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
+            self.frame=CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.size.width, height: height);
         });
     }
     

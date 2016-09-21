@@ -17,28 +17,29 @@ class WalfarePictureViewController: WalfareSuperViewController {
 
     }
     
-    override func netRequestWithMJRefresh(refresh: MJRefresh, baseView: MJRefreshBaseView?) {
+    override func netRequestWithMJRefresh(_ refresh: MJRefresh, baseView: MJRefreshBaseView?) {
         let urlString = self.NetURL(refresh);
-        NetManager.requestDataWithURLString(urlString, contentType: HTML, finished: { (responseObj) -> Void in
-            let itemsArray = responseObj["items"] as! Array<AnyObject>;
-            if refresh == MJRefresh.Pull && self.dataSource.count > 0 {
+        NetManager.requestData(withURLString: urlString, contentType: HTML, finished: { (responseObj) -> Void in
+            let responseDic = responseObj as! Dictionary<String,AnyObject>;
+            let itemsArray = responseDic["items"] as! Array<AnyObject>;
+            if refresh == MJRefresh.pull && self.dataSource.count > 0 {
                 let firstModel = self.dataSource[0];
                 let testDict = itemsArray[0] as! Dictionary<String,AnyObject>;
                 let testModel = WalfarePictureModel();
-                testModel.setValuesForKeysWithDictionary(testDict);
+                testModel.setValuesForKeys(testDict);
                 if firstModel.wbody != testModel.wbody {
-                    for (_,value) in itemsArray.enumerate() {
+                    for (_,value) in itemsArray.enumerated() {
                         let model = WalfarePictureModel();
                         let valueDict = value as! Dictionary<String,AnyObject>;
-                        model.setValuesForKeysWithDictionary(valueDict);
-                        self.dataSource.insert(model, atIndex: 0);
+                        model.setValuesForKeys(valueDict);
+                        self.dataSource.insert(model, at: 0);
                     }
                 }
             }else{
-                for (_,value) in itemsArray.enumerate() {
+                for (_,value) in itemsArray.enumerated() {
                     let model = WalfarePictureModel();
                     let valueDict = value as! Dictionary<String,AnyObject>;
-                    model.setValuesForKeysWithDictionary(valueDict);
+                    model.setValuesForKeys(valueDict);
                     self.dataSource.append(model);
                 }
             }
@@ -51,28 +52,28 @@ class WalfarePictureViewController: WalfareSuperViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }
     override
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return self.PictureCell(tableView, indexPath: indexPath);
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return self.PictureCell(tableView, indexPath: indexPath).rowHeight;
     }
     
-    private func PictureCell(tableView: UITableView, indexPath: NSIndexPath) ->WalfarePictureTableViewCell{
-        var cell = tableView.dequeueReusableCellWithIdentifier("WalfarePictureCell") as? WalfarePictureTableViewCell;
+    fileprivate func PictureCell(_ tableView: UITableView, indexPath: IndexPath) ->WalfarePictureTableViewCell{
+        var cell = tableView.dequeueReusableCell(withIdentifier: "WalfarePictureCell") as? WalfarePictureTableViewCell;
         if cell == nil {
-            cell = WalfarePictureTableViewCell(style:.Default, reuseIdentifier:"WalfarePictureCell");
+            cell = WalfarePictureTableViewCell(style:.default, reuseIdentifier:"WalfarePictureCell");
         }
-        cell?.model = self.dataSource[indexPath.row];
+        cell?.model = self.dataSource[(indexPath as NSIndexPath).row];
         return cell!;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //http://ww2.sinaimg.cn/orj480/736f0c7ejw1ezdllt3w6uj20hs0a03zn.jpg
     }
 

@@ -11,7 +11,7 @@ import UIKit
 class SomeWhatPictureTableViewCell: PictureSuperTableViewCell {
 
     override func configSecondSuperUI() {
-        _mainPictureImgaeV.userInteractionEnabled = true;
+        _mainPictureImgaeV.isUserInteractionEnabled = true;
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longGestureAction(_:)));
         longGesture.minimumPressDuration = 1.0;
         _mainPictureImgaeV.addGestureRecognizer(longGesture);
@@ -25,22 +25,22 @@ class SomeWhatPictureTableViewCell: PictureSuperTableViewCell {
             _userTextLabel.height = newSize.height;
             _userTextLabel.text = model.text;
             
-            let scale = (WIDTH - 20) / CGFloat(model.r_width.integerValue);
-            let height = CGFloat(model.r_height.integerValue) * scale;
-            _mainPictureImgaeV.frame = CGRectMake(10, CGRectGetMaxY(_userTextLabel.frame) + 5, WIDTH - 20, height);
+            let scale = (WIDTH - 20) / CGFloat(model.r_width.intValue);
+            let height = CGFloat(model.r_height.intValue) * scale;
+            _mainPictureImgaeV.frame = CGRect(x: 10, y: _userTextLabel.frame.maxY + 5, width: WIDTH - 20, height: height);
             if model.text.isEmpty {
                 _mainPictureImgaeV.frame.origin.y = 65.0;
             }
-            _mainPictureImgaeV.sd_setImageWithURL(NSURL(string: model.url), placeholderImage: BigImage);
+            _mainPictureImgaeV.sd_setImage(with: URL(string: model.url), placeholderImage: BigImage);
             
-            _backView.height = CGRectGetMaxY(_mainPictureImgaeV.frame) + 4.0;
-            rowHeight = CGRectGetMaxY(_mainPictureImgaeV.frame) + 8.0;
+            _backView.height = _mainPictureImgaeV.frame.maxY + 4.0;
+            rowHeight = _mainPictureImgaeV.frame.maxY + 8.0;
         }
     }
     
     
-    func longGestureAction(tap: UILongPressGestureRecognizer) {
-        if tap.state != UIGestureRecognizerState.Began {
+    func longGestureAction(_ tap: UILongPressGestureRecognizer) {
+        if tap.state != UIGestureRecognizerState.began {
             return;
         }
         let tapView = tap.view as! UIImageView;
