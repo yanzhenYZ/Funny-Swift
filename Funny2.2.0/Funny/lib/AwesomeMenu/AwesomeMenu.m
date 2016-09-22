@@ -30,7 +30,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     return CGPointApplyAffineTransform(point, transformGroup);    
 }
 
-@interface AwesomeMenu ()
+@interface AwesomeMenu ()<CAAnimationDelegate>
 - (void)_expandAnimation;
 - (void)_closeAnimation;
 - (void)_setMenu;
@@ -404,6 +404,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
 
     _flag --;
 }
+#pragma mark - CAAnimationDelegate
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if([[anim valueForKey:@"id"] isEqual:@"lastAnimation"]) {
         if(self.delegate && [self.delegate respondsToSelector:@selector(awesomeMenuDidFinishAnimationClose:)]){

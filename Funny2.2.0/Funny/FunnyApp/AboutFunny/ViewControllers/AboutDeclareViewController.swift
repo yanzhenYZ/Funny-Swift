@@ -30,7 +30,7 @@ class AboutDeclareViewController: UIViewController {
         declareLabel.font = UIFont.systemFont(ofSize: 20.0);
         declareLabel.numberOfLines = 0;
         //declareLabel.textColor = UIColor.blackColor();
-        declareLabel.text = "Most of the resources of the App are from the network, the App does not do business purposes, will not have any resource owners infringement.This app's system is swift2.2. \n\n该App支持iPhone6和iPhone6s,其他设备会出现适配问题。";
+        declareLabel.text = "Most of the resources of the App are from the network, the App does not do business purposes, will not have any resource owners infringement.This app's system is swift3.0. \n\n该App支持iPhone6和iPhone6s,其他设备会出现适配问题。";
         self.view.addSubview(declareLabel);
         
         let newSize = FunnyManager.manager.LabelSize(declareLabel.text!, width: WIDTH - 40, font: 20.0);

@@ -70,23 +70,22 @@ class GifShowViewController: GifShowSuperViewController,VideoPlayBtnActionDelega
         //
         let config = URLSessionConfiguration.default;
         let urlSession = URLSession(configuration: config);
-        
-//        let task = urlSession.dataTask(with: request) { (data, response, error) in
-//            DispatchQueue.main.async(execute: {
-//                if data != nil {
-//                    self.parsingData(data!);
-//                    if baseView != nil {
-//                        baseView?.endRefreshing();
-//                    }
-//                    UIApplication.shared.isNetworkActivityIndicatorVisible = false;
-//                    self.tableView.reloadData();
-//                }
-//            });
-//
-//        }
-//        task.resume();
+        let task = urlSession.dataTask(with: request as URLRequest, completionHandler: {(data, response, error) in
+            DispatchQueue.main.async(execute: {
+                if data != nil {
+                    self.parsingData(data!);
+                    if baseView != nil {
+                        baseView?.endRefreshing();
+                    }
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false;
+                    self.tableView.reloadData();
+                }
+            });
+
+        });
+        task.resume();
     }
-//MARK: - tableView 
+//MARK: - tableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count;
     }

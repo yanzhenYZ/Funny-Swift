@@ -10,7 +10,7 @@ import UIKit
 
 class LayerDelegate: NSObject, CALayerDelegate {
 
-    var rightSpace: CGFloat!
+    var rightSpace: CGFloat! = 0
     var left: Bool = false
     
     func draw(_ layer: CALayer, in ctx: CGContext) {

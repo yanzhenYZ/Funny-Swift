@@ -24,6 +24,7 @@ class AboutAboutViewController: UIViewController,UIViewControllerPreviewingDeleg
 
         self.title = "关于";
         
+        aboutImageView.layoutIfNeeded();
         aboutImageView.layer.masksToBounds = true;
         aboutImageView.layer.cornerRadius = aboutImageView.width / 2;
         

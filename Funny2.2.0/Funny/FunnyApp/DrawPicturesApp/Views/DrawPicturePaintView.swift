@@ -18,17 +18,14 @@ class DrawPicturePaintView: UIView {
     override func draw(_ rect: CGRect) {
         if paths.count > 0 {
             for (_,value) in paths.enumerated() {
-//                if value.isKind(of: UIImage()) {
-//                    
-//                }
-//                if value.isKind(of: UIImage()) {
-//                    let image = value as! UIImage;
-//                    image.draw(at: CGPoint.zero);
-//                }else{
-//                    let onePath = value as! DrawPicturePath;
-//                    onePath.color.set();
-//                    onePath.stroke();
-//                }
+                if value is UIImage {
+                    let image = value as! UIImage;
+                    image.draw(at: CGPoint.zero);
+                }else{
+                    let onePath = value as! DrawPicturePath;
+                    onePath.color.set();
+                    onePath.stroke();
+                }
             }
         }
     }

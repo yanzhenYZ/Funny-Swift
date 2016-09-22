@@ -28,9 +28,6 @@ class AboutSettingsViewController: SuperTableViewController {
         self.tableView.backgroundColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 237/255.0, alpha: 1);
         self.tableView.separatorStyle = .none;
         dataSource.append(["隐私设置"]);
-        dataSource.append(["打开WIFI"]);
-        dataSource.append(["打开移动网络"]);
-        print(dataSource);
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,7 +45,6 @@ class AboutSettingsViewController: SuperTableViewController {
             cell = UITableViewCell(style: .default, reuseIdentifier: "SETTINGS_CELL");
             cell?.accessoryType = .disclosureIndicator;
         }
-        print((indexPath as NSIndexPath).section);
         let items = dataSource[(indexPath as NSIndexPath).section];
         cell?.textLabel?.text = items[(indexPath as NSIndexPath).row];
         return cell!;
@@ -66,8 +62,7 @@ class AboutSettingsViewController: SuperTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true);
-        let str = [UIApplicationOpenSettingsURLString,"prefs:root=WIFI","prefs:root=MOBILE_DATA_SETTINGS_ID"];
-        print((indexPath as NSIndexPath).section);
+        let str = [UIApplicationOpenSettingsURLString];
         let url = URL(string: str[(indexPath as NSIndexPath).section]);
         if UIApplication.shared.canOpenURL(url!) {
             UIApplication.shared.openURL(url!);

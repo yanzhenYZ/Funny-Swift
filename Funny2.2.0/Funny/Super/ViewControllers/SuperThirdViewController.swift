@@ -28,6 +28,7 @@ class SuperThirdViewController: SuperSecondViewController,UITableViewDelegate,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.layoutIfNeeded();
 
         // Do any additional setup after loading the view.
     }

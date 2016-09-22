@@ -25,12 +25,14 @@ class FunnyManager: NSObject {
                     var isDirectory = ObjCBool(false);
                     fileManager.fileExists(atPath: path, isDirectory: &isDirectory);
                     if !isDirectory.boolValue{
-//                        fileSize += try! ((fileManager.attributesOfItem(atPath: path)[FileAttributeKey.size] as AnyObject).intValue)!;
+                        let size = try! fileManager.attributesOfItem(atPath: path)[FileAttributeKey.size] as! NSNumber;
+                        fileSize += size.intValue;
                     }
                 }
                 
             }else{
-                fileSize = try! ((fileManager.attributesOfItem(atPath: filePath)[FileAttributeKey.size] as AnyObject).intValue)!;
+                let size = try! fileManager.attributesOfItem(atPath: filePath)[FileAttributeKey.size] as! NSNumber;
+                fileSize = size.intValue;
             }
         }
         
