@@ -25,6 +25,6 @@ class BuDeJieSuperViewController: SuperForthViewController {
         if rowHeightData[indexPath] != nil {
             return rowHeightData[indexPath]!;
         }
-        return 0;
+        return HEIGHT;
     }
 }

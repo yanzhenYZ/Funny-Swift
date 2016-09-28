@@ -20,15 +20,10 @@ class ContentSuperViewController: SuperForthViewController {
 
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        print("22=%f",rowHeightData[indexPath]!);
-//        return rowHeightData[indexPath]!;
-//    }
-    
     func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         if rowHeightData[indexPath] != nil {
             return rowHeightData[indexPath]!;
         }
-        return 0;
+        return HEIGHT;
     }
 }

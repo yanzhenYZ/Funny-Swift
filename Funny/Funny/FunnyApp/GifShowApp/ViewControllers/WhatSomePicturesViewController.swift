@@ -89,7 +89,7 @@ class WhatSomePicturesViewController: GifShowSuperViewController {
         if rowHeightData[indexPath] != nil {
             return rowHeightData[indexPath]!;
         }
-        return 0;
+        return HEIGHT;
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

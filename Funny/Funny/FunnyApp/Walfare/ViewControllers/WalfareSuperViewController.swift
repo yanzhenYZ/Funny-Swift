@@ -38,7 +38,7 @@ class WalfareSuperViewController: SuperForthViewController {
         if rowHeightData[indexPath] != nil {
             return rowHeightData[indexPath]!;
         }
-        return 0;
+        return HEIGHT;
     }
     
     func NetURL(_ refresh: MJRefresh) ->String {
