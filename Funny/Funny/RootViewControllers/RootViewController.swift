@@ -25,7 +25,7 @@ class RootViewController: SuperViewController {
     }
     
     fileprivate func configUI() {
-        let imageNames:[String] = ["艾斯","鹰眼","女帝","明哥","黑胡子","白胡子","红发","白胡子_logo","乔巴","索隆","罗宾"];
+        let imageNames:[String] = ["content","gifShow","budejie","walfare","uc","netease","sina","secret","drawPicture","note","QR"];
         let titleArray:[String] = ["内涵段子","快手","不得姐","福利社","UC新闻","网易新闻","新浪新闻","Area","画图","Note","二维码"];
         
         for (index,value) in imageNames.enumerated() {
@@ -36,7 +36,7 @@ class RootViewController: SuperViewController {
             btn.frame = CGRect(x: (spaceX + 60) * CGFloat(x) + spaceX, y: 84.0 + 100.0 * CGFloat(y), width: 60.0, height: 60.0);
             btn.tag = 100 + index;
             btn.layer.masksToBounds = true;
-            btn.layer.cornerRadius = 8.0;
+            btn.layer.cornerRadius = 12.0;
             let image = UIImage(named: value)?.withRenderingMode(.alwaysOriginal);
             btn.setImage(image, for: .normal);
             btn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside);
