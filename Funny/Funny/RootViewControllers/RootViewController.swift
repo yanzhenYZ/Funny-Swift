@@ -51,23 +51,27 @@ class RootViewController: SuperViewController {
     }
     
     func btnAction(_ btn: UIButton) {
+        self.intoVC(tag: btn.tag);
+    }
+    
+    func intoVC(tag: Int) {
         transition = YZTransition();
         transition.type = .custom;
-        if btn.tag < FunnyApp.area.rawValue {
+        if tag < FunnyApp.area.rawValue {
             var tvc: ExtentTabBarViewController?;
-            if btn.tag == FunnyApp.content.rawValue {
+            if tag == FunnyApp.content.rawValue {
                 tvc = ContentTabBarViewController();
-            }else if btn.tag == FunnyApp.gifShow.rawValue {
+            }else if tag == FunnyApp.gifShow.rawValue {
                 tvc = GifShowTabBarViewController();
-            }else if btn.tag == FunnyApp.buDeJie.rawValue {
+            }else if tag == FunnyApp.buDeJie.rawValue {
                 tvc = BuDeJieTabBarViewController();
-            }else if btn.tag == FunnyApp.walfare.rawValue {
+            }else if tag == FunnyApp.walfare.rawValue {
                 tvc = WalfareTabBarViewController();
-            }else if btn.tag == FunnyApp.ucNews.rawValue {
+            }else if tag == FunnyApp.ucNews.rawValue {
                 tvc = UCNewsTabBarViewController();
-            }else if btn.tag == FunnyApp.netEase.rawValue {
+            }else if tag == FunnyApp.netEase.rawValue {
                 tvc = NetEaseTabBarViewController();
-            }else if btn.tag == FunnyApp.sinaNews.rawValue {
+            }else if tag == FunnyApp.sinaNews.rawValue {
                 tvc = SinaNewsTabBarViewController();
             }
             tvc?.modalPresentationStyle = .custom;
@@ -75,13 +79,13 @@ class RootViewController: SuperViewController {
             self.navigationController?.present(tvc!, animated: true, completion: nil);
         }else{
             var vc: UIViewController?;
-            if btn.tag == FunnyApp.area.rawValue {
+            if tag == FunnyApp.area.rawValue {
                 vc = SecretLockViewController(nibName: "SecretLockViewController", bundle: nil);
-            }else if btn.tag == FunnyApp.drawPicture.rawValue {
+            }else if tag == FunnyApp.drawPicture.rawValue {
                 vc = DrawPicturesViewController(nibName: "DrawPicturesViewController", bundle: nil);
-            }else if btn.tag == FunnyApp.note.rawValue {
+            }else if tag == FunnyApp.note.rawValue {
                 vc = NoteLockViewController();
-            }else if btn.tag == FunnyApp.qrCode.rawValue {
+            }else if tag == FunnyApp.qrCode.rawValue {
                 vc = QRHeaderViewController();
             }
             let nvc = ExtentNavigationViewController(rootViewController: vc!);
@@ -90,5 +94,6 @@ class RootViewController: SuperViewController {
             nvc.transitioningDelegate = transition;
             self.navigationController?.present(nvc, animated: true, completion: nil);
         }
+
     }
 }
