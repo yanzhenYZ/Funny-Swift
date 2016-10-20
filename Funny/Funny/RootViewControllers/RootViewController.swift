@@ -21,12 +21,19 @@ class RootViewController: SuperViewController {
 
         // Do any additional setup after loading the view.
         self.title = "Funny";
+        self.view.backgroundColor = UIColor.gray;
         self.configUI();
     }
     
     fileprivate func configUI() {
         let imageNames:[String] = ["content","gifShow","budejie","walfare","uc","netease","sina","secret","drawPicture","note","QR"];
         let titleArray:[String] = ["内涵段子","快手","不得姐","福利社","UC新闻","网易新闻","新浪新闻","Area","画图","Note","二维码"];
+        
+        let effect = UIBlurEffect(style: .extraLight);
+        let effectView = UIVisualEffectView(effect: effect);
+        effectView.frame = self.view.bounds;
+        effectView.isUserInteractionEnabled = false;
+        self.view.addSubview(effectView);
         
         for (index,value) in imageNames.enumerated() {
             let x = index % 4;
@@ -42,7 +49,7 @@ class RootViewController: SuperViewController {
             btn.addTarget(self, action: #selector(self.btnAction(_:)), for: .touchUpInside);
             let label = UILabel(frame: CGRect(x: (spaceX+60) * CGFloat(x)+spaceX, y: 65.0+84.0+100.0 * CGFloat(y), width: 60, height: 20));
             label.font = UIFont.systemFont(ofSize: 14.0);
-            label.textColor = UIColor.blue;
+            label.textColor = UIColor.black;
             label.text = titleArray[index];
             label.textAlignment = .center;
             self.view.addSubview(btn);

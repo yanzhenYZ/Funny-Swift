@@ -169,6 +169,8 @@
 		9B86C0921D4B238200F29B35 /* WindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B86C0911D4B238200F29B35 /* WindowView.swift */; };
 		9B86C0941D4B239B00F29B35 /* WindowViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B86C0931D4B239B00F29B35 /* WindowViewManager.swift */; };
 		9B86C09F1D4B58D500F29B35 /* VideoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B86C09E1D4B58D500F29B35 /* VideoWindow.swift */; };
+		9B8A33241DB73F83001E8512 /* YZCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8A33221DB73F83001E8512 /* YZCircleView.swift */; };
+		9B8A33251DB73F83001E8512 /* YZIPhoneDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8A33231DB73F83001E8512 /* YZIPhoneDevice.framework */; };
 		9BB154941DAE16490091CC7A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB154931DAE16490091CC7A /* NotificationCenter.framework */; };
 		9BB154971DAE16490091CC7A /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB154961DAE16490091CC7A /* TodayViewController.swift */; };
 		9BB1549A1DAE16490091CC7A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BB154981DAE16490091CC7A /* MainInterface.storyboard */; };
@@ -431,6 +433,9 @@
 		9B86C0911D4B238200F29B35 /* WindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowView.swift; sourceTree = "<group>"; };
 		9B86C0931D4B239B00F29B35 /* WindowViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowViewManager.swift; sourceTree = "<group>"; };
 		9B86C09E1D4B58D500F29B35 /* VideoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoWindow.swift; sourceTree = "<group>"; };
+		9B8A33221DB73F83001E8512 /* YZCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YZCircleView.swift; sourceTree = "<group>"; };
+		9B8A33231DB73F83001E8512 /* YZIPhoneDevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YZIPhoneDevice.framework; path = Today/YZIPhoneDevice.framework; sourceTree = "<group>"; };
+		9B8A33261DB73F9B001E8512 /* Today-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Today-Bridging-Header.h"; sourceTree = "<group>"; };
 		9BB154911DAE16490091CC7A /* Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Today.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB154931DAE16490091CC7A /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		9BB154961DAE16490091CC7A /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -518,6 +523,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B8A33251DB73F83001E8512 /* YZIPhoneDevice.framework in Frameworks */,
 				9BB154941DAE16490091CC7A /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1193,6 +1199,7 @@
 		9BB154921DAE16490091CC7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B8A33231DB73F83001E8512 /* YZIPhoneDevice.framework */,
 				9BB154931DAE16490091CC7A /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
@@ -1202,10 +1209,12 @@
 			isa = PBXGroup;
 			children = (
 				9BB154961DAE16490091CC7A /* TodayViewController.swift */,
+				9B8A33221DB73F83001E8512 /* YZCircleView.swift */,
 				9BB154A31DAE16AF0091CC7A /* ExtensionButton.swift */,
 				9BB154981DAE16490091CC7A /* MainInterface.storyboard */,
 				9BB1549B1DAE16490091CC7A /* Info.plist */,
 				9BB154A51DAE16D10091CC7A /* Image.xcassets */,
+				9B8A33261DB73F9B001E8512 /* Today-Bridging-Header.h */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -1501,6 +1510,7 @@
 					9BB154901DAE16490091CC7A = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = M7R5TQ8AQY;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					9BEFACF01CB3B5380076472B = {
@@ -1613,6 +1623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BB154971DAE16490091CC7A /* TodayViewController.swift in Sources */,
+				9B8A33241DB73F83001E8512 /* YZCircleView.swift in Sources */,
 				9BB154A41DAE16AF0091CC7A /* ExtensionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1836,10 +1847,15 @@
 		9BB1549F1DAE16490091CC7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = M7R5TQ8AQY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Today",
+				);
 				INFOPLIST_FILE = Today/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1847,6 +1863,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Today/Today-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -1854,16 +1872,22 @@
 		9BB154A01DAE16490091CC7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = M7R5TQ8AQY;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Today",
+				);
 				INFOPLIST_FILE = Today/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YZ.Funny.Today;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Today/Today-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -2058,6 +2082,7 @@
 				9BB154A01DAE16490091CC7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BEFACEC1CB3B5380076472B /* Build configuration list for PBXProject "Funny" */ = {
 			isa = XCConfigurationList;
