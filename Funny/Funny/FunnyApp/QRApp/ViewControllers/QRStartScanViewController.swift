@@ -98,7 +98,7 @@ class QRStartScanViewController: UIViewController,AVCaptureMetadataOutputObjects
             let metadataObject = metadataObjects[0] as! AVMetadataMachineReadableCodeObject;
             if isFromWindow {
                 if FunnyManager.manager.isNetURL(metadataObject.stringValue) {
-                    UIApplication.shared.openURL(URL(string: metadataObject.stringValue)!);
+                    UIApplication.shared.open(URL(string: metadataObject.stringValue)!, options: [ : ], completionHandler: nil);
                 }else{
                     self.session.stopRunning();
                     self.timer.invalidate();

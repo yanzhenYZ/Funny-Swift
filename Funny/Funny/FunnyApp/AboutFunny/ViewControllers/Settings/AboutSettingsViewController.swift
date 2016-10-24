@@ -65,7 +65,7 @@ class AboutSettingsViewController: SuperTableViewController {
         let str = [UIApplicationOpenSettingsURLString];
         let url = URL(string: str[(indexPath as NSIndexPath).section]);
         if UIApplication.shared.canOpenURL(url!) {
-            UIApplication.shared.openURL(url!);
+            UIApplication.shared.open(url!, options:[:], completionHandler: nil);
         }
     }
 }

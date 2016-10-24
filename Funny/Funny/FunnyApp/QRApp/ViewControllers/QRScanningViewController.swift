@@ -39,7 +39,7 @@ class QRScanningViewController: UIViewController {
         if textView.text.isEmpty {
             return;
         }
-        UIApplication.shared.openURL(URL(string: textView.text)!);
+        UIApplication.shared.open(URL(string: textView.text)!, options: [:], completionHandler: nil);
     }
     
     func scanningDone(_ result: String) {

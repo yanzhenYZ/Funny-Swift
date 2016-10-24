@@ -64,14 +64,6 @@
 		9B7578611CB60D5A00FC75D2 /* NEPictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B75785C1CB60D5A00FC75D2 /* NEPictureTableViewCell.xib */; };
 		9B7578621CB60D5A00FC75D2 /* NEThreePicturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75785D1CB60D5A00FC75D2 /* NEThreePicturesTableViewCell.swift */; };
 		9B7578631CB60D5A00FC75D2 /* NEThreePicturesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B75785E1CB60D5A00FC75D2 /* NEThreePicturesTableViewCell.xib */; };
-		9B7578651CB61DDA00FC75D2 /* SinaNewsTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578641CB61DDA00FC75D2 /* SinaNewsTabBarViewController.swift */; };
-		9B75786D1CB61E4000FC75D2 /* SinaNewsSuperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578681CB61E4000FC75D2 /* SinaNewsSuperViewController.swift */; };
-		9B75786F1CB61E4000FC75D2 /* SinaRecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B75786A1CB61E4000FC75D2 /* SinaRecommendViewController.swift */; };
-		9B7578711CB61E4900FC75D2 /* SinaNewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578701CB61E4900FC75D2 /* SinaNewsModel.swift */; };
-		9B7578761CB61E5200FC75D2 /* SinaPictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578721CB61E5200FC75D2 /* SinaPictureTableViewCell.swift */; };
-		9B7578771CB61E5200FC75D2 /* SinaPictureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B7578731CB61E5200FC75D2 /* SinaPictureTableViewCell.xib */; };
-		9B7578781CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578741CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.swift */; };
-		9B7578791CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B7578751CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.xib */; };
 		9B7578961CB622FF00FC75D2 /* SecretLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578901CB622FF00FC75D2 /* SecretLockViewController.swift */; };
 		9B7578971CB622FF00FC75D2 /* SecretLockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B7578911CB622FF00FC75D2 /* SecretLockViewController.xib */; };
 		9B7578981CB622FF00FC75D2 /* SecretNewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7578921CB622FF00FC75D2 /* SecretNewItemViewController.swift */; };
@@ -324,14 +316,6 @@
 		9B75785C1CB60D5A00FC75D2 /* NEPictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NEPictureTableViewCell.xib; sourceTree = "<group>"; };
 		9B75785D1CB60D5A00FC75D2 /* NEThreePicturesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NEThreePicturesTableViewCell.swift; sourceTree = "<group>"; };
 		9B75785E1CB60D5A00FC75D2 /* NEThreePicturesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NEThreePicturesTableViewCell.xib; sourceTree = "<group>"; };
-		9B7578641CB61DDA00FC75D2 /* SinaNewsTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaNewsTabBarViewController.swift; sourceTree = "<group>"; };
-		9B7578681CB61E4000FC75D2 /* SinaNewsSuperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaNewsSuperViewController.swift; sourceTree = "<group>"; };
-		9B75786A1CB61E4000FC75D2 /* SinaRecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaRecommendViewController.swift; sourceTree = "<group>"; };
-		9B7578701CB61E4900FC75D2 /* SinaNewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaNewsModel.swift; sourceTree = "<group>"; };
-		9B7578721CB61E5200FC75D2 /* SinaPictureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaPictureTableViewCell.swift; sourceTree = "<group>"; };
-		9B7578731CB61E5200FC75D2 /* SinaPictureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SinaPictureTableViewCell.xib; sourceTree = "<group>"; };
-		9B7578741CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinaThreePicturesTableViewCell.swift; sourceTree = "<group>"; };
-		9B7578751CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SinaThreePicturesTableViewCell.xib; sourceTree = "<group>"; };
 		9B7578901CB622FF00FC75D2 /* SecretLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretLockViewController.swift; sourceTree = "<group>"; };
 		9B7578911CB622FF00FC75D2 /* SecretLockViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecretLockViewController.xib; sourceTree = "<group>"; };
 		9B7578921CB622FF00FC75D2 /* SecretNewItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretNewItemViewController.swift; sourceTree = "<group>"; };
@@ -665,45 +649,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		9B75782A1CB6086E00FC75D2 /* SinaNewsApp */ = {
-			isa = PBXGroup;
-			children = (
-				9B75782B1CB6086E00FC75D2 /* Model */,
-				9B75782C1CB6086E00FC75D2 /* ViewControllers */,
-				9B75782D1CB6086E00FC75D2 /* Views */,
-			);
-			path = SinaNewsApp;
-			sourceTree = "<group>";
-		};
-		9B75782B1CB6086E00FC75D2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9B7578701CB61E4900FC75D2 /* SinaNewsModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		9B75782C1CB6086E00FC75D2 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				9B75786A1CB61E4000FC75D2 /* SinaRecommendViewController.swift */,
-				9B7578681CB61E4000FC75D2 /* SinaNewsSuperViewController.swift */,
-				9B7578641CB61DDA00FC75D2 /* SinaNewsTabBarViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		9B75782D1CB6086E00FC75D2 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				9B7578721CB61E5200FC75D2 /* SinaPictureTableViewCell.swift */,
-				9B7578731CB61E5200FC75D2 /* SinaPictureTableViewCell.xib */,
-				9B7578741CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.swift */,
-				9B7578751CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.xib */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		9B75782E1CB6086E00FC75D2 /* UCNewsApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -911,7 +856,6 @@
 				9B76DE4F1CB4A7C30008A487 /* Walfare */,
 				9B75782E1CB6086E00FC75D2 /* UCNewsApp */,
 				9B7578261CB6086E00FC75D2 /* NetEaseApp */,
-				9B75782A1CB6086E00FC75D2 /* SinaNewsApp */,
 				9B7578821CB622AF00FC75D2 /* AreaApp */,
 				9B7578891CB622AF00FC75D2 /* NoteApp */,
 				9B75788D1CB622AF00FC75D2 /* QRApp */,
@@ -1581,7 +1525,6 @@
 				9B7578471CB6095F00FC75D2 /* UCNewsPictureTableViewCell.xib in Resources */,
 				9B7578D91CB6344C00FC75D2 /* QRStartScanViewController.xib in Resources */,
 				9B76DE8A1CB4BF390008A487 /* SuperThirdViewController.xib in Resources */,
-				9B7578791CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.xib in Resources */,
 				9B76DE881CB4BF390008A487 /* SuperTableViewController.xib in Resources */,
 				9B7578C11CB6305D00FC75D2 /* NoteWriteViewController.xib in Resources */,
 				9BEFAD971CB3B9F60076472B /* MJRefresh.bundle in Resources */,
@@ -1597,7 +1540,6 @@
 				9B7578E51CB63EEB00FC75D2 /* AboutManageViewController.xib in Resources */,
 				9BEFAD951CB3B9F60076472B /* MBProgressHUD.bundle in Resources */,
 				9B7578E71CB63EEB00FC75D2 /* AboutModifyAreaViewController.xib in Resources */,
-				9B7578771CB61E5200FC75D2 /* SinaPictureTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1633,7 +1575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B86C0921D4B238200F29B35 /* WindowView.swift in Sources */,
-				9B7578651CB61DDA00FC75D2 /* SinaNewsTabBarViewController.swift in Sources */,
 				9BC873D21D22595D001B7DD9 /* SuperWebViewController.swift in Sources */,
 				9B1BB1DC1D17DD7F0033334D /* AwesomeMenuItem.m in Sources */,
 				9B86C0901D4B237700F29B35 /* WindowLoadingView.swift in Sources */,
@@ -1647,14 +1588,12 @@
 				9B76DE991CB4DC430008A487 /* TextSuperTableViewCell.swift in Sources */,
 				9B76DE851CB4BF390008A487 /* ExtentTabBarViewController.swift in Sources */,
 				9B7578161CB5FFED00FC75D2 /* WalfareVideoViewController.swift in Sources */,
-				9B7578711CB61E4900FC75D2 /* SinaNewsModel.swift in Sources */,
 				9B0A5ADE1D06C8CD00A45729 /* AFURLResponseSerialization.m in Sources */,
 				9B7578531CB60D4A00FC75D2 /* NetEaseHeadLineViewController.swift in Sources */,
 				9B75778C1CB5F0B900FC75D2 /* BuDeJiePictureTableViewCell.swift in Sources */,
 				9B75780C1CB5FFAA00FC75D2 /* WalfareTabBarViewController.swift in Sources */,
 				9B7578131CB5FFED00FC75D2 /* WalfarePictureViewController.swift in Sources */,
 				9B7577831CB5F06B00FC75D2 /* BuDeJiePictureViewController.swift in Sources */,
-				9B7578781CB61E5200FC75D2 /* SinaThreePicturesTableViewCell.swift in Sources */,
 				9BEFADA41CB3B9F60076472B /* SDWebImageManager.m in Sources */,
 				9B7578981CB622FF00FC75D2 /* SecretNewItemViewController.swift in Sources */,
 				9B1F8BAB1D828FE50047A1CB /* AboutSettingsViewController.swift in Sources */,
@@ -1723,7 +1662,6 @@
 				9BEFADAC1CB3B9F60076472B /* UIView+WebCacheOperation.m in Sources */,
 				9B75784B1CB60CDD00FC75D2 /* NetEaseTabBarViewController.swift in Sources */,
 				9BEFAD961CB3B9F60076472B /* MBProgressHUD.m in Sources */,
-				9B75786D1CB61E4000FC75D2 /* SinaNewsSuperViewController.swift in Sources */,
 				9B7578E81CB63EEB00FC75D2 /* AboutMPViewController.swift in Sources */,
 				9B7578B61CB6293400FC75D2 /* DrawPicturePaintView.swift in Sources */,
 				9BC8740F1D22606D001B7DD9 /* ContentWebViewController.swift in Sources */,
@@ -1762,7 +1700,6 @@
 				9BEFADA21CB3B9F60076472B /* SDWebImageDownloader.m in Sources */,
 				9B7578601CB60D5A00FC75D2 /* NEPictureTableViewCell.swift in Sources */,
 				9B7578591CB60D5000FC75D2 /* NetEaseModel.swift in Sources */,
-				9B7578761CB61E5200FC75D2 /* SinaPictureTableViewCell.swift in Sources */,
 				9B75789A1CB622FF00FC75D2 /* SecretRecordViewController.swift in Sources */,
 				9BEFADAB1CB3B9F60076472B /* UIImageView+WebCache.m in Sources */,
 				9B350E371D2B5981009699DF /* Super3DTouchViewController.swift in Sources */,
@@ -1771,7 +1708,6 @@
 				9B7578351CB608CF00FC75D2 /* UCNewsSuperViewController.swift in Sources */,
 				9B7577861CB5F06B00FC75D2 /* BuDeJieVideoViewController.swift in Sources */,
 				9B75777C1CB5EFF800FC75D2 /* BuDeJieTabBarViewController.swift in Sources */,
-				9B75786F1CB61E4000FC75D2 /* SinaRecommendViewController.swift in Sources */,
 				9B75785F1CB60D5A00FC75D2 /* NEContentTableViewCell.swift in Sources */,
 				9BEFAD931CB3B9F60076472B /* UIView+Extent.m in Sources */,
 				9B7578C41CB6306400FC75D2 /* NoteModel.swift in Sources */,
@@ -1988,7 +1924,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Funny/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2009,7 +1945,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Funny/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

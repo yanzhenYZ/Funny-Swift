@@ -38,7 +38,6 @@ enum FunnyApp: Int {
     case walfare
     case ucNews
     case netEase
-    case sinaNews
     case area
     case drawPicture
     case note

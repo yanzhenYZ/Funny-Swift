@@ -97,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if tag! >= 100 && tag! <= 102 {
                 if tag == 102 {
-                    tag = 109;
+                    tag = 108;
                 }
                 vc.intoVC(tag: tag!);
             }else{

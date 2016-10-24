@@ -26,8 +26,8 @@ class RootViewController: SuperViewController {
     }
     
     fileprivate func configUI() {
-        let imageNames:[String] = ["content","gifShow","budejie","walfare","uc","netease","sina","secret","drawPicture","note","QR"];
-        let titleArray:[String] = ["内涵段子","快手","不得姐","福利社","UC新闻","网易新闻","新浪新闻","Area","画图","Note","二维码"];
+        let imageNames:[String] = ["content","gifShow","budejie","walfare","uc","netease","secret","drawPicture","note","QR"];
+        let titleArray:[String] = ["内涵段子","快手","不得姐","福利社","UC新闻","网易新闻","Area","画图","Note","二维码"];
         
         let effect = UIBlurEffect(style: .extraLight);
         let effectView = UIVisualEffectView(effect: effect);
@@ -78,8 +78,6 @@ class RootViewController: SuperViewController {
                 tvc = UCNewsTabBarViewController();
             }else if tag == FunnyApp.netEase.rawValue {
                 tvc = NetEaseTabBarViewController();
-            }else if tag == FunnyApp.sinaNews.rawValue {
-                tvc = SinaNewsTabBarViewController();
             }
             tvc?.modalPresentationStyle = .custom;
             tvc?.transitioningDelegate = transition;
